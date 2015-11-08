@@ -1,0 +1,17 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\PathFinding.cs">
+    <Files>
+      <File FileName="Assets\PathFinding.cs" Line="67" Column="28" />
+      <File FileName="Assets\Geometry.cs" Line="37" Column="17" />
+      <File FileName="Assets\WalkMesh.cs" Line="1" Column="1" />
+      <File FileName="Assets\C5\heaps\IntervalHeap.cs" Line="1" Column="1" />
+      <File FileName="Assets\TestPathFinding.cs" Line="15" Column="22" />
+      <File FileName="Assets\MeshFactory.cs" Line="23" Column="31" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
