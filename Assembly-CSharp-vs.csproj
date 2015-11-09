@@ -100,6 +100,9 @@
      <Compile Include="Assets\PathFinding.cs" />
      <Compile Include="Assets\TestPathFinding.cs" />
      <Compile Include="Assets\WalkMesh.cs" />
+     <None Include="Assets\UnityVC\StandardVC.shader" />
+     <None Include="Assets\UnityVC\StandardSpecularVC.shader" />
+     <None Include="Assets\UnityVC\UnityVC.cginc" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Unity 5.1/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

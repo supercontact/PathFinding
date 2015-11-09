@@ -27,6 +27,16 @@ public class Vertex {
 		onBorder = true;
 	}
 
+	public double CalculateVertexAreaTri() {
+		double result = 0;
+		FillEdgeArray();
+		foreach (Halfedge edge in edges) {
+			result += edge.face.CalculateAreaTri();
+		}
+		result /= 3;
+		ClearEdgeArray();
+		return result;
+	}
 	public void FillEdgeArray() {
 		edges = new List<Halfedge>();
 		Halfedge first = edge, temp = edge;
@@ -58,6 +68,28 @@ public class Face {
 	public List<Halfedge> edges;
 	public int index;
 
+	public double CalculateAreaTri() {
+		Vector3 a = edge.vertex.p;
+		Vector3 b = edge.next.vertex.p;
+		Vector3 c = edge.prev.vertex.p;
+		return Vector3.Cross((b-a), (c-a)).magnitude / 2;
+	}
+	public Vector3 CalculateNormalTri() {
+		Vector3 a = edge.vertex.p;
+		Vector3 b = edge.next.vertex.p;
+		Vector3 c = edge.prev.vertex.p;
+		return Vector3.Cross((b-a), (c-a)).normalized;
+	}
+	public Vector3 CalculateCenter() {
+		FillEdgeArray();
+		Vector3 c = new Vector3();
+		foreach(Halfedge edge in edges) {
+			c += edge.vertex.p;
+		}
+		c /= edges.Count;
+		ClearEdgeArray();
+		return c;
+	}
 	public void FillEdgeArray() {
 		edges = new List<Halfedge>();
 		Halfedge first = edge, temp = edge;
