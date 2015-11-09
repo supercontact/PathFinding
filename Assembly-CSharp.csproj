@@ -95,6 +95,7 @@
      <Compile Include="Assets\C5\trees\RedBlackTreeDictionary.cs" />
      <Compile Include="Assets\C5\trees\RedBlackTreeSet.cs" />
      <Compile Include="Assets\Geometry.cs" />
+     <Compile Include="Assets\HeatGeodesics.cs" />
      <Compile Include="Assets\MeshFactory.cs" />
      <Compile Include="Assets\PathFinding.cs" />
      <Compile Include="Assets\TestPathFinding.cs" />
