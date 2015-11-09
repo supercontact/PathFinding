@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Vertex {
 	/// <summary>
@@ -91,6 +92,7 @@ public class Geometry {
 	public List<Halfedge> halfedges;
 	public List<Face> faces;
 	public List<Face> boundaries;
+	public double h;
 	public Geometry() {
 		vertices = new List<Vertex>();
 		halfedges = new List<Halfedge>();
@@ -226,6 +228,12 @@ public class Geometry {
 		for (int i = 0; i < vertices.Count; i++) {
 			vertices[i].ClearEdgeArray();
 		}
+
+		h = 0;
+		foreach (Halfedge e in halfedges) {
+			h += e.Length();
+		}
+		h /= halfedges.Count;
 	}
 
 	public void ToMesh(Mesh mesh) {
@@ -259,5 +267,27 @@ public class Geometry {
 	public void Merge2Vertices(Vertex v1, Vertex v2) {
 
 	}*/
+
+	public double[,] CalculateLcMatrix(double factor = 1) {
+		int n = vertices.Count;
+		double[,] result = new double[n,n];
+		for (int i = 0; i < n; i++) {
+			vertices[i].FillEdgeArray();
+			Vector3 vi = vertices[i].p;
+			foreach (Halfedge e in vertices[i].edges) {
+				int j = e.prev.vertex.index;
+				Vector3 vj = e.prev.vertex.p;
+				Vector3 va = e.next.vertex.p;
+				Vector3 vb = e.opposite.next.vertex.p;
+				double cosa = Vector3.Dot((vi - va), (vj - va)) / (vi - va).magnitude / (vj - va).magnitude;
+				double cota = cosa / Math.Sqrt(1 - cosa * cosa);
+				double cosb = Vector3.Dot((vi - vb), (vj - vb)) / (vi - vb).magnitude / (vj - vb).magnitude;
+				double cotb = cosb / Math.Sqrt(1 - cosb * cosb);
+				result[i,i] -= factor * (cota + cotb) / 2;
+				result[i,j] += factor * (cota + cotb) / 2;
+			}
+		}
+		return result;
+	}
 }
 
