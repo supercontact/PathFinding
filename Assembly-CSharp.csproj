@@ -95,10 +95,14 @@
      <Compile Include="Assets\C5\trees\RedBlackTreeDictionary.cs" />
      <Compile Include="Assets\C5\trees\RedBlackTreeSet.cs" />
      <Compile Include="Assets\Geometry.cs" />
+     <Compile Include="Assets\HeatGeodesics.cs" />
      <Compile Include="Assets\MeshFactory.cs" />
      <Compile Include="Assets\PathFinding.cs" />
      <Compile Include="Assets\TestPathFinding.cs" />
      <Compile Include="Assets\WalkMesh.cs" />
+     <None Include="Assets\UnityVC\StandardVC.shader" />
+     <None Include="Assets\UnityVC\StandardSpecularVC.shader" />
+     <None Include="Assets\UnityVC\UnityVC.cginc" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
