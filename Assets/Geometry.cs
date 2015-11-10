@@ -321,5 +321,31 @@ public class Geometry {
 		}
 		return result;
 	}
+	public alglib.sparsematrix CalculateLcMatrixSparse(double factor = 1) {
+		int n = vertices.Count;
+		alglib.sparsematrix result;
+		alglib.sparsecreate(n, n, out result);
+		for (int i = 0; i < n; i++) {
+			vertices[i].FillEdgeArray();
+			Vector3 vi = vertices[i].p;
+			double aii = 0;
+			foreach (Halfedge e in vertices[i].edges) {
+				int j = e.prev.vertex.index;
+				Vector3 vj = e.prev.vertex.p;
+				Vector3 va = e.next.vertex.p;
+				Vector3 vb = e.opposite.next.vertex.p;
+				double cosa = Vector3.Dot((vi - va), (vj - va)) / (vi - va).magnitude / (vj - va).magnitude;
+				double cota = cosa / Math.Sqrt(1 - cosa * cosa);
+				double cosb = Vector3.Dot((vi - vb), (vj - vb)) / (vi - vb).magnitude / (vj - vb).magnitude;
+				double cotb = cosb / Math.Sqrt(1 - cosb * cosb);
+				aii -= factor * (cota + cotb) / 2;
+				alglib.sparseset(result, i, j, factor * (cota + cotb) / 2);
+			}
+			alglib.sparseset(result, i, i, aii);
+		}
+		//alglib.sparseconverttocrs(result);
+		return result;
+	}
+
 }
 
