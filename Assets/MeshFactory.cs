@@ -1,7 +1,77 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Text;
+using System.IO;
+using System;
 
 public class MeshFactory {
+
+	public static Mesh ReadMeshFromFile(string file) {
+		int state = 0;
+		int v = 0, f = 0, counter = 0;
+		Vector3[] vertices = null;
+		int[] triangles = null;
+		try
+		{
+			string line;
+			StreamReader theReader = new StreamReader(file, Encoding.Default);
+			using (theReader)
+			{
+				line = theReader.ReadLine();
+				if (!line.Equals("OFF")) {
+					Debug.Log("Not OFF!");
+					return null;
+				}
+				do
+				{
+					line = theReader.ReadLine();
+					if (line != null)
+					{
+						string[] entries = line.Split(' ');
+						if (entries.Length > 0) {
+							if (entries[0].Equals("#") || entries[0].Equals("")) continue;
+							if (state == 0) {
+								v = int.Parse(entries[0]);
+								f = int.Parse(entries[1]);
+								vertices = new Vector3[v];
+								triangles = new int[3*f];
+								state = 1;
+								counter = 0;
+							} else if (state == 1) {
+								vertices[counter++] = new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) / 5;
+								if (counter == v) {
+									state = 2;
+									counter = 0;
+								}
+							} else if (state == 2) {
+								if (!entries[0].Equals("3")) {
+									Debug.Log(entries[0]+"Not a triangle mesh!");
+									return null;
+								}
+								triangles[counter++] = int.Parse(entries[1]);
+								triangles[counter++] = int.Parse(entries[2]);
+								triangles[counter++] = int.Parse(entries[3]);
+							}
+						}
+					}
+				}
+				while (line != null);
+				theReader.Close();
+			}
+		}
+		catch (Exception e)
+		{
+			//Console.WriteLine("{0}\n", e.Message);
+			Debug.Log(e.Message);
+			return null;
+		}
+		Mesh m = new Mesh();
+		Debug.Log("New mesh loaded: "+file+" \nVertex count = "+vertices.Length+" triangle count = "+triangles.Length);
+		m.vertices = vertices;
+		m.triangles = triangles;
+		m.RecalculateNormals();
+		return m;
+	}
 
 	public static Mesh CreateSphere(float radius, int c) {
 		Vector3[] vertices = new Vector3[2+(c-1)*2*c];
@@ -42,5 +112,9 @@ public class MeshFactory {
 		m.triangles = triangles;
 		m.RecalculateNormals();
 		return m;
-	} 
+	}
+
+	public static Texture2D CreateStripedTexture() {
+		return null;
+	}
 }

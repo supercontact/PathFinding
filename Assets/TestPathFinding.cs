@@ -6,7 +6,8 @@ public class TestPathFinding : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameObject earth = GameObject.Find("Earth");
-		earth.GetComponent<MeshFilter>().mesh = MeshFactory.CreateSphere(1, 24);
+		//earth.GetComponent<MeshFilter>().mesh = MeshFactory.CreateSphere(1, 24);
+		earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/high_genus.off");
 
 		/*PathFinding pf = new PathFinding();
 		Geometry g = new Geometry(GetComponent<MeshFilter>().mesh);
@@ -17,7 +18,7 @@ public class TestPathFinding : MonoBehaviour {
 		Geometry g = new Geometry(GetComponent<MeshFilter>().mesh);
 		HeatGeodesics hg = new HeatGeodesics(g);
 		hg.Initialize();
-		hg.CalculateGeodesics(g.vertices[242]);
+		hg.CalculateGeodesics(g.vertices[42]);
 	}
 	
 	// Update is called once per frame
