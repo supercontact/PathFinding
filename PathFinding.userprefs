@@ -1,0 +1,15 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\HeatGeodesics.cs">
+    <Files>
+      <File FileName="Assets\MeshFactory.cs" Line="80" Column="35" />
+      <File FileName="Assets\HeatGeodesics.cs" Line="137" Column="32" />
+      <File FileName="Assets\TestPathFinding.cs" Line="9" Column="3" />
+      <File FileName="Assets\Geometry.cs" Line="315" Column="31" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
