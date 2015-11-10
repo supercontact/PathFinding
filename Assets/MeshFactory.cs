@@ -10,8 +10,8 @@ public class MeshFactory {
 		for (int i = 1; i < c; i++) {
 			for (int j = 0; j < 2*c; j++) {
 				vertices[1+(i-1)*2*c+j] = new Vector3(
-					radius * Mathf.Sin(Mathf.PI*i/(float)c) * Mathf.Sin(Mathf.PI*j/(float)c),
-					radius * Mathf.Sin(Mathf.PI*i/(float)c) * Mathf.Cos(Mathf.PI*j/(float)c),
+					radius * Mathf.Sin(Mathf.PI*i/(float)c) * Mathf.Sin(0.5f * Mathf.PI*(2*j-i)/(float)c),
+					radius * Mathf.Sin(Mathf.PI*i/(float)c) * Mathf.Cos(0.5f * Mathf.PI*(2*j-i)/(float)c),
 					radius * Mathf.Cos(Mathf.PI*i/(float)c));
 			}
 		}
