@@ -263,9 +263,12 @@ public class Geometry {
 
 		h = 0;
 		foreach (Halfedge e in halfedges) {
-			h += e.Length();
+			if (e.Length() > h) {
+				h = e.Length();
+			}
+			//h += e.Length();
 		}
-		h /= halfedges.Count;
+		//h /= halfedges.Count;
 	}
 
 	public void ToMesh(Mesh mesh) {

@@ -58,6 +58,7 @@ public class HeatGeodesics {
 		}
 		g.linkedMesh.colors = colors;*/
 
+		GameObject visual = GameObject.Find("FlowVisualization");
 		Vector3[] X = new Vector3[f];
 		for (int i = 0; i < f; i++) {
 			Face face = g.faces[i];
@@ -75,10 +76,11 @@ public class HeatGeodesics {
 			face.ClearEdgeArray();
 
 			//Visualize flow
-			/*GameObject stick = GameObject.Instantiate(GameObject.Find("Edge"));
+			GameObject stick = GameObject.Instantiate(GameObject.Find("Edge"));
+			stick.transform.SetParent(visual.transform);
 			stick.transform.position = face.CalculateCenter();
-			stick.transform.localScale = new Vector3(0.01f, 0.01f, 0.05f);
-			stick.transform.rotation = Quaternion.LookRotation(X[i]);*/
+			stick.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+			stick.transform.rotation = Quaternion.LookRotation(X[i], face.CalculateNormalTri());
 		}
 
 		Debug.Log("Gradient of heat flow calculated");
