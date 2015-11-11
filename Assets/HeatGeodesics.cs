@@ -26,6 +26,7 @@ public class HeatGeodesics {
 			alglib.sparseadd(A1, i, i, g.vertices[i].CalculateVertexAreaTri());
 		}
 		A2 = g.CalculateLcMatrixSparse();
+	
 		alglib.sparseconverttocrs(A1);
 		alglib.sparseconverttocrs(A2);
 	}
@@ -76,11 +77,11 @@ public class HeatGeodesics {
 			face.ClearEdgeArray();
 
 			//Visualize flow
-			GameObject stick = GameObject.Instantiate(GameObject.Find("Edge"));
+			/*GameObject stick = GameObject.Instantiate(GameObject.Find("Edge"));
 			stick.transform.SetParent(visual.transform);
 			stick.transform.position = face.CalculateCenter();
 			stick.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
-			stick.transform.rotation = Quaternion.LookRotation(X[i], face.CalculateNormalTri());
+			stick.transform.rotation = Quaternion.LookRotation(X[i], face.CalculateNormalTri());*/
 		}
 
 		Debug.Log("Gradient of heat flow calculated");
@@ -113,6 +114,7 @@ public class HeatGeodesics {
 		alglib.linlsqrcreate(n, n, out s2);
 		alglib.linlsqrsolvesparse(s2, A2, divX);
 		alglib.linlsqrresults(s2, out phi, out rep2);
+
 		double phi0 = phi[source.index];
 		double maxDistance = 0;
 		for (int i = 0; i < n; i++) {
