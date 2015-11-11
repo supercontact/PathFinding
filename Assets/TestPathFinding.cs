@@ -6,8 +6,8 @@ public class TestPathFinding : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		GameObject earth = GameObject.Find("Earth");
-		//earth.GetComponent<MeshFilter>().mesh = MeshFactory.CreateSphere(1, 48);
-		earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/high_genus.off");
+		earth.GetComponent<MeshFilter>().mesh = MeshFactory.CreateSphere(1, 48);
+		//earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/high_genus.off");
 		//earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/cow.off");
 
 		ColorMixer background = new ColorMixer();
