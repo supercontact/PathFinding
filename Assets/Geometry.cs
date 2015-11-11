@@ -37,6 +37,16 @@ public class Vertex {
 		ClearEdgeArray();
 		return result;
 	}
+	public Vector3 CalculateNormalTri() {
+		Vector3 result = new Vector3();
+		FillEdgeArray();
+		foreach (Halfedge edge in edges) {
+			result += edge.face.CalculateNormalTri();
+		}
+		result.Normalize();
+		ClearEdgeArray();
+		return result;
+	}
 	public void FillEdgeArray() {
 		edges = new List<Halfedge>();
 		Halfedge first = edge, temp = edge;

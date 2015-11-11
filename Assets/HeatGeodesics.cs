@@ -35,6 +35,10 @@ public class HeatGeodesics {
 		float time = Time.realtimeSinceStartup;
 		Debug.Log("t = 0ms");
 
+		GameObject pin = GameObject.Find("Pin");
+		pin.transform.position = source.p;
+		pin.transform.rotation = Quaternion.LookRotation(source.CalculateNormalTri());
+
 		int n = g.vertices.Count;
 		int f = g.faces.Count;
 		double[] b = new double[n];
@@ -101,7 +105,6 @@ public class HeatGeodesics {
 				divX[i] += cot1 * Vector3.Dot(v1 - v, X[edge.face.index]) + cot2 * Vector3.Dot(v2 - v, X[edge.face.index]);
 			}
 			divX[i] /= 2;
-			g.vertices[i].ClearEdgeArray();
 		}
 
 		Debug.Log("Div of X calculated");
@@ -138,10 +141,19 @@ public class HeatGeodesics {
 		g.linkedMesh.colors = colors;*/
 
 		Vector2[] uv = new Vector2[n];
+		Vector4[] tangents = new Vector4[n];
 		for (int i = 0; i < n; i++) {
 			uv[i] = new Vector2((float) (phi[i] / maxDistance), 0);
+			Vector3 tgt = new Vector3();
+			foreach (Halfedge e in g.vertices[i].edges) {
+				tgt += X[e.face.index];
+			}
+			tgt.Normalize();
+			tangents[i] = new Vector4(tgt.x, tgt.y, tgt.z, 1);
+			g.vertices[i].ClearEdgeArray();
 		}
 		g.linkedMesh.uv = uv;
+		g.linkedMesh.tangents = tangents;
 
 
 		Vector3[] X2 = new Vector3[f];

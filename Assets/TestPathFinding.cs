@@ -23,15 +23,24 @@ public class TestPathFinding : MonoBehaviour {
 		background.InsertColorNode(Color.red, 0.5f);
 		background.InsertColorNode(Color.black, 1);
 		stripe.InsertColorNode(new Color(1,1,0.5f), 0);
-		Texture2D stripes = MeshFactory.CreateStripedTexture(1024, 40, 5, 20, background, stripe);
+		Texture2D stripes = MeshFactory.CreateStripedTexture(1024, 40, 6, 20, background, stripe);
 		earth.GetComponent<MeshRenderer>().material.mainTexture = stripes;
 
-		background = new ColorMixer();
+		/*background = new ColorMixer();
 		stripe = new ColorMixer();
 		background.InsertColorNode(new Color(0.5f, 0.5f, 0.5f, 0.6f), 0);
 		stripe.InsertColorNode(new Color(0.5f, 0.5f, 0.5f, 0.6f), 0);
 		Texture2D stripeSmoothness = MeshFactory.CreateStripedTexture(1024, 40, 5, 20, background, stripe);
-		earth.GetComponent<MeshRenderer>().material.SetTexture("_SpecGlossMap", stripeSmoothness);
+		earth.GetComponent<MeshRenderer>().material.SetTexture("_SpecGlossMap", stripeSmoothness);*/
+
+		background = new ColorMixer();
+		stripe = new ColorMixer();
+		background.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0);
+		stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 1f), 0);
+		stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0f), 1);
+		Texture2D stripeBump = MeshFactory.CreateStripedTexture(1024, 40, 6, 20, background, stripe, true);
+		earth.GetComponent<MeshRenderer>().material.SetTexture("_BumpMap", stripeBump);
+		earth.GetComponent<MeshRenderer>().material.EnableKeyword("_NORMALMAP");
 
 		/*PathFinding pf = new PathFinding();
 		Geometry g = new Geometry(GetComponent<MeshFilter>().mesh);
@@ -52,15 +61,17 @@ public class TestPathFinding : MonoBehaviour {
 			RaycastHit info;
 			if (Physics.Raycast(ray, out info)) {
 				Debug.Log("triangle hit = " + info.triangleIndex);
-				Face f = g.faces[info.triangleIndex];
-				f.FillEdgeArray();
-				Vertex v = f.edges[0].vertex;
-				if ((f.edges[1].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
-					v = f.edges[1].vertex;
-				if ((f.edges[2].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
-					v = f.edges[2].vertex;
-				f.ClearEdgeArray();
-				hg.CalculateGeodesics(v);
+				if (info.triangleIndex != -1) {
+					Face f = g.faces[info.triangleIndex];
+					f.FillEdgeArray();
+					Vertex v = f.edges[0].vertex;
+					if ((f.edges[1].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
+						v = f.edges[1].vertex;
+					if ((f.edges[2].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
+						v = f.edges[2].vertex;
+					f.ClearEdgeArray();
+					hg.CalculateGeodesics(v);
+				}
 			}
 		}
 	}

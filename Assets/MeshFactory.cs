@@ -160,10 +160,15 @@ public class MeshFactory {
 		return m;
 	}
 
-	public static Texture2D CreateStripedTexture(int size, int stripePeriod, int stripeWidth, int offset, ColorMixer background, ColorMixer stripe) {
+	public static Texture2D CreateStripedTexture(int size, int stripePeriod, int stripeWidth, int offset, ColorMixer background, ColorMixer stripe, bool colorEveryPeriod = false) {
 		Texture2D result = new Texture2D(size, 1, TextureFormat.ARGB32, false);
 		for (int i = 0; i < size; i++) {
-			result.SetPixel(i, 0, (i + offset) % stripePeriod < stripeWidth ? stripe.GetColor(i/(float)size) : background.GetColor(i/(float)size));
+			int t = (i + offset) % stripePeriod;
+			if (!colorEveryPeriod) {
+				result.SetPixel(i, 0, t < stripeWidth ? stripe.GetColor(i/(float)size) : background.GetColor(i/(float)size));
+			} else {
+				result.SetPixel(i, 0, t < stripeWidth ? stripe.GetColor(t/(float)stripeWidth) : background.GetColor((t-stripeWidth)/(float)(stripePeriod-stripeWidth)));
+			}
 		}
 		result.Apply();
 		return result;
