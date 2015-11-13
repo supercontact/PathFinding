@@ -1,13 +1,14 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\HeatGeodesics.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TestPathFinding.cs">
     <Files>
-      <File FileName="Assets\Geometry.cs" Line="47" Column="20" />
-      <File FileName="Assets\HeatGeodesics.cs" Line="40" Column="36" />
+      <File FileName="Assets\WalkingMan.cs" Line="39" Column="72" />
+      <File FileName="Assets\HeatGeodesics.cs" Line="132" Column="25" />
+      <File FileName="Assets\Geometry.cs" Line="317" Column="25" />
       <File FileName="Assets\WalkMesh.cs" Line="1" Column="1" />
-      <File FileName="Assets\TestPathFinding.cs" Line="54" Column="41" />
-      <File FileName="Assets\MeshFactory.cs" Line="170" Column="80" />
-      <File FileName="Assets\ObserveCamera.cs" Line="39" Column="113" />
+      <File FileName="Assets\TestPathFinding.cs" Line="16" Column="3" />
+      <File FileName="Assets\MeshFactory.cs" Line="1" Column="1" />
+      <File FileName="Assets\ObserveCamera.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
