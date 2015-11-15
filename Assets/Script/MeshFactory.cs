@@ -184,6 +184,15 @@ public class MeshFactory {
 		return m;
 	}
 
+	public static void TransformMesh(Mesh mesh, Vector3 offset, Quaternion rot) {
+		Vector3[] verts = mesh.vertices;
+		for (int i = 0; i < verts.Length; i++) {
+			verts[i] = rot * verts[i] + offset;
+		}
+		mesh.vertices = verts;
+		mesh.RecalculateNormals();
+	}
+
 	public static Texture2D CreateStripedTexture(int size, int stripePeriod, int stripeWidth, int offset, ColorMixer background, ColorMixer stripe, bool colorEveryPeriod = false) {
 		Texture2D result = new Texture2D(size, 1, TextureFormat.ARGB32, false);
 		for (int i = 0; i < size; i++) {

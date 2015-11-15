@@ -13,6 +13,7 @@ public class WalkingMan : MonoBehaviour {
 	public float speed = 0.1f;
 
 	public bool ready = false;
+	private int stepsThisFrame = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,7 @@ public class WalkingMan : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (ready) {
+			stepsThisFrame = 0;
 			GoForward(speed * Time.deltaTime, triangle);
 			UpdatePosition();
 		}
@@ -35,11 +37,16 @@ public class WalkingMan : MonoBehaviour {
 		UpdatePosition();
 		ready = true;
 	}
-
+	
 	void GoForward(float dist, Face lastTriangle, Halfedge avoid = null) {
+		stepsThisFrame++;
+		if (stepsThisFrame > 20) {
+			return;
+		}
 		if ((navigation.s.p - BarycenterToWorldCoord(coeffs)).magnitude < 0.05f) {
 			return;
 		}
+
 		Vector3 dir = navigation.X2[triangle.index];
 		if (avoid != null) {
 			Vector3 e = avoid.vertex.p - avoid.prev.vertex.p;

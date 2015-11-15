@@ -8,17 +8,25 @@ public class TestPathFinding : MonoBehaviour {
 	Geometry g;
 	HeatGeodesics hg;
 	GameObject earth;
-	WalkingMan man;
+	WalkingMan man = null;
 	Text counter;
 	int textureIndex = 0;
 	bool firstClick = true;
+	public Mesh road;
+	public GameObject roadBase;
 
 	// Use this for initialization
 	void Start () {
 		cam = GameObject.Find("Main Camera").GetComponent<Camera>();
-		man = GameObject.Find("LittleMan").GetComponent<WalkingMan>();
+		if (GameObject.Find("LittleMan") != null) {
+			man = GameObject.Find("LittleMan").GetComponent<WalkingMan>();
+		}
 		earth = GameObject.Find("Earth");
 		counter = GameObject.Find("Counter").GetComponent<Text>();
+
+		road = Instantiate<Mesh>(road);
+		MeshFactory.TransformMesh(road, Vector3.zero, Quaternion.Euler(-90, 0, 0));
+
 
 		SetLevel(1);
 
@@ -70,6 +78,7 @@ public class TestPathFinding : MonoBehaviour {
 
 	public void SetLevel(int level) {
 
+		//earth.transform.eulerAngles = new Vector3(0, 0, 0);
 		switch (level) {
 		case 0:
 		default:
@@ -110,8 +119,15 @@ public class TestPathFinding : MonoBehaviour {
 			Constant.cotLimit = 10000;
 			Constant.tFactor = 1;
 			break;
+		case 7:
+			earth.GetComponent<MeshFilter>().sharedMesh = road;
+			//earth.transform.eulerAngles = new Vector3(-90, 0, 0);
+			SetTexture(1);
+			Constant.cotLimit = 10000;
+			Constant.tFactor = 1;
+			break;
 		}
-
+		roadBase.SetActive(level == 7);
 		earth.GetComponent<MeshCollider>().sharedMesh = earth.GetComponent<MeshFilter>().sharedMesh;
 		g = new Geometry(GetComponent<MeshFilter>().sharedMesh);
 		counter.text = "Triangle Count = " + g.faces.Count;
@@ -125,7 +141,9 @@ public class TestPathFinding : MonoBehaviour {
 		hg = new HeatGeodesics(g);
 		hg.Initialize();
 		hg.CalculateGeodesics(g.vertices[69]);
-		man.GetReady(g, hg, g.faces[42]);
+		if (man != null) {
+			man.GetReady(g, hg, g.faces[42]);
+		}
 	}
 
 	public void SetTexture(int type) {
