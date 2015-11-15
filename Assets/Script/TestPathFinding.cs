@@ -59,6 +59,9 @@ public class TestPathFinding : MonoBehaviour {
 				}
 			}
 		}
+		if (Input.GetKey(KeyCode.Escape)) {
+			Application.Quit();
+		}
 
 		offset -= Constant.ScrollSpeed * Time.deltaTime;
 		//earth.GetComponent<MeshRenderer>().material.mainTextureOffset -= new Vector2(0.05f, 0) * Time.deltaTime;
