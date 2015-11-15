@@ -46,10 +46,11 @@ public class ColorMixer {
 
 public class MeshFactory {
 
-	public static Mesh ReadMeshFromFile(string file, float scaleFactor = 1) {
+	public static Mesh ReadMeshFromFile(string file, float scaleFactor = 1, Vector3 offset = default(Vector3)) {
 		int state = 0;
 		int v = 0, f = 0, counter = 0;
 		Vector3[] vertices = null;
+		bool[] verticesIsUsed = null;
 		int[] triangles = null;
 		try
 		{
@@ -80,11 +81,12 @@ public class MeshFactory {
 								v = int.Parse(entries[0]);
 								f = int.Parse(entries[1]);
 								vertices = new Vector3[v];
+								verticesIsUsed = new bool[v];
 								triangles = new int[3*f];
 								state = 1;
 								counter = 0;
 							} else if (state == 1) {
-								vertices[counter++] = new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) * scaleFactor;
+								vertices[counter++] = new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) * scaleFactor + offset;
 								if (counter == v) {
 									state = 2;
 									counter = 0;
@@ -94,9 +96,12 @@ public class MeshFactory {
 									Debug.Log(entries[0]+"Not a triangle mesh!");
 									return null;
 								}
-								triangles[counter++] = int.Parse(entries[1]);
-								triangles[counter++] = int.Parse(entries[2]);
-								triangles[counter++] = int.Parse(entries[3]);
+								triangles[counter] = int.Parse(entries[1]);
+								verticesIsUsed[triangles[counter++]] = true;
+								triangles[counter] = int.Parse(entries[2]);
+								verticesIsUsed[triangles[counter++]] = true;
+								triangles[counter] = int.Parse(entries[3]);
+								verticesIsUsed[triangles[counter++]] = true;
 							}
 						}
 					}
@@ -107,13 +112,28 @@ public class MeshFactory {
 		}
 		catch (Exception e)
 		{
-			//Console.WriteLine("{0}\n", e.Message);
 			Debug.Log(e.StackTrace);
 			return null;
 		}
+
+		int[] verticesDeletedBefore = new int[v];
+		verticesDeletedBefore[0] = verticesIsUsed[0] ? 0 : 1;
+		for (int i = 1; i < v; i++) {
+			verticesDeletedBefore[i] = verticesIsUsed[i] ? verticesDeletedBefore[i-1] : verticesDeletedBefore[i-1] + 1;
+		}
+		Vector3[] usedVertices = new Vector3[v - verticesDeletedBefore[v - 1]];
+		for (int i = 0; i < v; i++) {
+			if (verticesIsUsed[i]) {
+				usedVertices[i - verticesDeletedBefore[i]] = vertices[i];
+			}
+		}
+		for (int i = 0; i < 3 * f; i++) {
+			triangles[i] -= verticesDeletedBefore[triangles[i]];
+		}
+
 		Mesh m = new Mesh();
-		Debug.Log("New mesh loaded: "+file+" \nVertex count = "+vertices.Length+" triangle count = "+triangles.Length);
-		m.vertices = vertices;
+		Debug.Log("New mesh loaded: "+file+" \nVertex count = "+usedVertices.Length+" triangle count = "+triangles.Length);
+		m.vertices = usedVertices;
 		m.triangles = triangles;
 		m.RecalculateNormals();
 		return m;

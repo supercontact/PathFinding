@@ -76,7 +76,7 @@ public class WalkingMan : MonoBehaviour {
 			} else {
 				newTriangle = triEdges[1].opposite.face;
 			}*/
-			if (newTriangle != lastTriangle) {
+			if (newTriangle != lastTriangle && newTriangle.index != -1) {
 				EnterTriangle(newTriangle);
 				coeffs = WorldToBarycenterCoord(newPos);
 				GoForward(dist - t, currentTriangle);

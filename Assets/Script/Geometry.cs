@@ -31,7 +31,9 @@ public class Vertex {
 		double result = 0;
 		FillEdgeArray();
 		foreach (Halfedge edge in edges) {
-			result += edge.face.CalculateAreaTri();
+			if (edge.face.index != -1) {
+				result += edge.face.CalculateAreaTri();
+			}
 		}
 		result /= 3;
 		ClearEdgeArray();
@@ -41,7 +43,9 @@ public class Vertex {
 		Vector3 result = new Vector3();
 		FillEdgeArray();
 		foreach (Halfedge edge in edges) {
-			result += edge.face.CalculateNormalTri();
+			if (edge.face.index != -1) {
+				result += edge.face.CalculateNormalTri();
+			}
 		}
 		result.Normalize();
 		ClearEdgeArray();
@@ -312,14 +316,13 @@ public class Geometry {
 				Vector3 vb = e.opposite.next.vertex.p;
 				double cosa = Vector3.Dot((vi - va), (vj - va)) / (vi - va).magnitude / (vj - va).magnitude;
 				double cota = cosa / Math.Sqrt(1 - cosa * cosa);
-				double limit = 10000;
-				if (double.IsNaN(cota) || System.Math.Abs(cota) > limit) {
-					cota = cosa > 0 ? limit : -limit;
+				if (double.IsNaN(cota) || System.Math.Abs(cota) > Constant.cotLimit) {
+					cota = cosa > 0 ? Constant.cotLimit : -Constant.cotLimit;
 				}
 				double cosb = Vector3.Dot((vi - vb), (vj - vb)) / (vi - vb).magnitude / (vj - vb).magnitude;
 				double cotb = cosb / Math.Sqrt(1 - cosb * cosb);
-				if (double.IsNaN(cotb) || System.Math.Abs(cotb) > limit) {
-					cotb = cosb > 0 ? limit : -limit;
+				if (double.IsNaN(cotb) || System.Math.Abs(cotb) > Constant.cotLimit) {
+					cotb = cosb > 0 ? Constant.cotLimit : -Constant.cotLimit;
 				}
 				aii -= factor * (cota + cotb) / 2;
 				alglib.sparseset(result, i, j, factor * (cota + cotb) / 2);

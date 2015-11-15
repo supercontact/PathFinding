@@ -27,13 +27,14 @@ public class HeatGeodesics {
 
 	public Vertex s;
 
+
 	public HeatGeodesics(Geometry g) {
 		this.g = g;
 	}
 
 	public void Initialize() {
 		int n = g.vertices.Count;
-		A1 = g.CalculateLcMatrixSparse(- g.h * g.h);
+		A1 = g.CalculateLcMatrixSparse(- Constant.tFactor * g.h * g.h);
 		for (int i = 0; i < n; i++) {
 			alglib.sparseadd(A1, i, i, g.vertices[i].CalculateVertexAreaTri());
 			//A1.set(i + 1, i + 1, A1.get(i + 1, i + 1) + g.vertices[i].CalculateVertexAreaTri());
@@ -129,22 +130,23 @@ public class HeatGeodesics {
 			g.vertices[i].FillEdgeArray();
 			Vector3 v = g.vertices[i].p;
 			foreach (Halfedge edge in g.vertices[i].edges) {
-				double limit = 10000;
-				Vector3 v1 = edge.prev.vertex.p;
-				Vector3 v2 = edge.next.vertex.p;
-				double cos1 = Vector3.Dot(v-v2, v1-v2) / (v-v2).magnitude / (v1-v2).magnitude;
-				double cot1 = cos1 / System.Math.Sqrt(1 - cos1 * cos1);
-				if (double.IsNaN(cot1) || System.Math.Abs(cot1) > limit) {
-					cot1 = cos1 > 0 ? limit : -limit;
+				if (edge.face.index != -1) {
+					Vector3 v1 = edge.prev.vertex.p;
+					Vector3 v2 = edge.next.vertex.p;
+					double cos1 = Vector3.Dot(v-v2, v1-v2) / (v-v2).magnitude / (v1-v2).magnitude;
+					double cot1 = cos1 / System.Math.Sqrt(1 - cos1 * cos1);
+					if (double.IsNaN(cot1) || System.Math.Abs(cot1) > Constant.cotLimit) {
+						cot1 = cos1 > 0 ? Constant.cotLimit : -Constant.cotLimit;
+					}
+					double cos2 = Vector3.Dot(v-v1, v2-v1) / (v-v1).magnitude / (v2-v1).magnitude;
+					double cot2 = cos2 / System.Math.Sqrt(1 - cos2 * cos2);
+					if (double.IsNaN(cot2) || System.Math.Abs(cot2) > Constant.cotLimit) {
+						cot2 = cos2 > 0 ? Constant.cotLimit : -Constant.cotLimit;
+					}
+					divX[i] += cot1 * Vector3.Dot(v1 - v, X[edge.face.index]) + cot2 * Vector3.Dot(v2 - v, X[edge.face.index]);
 				}
-				double cos2 = Vector3.Dot(v-v1, v2-v1) / (v-v1).magnitude / (v2-v1).magnitude;
-				double cot2 = cos2 / System.Math.Sqrt(1 - cos2 * cos2);
-				if (double.IsNaN(cot2) || System.Math.Abs(cot2) > limit) {
-					cot2 = cos2 > 0 ? limit : -limit;
-				}
-				divX[i] += cot1 * Vector3.Dot(v1 - v, X[edge.face.index]) + cot2 * Vector3.Dot(v2 - v, X[edge.face.index]);
 			}
-			divX[i] /= -2; //inverse
+			divX[i] /= -2; //and make opposite
 		}
 
 		Debug.Log("Div of X calculated");
@@ -189,7 +191,9 @@ public class HeatGeodesics {
 			uv[i] = new Vector2((float) (phi[i] / maxDistance), 0);
 			Vector3 tgt = new Vector3();
 			foreach (Halfedge e in g.vertices[i].edges) {
-				tgt += X[e.face.index];
+				if (e.face.index != -1) {
+					tgt += X[e.face.index];
+				}
 			}
 			tgt.Normalize();
 			tangents[i] = new Vector4(tgt.x, tgt.y, tgt.z, 1);
