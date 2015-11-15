@@ -58,7 +58,8 @@ public class MeshFactory {
 		try
 		{
 			string line;
-			StreamReader theReader = new StreamReader(file, Encoding.Default);
+			TextAsset asset = Resources.Load(file) as TextAsset;
+			StreamReader theReader = new StreamReader(new MemoryStream(asset.bytes), Encoding.Default);
 			using (theReader)
 			{
 				line = theReader.ReadLine();
