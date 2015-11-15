@@ -73,33 +73,33 @@ public class TestPathFinding : MonoBehaviour {
 		switch (level) {
 		case 0:
 		default:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/high_genus.off", 0.2f, new Vector3(0, 0, -0.6f));
+			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
 			SetTexture(2);
 			Constant.cotLimit = 10000;
 			Constant.tFactor = 1;
 			break;
 		case 1:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bague.off", 0.5f);
+			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
 			SetTexture(0);
 			Constant.cotLimit = 10000;
 			Constant.tFactor = 1;
 			break;
 		case 2:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/cow.off", 1.5f, new Vector3(0.15f, 0.15f, 0));
+			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/cow", 1.5f, new Vector3(0.15f, 0.15f, 0));
 			SetTexture(3);
 			Constant.cotLimit = 10000;
 			Constant.tFactor = 1;
 			break;
 		case 3:
 		case 6:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops.off", 0.2f, new Vector3(0.15f, 0, 0));
+			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops", 0.2f, new Vector3(0.15f, 0, 0));
 			SetTexture(4);
 			Constant.cotLimit = 5;
 			Constant.tFactor = 1;
 			break;
 		case 4:
 			//earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/horse1.off", 12f, new Vector3(0f, 0f, -0.5f), Quaternion.Euler(-90, 0, 0));
+			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.5f), Quaternion.Euler(-90, 0, 0));
 			SetTexture(1);
 			Constant.cotLimit = 10000;
 			Constant.tFactor = 10;

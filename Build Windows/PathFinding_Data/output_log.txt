@@ -1,0 +1,1306 @@
+Initialize engine version: 5.1.2f1 (afd2369b692a)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics 4600 (ID=0x416)
+    Vendor:   Intel
+    VRAM:     128 MB
+Begin MonoManager ReloadAssembly
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\alglibnet2.dll (this message is harmless)
+Loading D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\alglibnet2.dll into Unity Child Domain
+- Completed reload, in  0.051 seconds
+=======
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\alglibnet2.dll (this message is harmless)
+Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\alglibnet2.dll into Unity Child Domain
+- Completed reload, in  0.046 seconds
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Unity projects\PathFinding\Build\PathFinding_Data\Managed\System.dll (this message is harmless)
+New mesh loaded: OFF/bague.off 
+=======
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\System.dll (this message is harmless)
+New mesh loaded: OFF/bague 
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+Vertex count = 2652 triangle count = 15912
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 31.59791ms
+=======
+t = 31.65704ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 36.68395ms
+=======
+t = 39.45744ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 42.65425ms
+=======
+t = 45.91241ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 74.90981ms
+=======
+t = 78.31997ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Setting up 2 worker threads for Enlighten.
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+  Thread -> id: 186c -> priority: 1 
+  Thread -> id: 1474 -> priority: 1 
+vertex hit = 177
+=======
+  Thread -> id: 5c4 -> priority: 1 
+  Thread -> id: 1b14 -> priority: 1 
+vertex hit = 161
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 71.15006ms
+=======
+t = 47.33491ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 80.08743ms
+=======
+t = 51.24235ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 87.84366ms
+=======
+t = 59.6962ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 126.3971ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 148
+=======
+t = 92.32449ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 122
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 72.2518ms
+=======
+t = 49.40724ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 80.9455ms
+=======
+t = 57.90567ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 93.45245ms
+=======
+t = 64.41665ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 130.6167ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 645
+=======
+t = 96.93146ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 175
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 99.85161ms
+=======
+t = 56.08749ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 105.5565ms
+=======
+t = 59.75914ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 115.1962ms
+=======
+t = 68.2354ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 158.3481ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/high_genus.off 
+Vertex count = 1660 triangle count = 9984
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 11.77597ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 16.43467ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 23.94772ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 55.32074ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/bague.off 
+Vertex count = 2652 triangle count = 15912
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 26.65901ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 30.26009ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 36.22246ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 66.84113ms
+=======
+t = 101.1915ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 35
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 33.28514ms
+=======
+t = 59.02719ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 37.04453ms
+=======
+t = 63.76553ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 43.37692ms
+=======
+t = 70.02926ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 107.1377ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/high_genus.off 
+=======
+t = 102.5262ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/high_genus 
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+Vertex count = 1660 triangle count = 9984
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 11.8351ms
+=======
+t = 6.828308ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 21.23642ms
+=======
+t = 9.454727ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 28.70941ms
+=======
+t = 13.70192ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 59.95941ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/bague.off 
+Vertex count = 2652 triangle count = 15912
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 26.35574ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 29.84047ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 38.75351ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 69.28253ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/cow.off 
+Vertex count = 2904 triangle count = 17412
+=======
+t = 31.29721ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 921
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 32.89986ms
+=======
+t = 27.78101ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 36.72791ms
+=======
+t = 33.42819ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 43.0336ms
+=======
+t = 42.74559ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 106.4358ms
+=======
+t = 63.8814ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 1604
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 32.24754ms
+=======
+t = 28.59592ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 35.89058ms
+=======
+t = 38.88035ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 42.00935ms
+=======
+t = 52.4559ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 107.2178ms
+=======
+t = 80.55592ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 1585
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 29.56963ms
+=======
+t = 6.334305ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 33.23936ms
+=======
+t = 9.101868ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 39.48784ms
+=======
+t = 14.24026ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 103.0197ms
+=======
+t = 32.84168ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 1166
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 421.423ms
+=======
+t = 23.93436ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 445.4269ms
+=======
+t = 29.07372ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 517.0517ms
+=======
+t = 36.99017ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 1486.031ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/high_genus.off 
+Vertex count = 1660 triangle count = 9984
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 6.271362ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 8.766174ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 12.73727ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 29.44946ms
+=======
+t = 64.13746ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/cow 
+Vertex count = 2904 triangle count = 17412
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 26.54266ms
+=======
+t = 36.05175ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 30.00259ms
+=======
+t = 40.49301ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 35.94589ms
+=======
+t = 47.36042ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 66.44821ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/cow.off 
+Vertex count = 2904 triangle count = 17412
+=======
+t = 114.8987ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 404
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 32.91321ms
+=======
+t = 73.77243ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 40.48538ms
+=======
+t = 77.80838ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 46.76437ms
+=======
+t = 84.52129ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 109.6306ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/tri_triceratops.off 
+Vertex count = 2832 triangle count = 16980
+=======
+t = 158.8945ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 123
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 36.01074ms
+=======
+t = 79.02145ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 39.72626ms
+=======
+t = 83.02879ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 45.9404ms
+=======
+t = 89.66064ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 110.9962ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/tri_triceratops.off 
+Vertex count = 2832 triangle count = 16980
+=======
+t = 165.7505ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/tri_triceratops 
+Vertex count = 2832 triangle count = 16980
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 34.3914ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 38.35487ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 45.02106ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 118.454ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 509
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 29.16336ms
+=======
+t = 53.68996ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 32.89795ms
+=======
+t = 59.83353ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 39.06631ms
+=======
+t = 67.32941ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 102.8786ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/horse1.off 
+Vertex count = 20000 triangle count = 119988
+=======
+t = 136.5757ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/tri_triceratops 
+Vertex count = 2832 triangle count = 16980
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 422.4739ms
+=======
+t = 35.11238ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 446.1479ms
+=======
+t = 39.62517ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 496.479ms
+=======
+t = 46.27609ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 1465.725ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/high_genus.off 
+Vertex count = 1660 triangle count = 9984
+=======
+t = 114.5725ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 736
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 59.3071ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 67.49153ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 73.95935ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 142.6945ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+New mesh loaded: OFF/horse1 
+Vertex count = 20000 triangle count = 119988
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 8.213043ms
+=======
+t = 453.1841ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 10.73837ms
+=======
+t = 477.5333ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 14.71329ms
+=======
+t = 538.0955ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 31.23474ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 405
+=======
+t = 1573.828ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 13924
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 24.71542ms
+=======
+t = 484.9319ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 32.18842ms
+=======
+t = 509.9926ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 42.58728ms
+=======
+t = 569.9902ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+<<<<<<< HEAD:Build/PathFinding_Data/output_log.txt
+t = 75.12283ms
+=======
+t = 1595.104ms
+>>>>>>> 0aaaca43fba580c28062a0e65a74fd650a029264:Build Windows/PathFinding_Data/output_log.txt
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
