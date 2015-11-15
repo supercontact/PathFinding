@@ -46,12 +46,15 @@ public class ColorMixer {
 
 public class MeshFactory {
 
-	public static Mesh ReadMeshFromFile(string file, float scaleFactor = 1, Vector3 offset = default(Vector3)) {
+	public static Mesh ReadMeshFromFile(string file, float scaleFactor = 1, Vector3 offset = default(Vector3), Quaternion rot = default(Quaternion)) {
 		int state = 0;
 		int v = 0, f = 0, counter = 0;
 		Vector3[] vertices = null;
 		bool[] verticesIsUsed = null;
 		int[] triangles = null;
+		if (rot == default(Quaternion)) {
+			rot = Quaternion.identity;
+		}
 		try
 		{
 			string line;
@@ -86,7 +89,7 @@ public class MeshFactory {
 								state = 1;
 								counter = 0;
 							} else if (state == 1) {
-								vertices[counter++] = new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) * scaleFactor + offset;
+								vertices[counter++] = rot * new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) * scaleFactor + offset;
 								if (counter == v) {
 									state = 2;
 									counter = 0;

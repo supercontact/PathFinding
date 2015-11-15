@@ -11,6 +11,7 @@ public class TestPathFinding : MonoBehaviour {
 	WalkingMan man;
 	Text counter;
 	int textureIndex = 0;
+	bool firstClick = true;
 
 	// Use this for initialization
 	void Start () {
@@ -28,10 +29,6 @@ public class TestPathFinding : MonoBehaviour {
 		pf.DrawPathFrom(g.vertices[805]);
 		pf.DrawAllBorder();*/
 
-		/*g.FixVertex(758);
-		g.FixVertex(295);
-		g.FixVertex(395);
-		g.FixVertex(2449);*/
 	}
 
 	float offset = 0;
@@ -42,8 +39,13 @@ public class TestPathFinding : MonoBehaviour {
 			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 			RaycastHit info;
 			if (Physics.Raycast(ray, out info)) {
-				Debug.Log("triangle hit = " + info.triangleIndex);
+				//Debug.Log("triangle hit = " + info.triangleIndex);
 				if (info.triangleIndex != -1) {
+					if (firstClick) {
+						GameObject.Find("Tutorial").SetActive(false);
+						firstClick = false;
+					}
+
 					Face f = g.faces[info.triangleIndex];
 					f.FillEdgeArray();
 					Vertex v = f.edges[0].vertex;
@@ -86,13 +88,15 @@ public class TestPathFinding : MonoBehaviour {
 			Constant.tFactor = 1;
 			break;
 		case 3:
+		case 6:
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops.off", 0.2f, new Vector3(0.15f, 0, 0));
 			SetTexture(4);
 			Constant.cotLimit = 5;
 			Constant.tFactor = 1;
 			break;
 		case 4:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
+			//earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
+			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/horse1.off", 12f, new Vector3(0f, 0f, -0.5f), Quaternion.Euler(-90, 0, 0));
 			SetTexture(1);
 			Constant.cotLimit = 10000;
 			Constant.tFactor = 10;
@@ -108,9 +112,16 @@ public class TestPathFinding : MonoBehaviour {
 		earth.GetComponent<MeshCollider>().sharedMesh = earth.GetComponent<MeshFilter>().sharedMesh;
 		g = new Geometry(GetComponent<MeshFilter>().sharedMesh);
 		counter.text = "Triangle Count = " + g.faces.Count;
+
+		if (level == 6) {
+			g.FixVertex(758);
+			g.FixVertex(295);
+			g.FixVertex(395);
+			g.FixVertex(2449);
+		}
 		hg = new HeatGeodesics(g);
 		hg.Initialize();
-		hg.CalculateGeodesics(g.vertices[42]);
+		hg.CalculateGeodesics(g.vertices[69]);
 		man.GetReady(g, hg, g.faces[42]);
 	}
 
