@@ -5,7 +5,12 @@ using System.Text;
 using System.IO;
 using System;
 
+/// <summary>
+/// A color mixer represents a gradient color set.
+/// Given a number t between 0 and 1, the output color c(t) is linearly interpolated between the 2 neighboring color nodes
+/// </summary>
 public class ColorMixer {
+	
 	private struct ColorNode {
 		public Color color;
 		public float coeff;
@@ -15,11 +20,15 @@ public class ColorMixer {
 		}
 	}
 	private LinkedList<ColorNode> colors;
+
 	public ColorMixer() {
 		colors = new LinkedList<ColorNode>();
 	}
+
+	/// <summary>
+	/// Inserts a color node at certain position.
+	/// </summary>
 	public void InsertColorNode(Color color, float coeff) {
-		//LinkedListNode<ColorNode> n = new LinkedListNode<ColorNode>();
 		LinkedListNode<ColorNode> current = colors.First;
 		while (current != null && current.Value.coeff < coeff) {
 			current = current.Next;
@@ -29,6 +38,11 @@ public class ColorMixer {
 		else
 			colors.AddBefore(current, new ColorNode(color, coeff));
 	}
+
+	/// <summary>
+	/// Returns the color at certain position.
+	/// Value should be between 0 and 1.
+	/// </summary>
 	public Color GetColor(float value) {
 		LinkedListNode<ColorNode> current = colors.First;
 		while (current != null && current.Value.coeff < value) {
@@ -44,44 +58,55 @@ public class ColorMixer {
 	}
 }
 
+/// <summary>
+/// The MeshFactory class is a collection of methods for manipulating mesh and textures.
+/// </summary>
 public class MeshFactory {
 
-	public static Mesh ReadMeshFromFile(string file, float scaleFactor = 1, Vector3 offset = default(Vector3), Quaternion rot = default(Quaternion)) {
+	/// <summary>
+	/// Reads the mesh from a OFF format text file.
+	/// The .txt file should be put in the Resources folder
+	/// Can also apply a transformation when reading the mesh.
+	/// </summary>
+	public static Mesh ReadMeshFromFile(string file, float scaleFactor = 1, Vector3 offset = default(Vector3), Quaternion rotation = default(Quaternion)) {
 		int state = 0;
 		int v = 0, f = 0, counter = 0;
 		Vector3[] vertices = null;
 		bool[] verticesIsUsed = null;
 		int[] triangles = null;
-		if (rot == default(Quaternion)) {
-			rot = Quaternion.identity;
+		if (rotation == default(Quaternion)) {
+			rotation = Quaternion.identity;
 		}
-		try
-		{
+
+		try {
 			string line;
 			TextAsset asset = Resources.Load(file) as TextAsset;
 			StreamReader theReader = new StreamReader(new MemoryStream(asset.bytes), Encoding.Default);
-			using (theReader)
-			{
+			using (theReader) {
 				line = theReader.ReadLine();
 				if (!line.Equals("OFF")) {
 					Debug.Log("Not OFF!");
 					return null;
 				}
-				do
-				{
+				do {
 					line = theReader.ReadLine();
-					if (line != null)
-					{
+					if (line != null) {
 						string[] entriesRaw = line.Split(' ');
 						List<string> entries = new List<string>();
+
+						// Remove empty entries
 						for (int i = 0; i < entriesRaw.Length; i++) {
 							if (!entriesRaw[i].Equals("")) {
 								entries.Add(entriesRaw[i]);
 							}
 						}
+
 						if (entries.Count > 0) {
+							// Comments in the OFF file
 							if (entries[0].Equals("#")) continue;
+	
 							if (state == 0) {
+								// Reading mesh information (first line of data)
 								v = int.Parse(entries[0]);
 								f = int.Parse(entries[1]);
 								vertices = new Vector3[v];
@@ -90,12 +115,14 @@ public class MeshFactory {
 								state = 1;
 								counter = 0;
 							} else if (state == 1) {
-								vertices[counter++] = rot * new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) * scaleFactor + offset;
+								// Reading vertex positions
+								vertices[counter++] = rotation * new Vector3(float.Parse(entries[0]), float.Parse(entries[1]), float.Parse(entries[2])) * scaleFactor + offset;
 								if (counter == v) {
 									state = 2;
 									counter = 0;
 								}
 							} else if (state == 2) {
+								// Reading triangles
 								if (!entries[0].Equals("3")) {
 									Debug.Log(entries[0]+"Not a triangle mesh!");
 									return null;
@@ -109,32 +136,33 @@ public class MeshFactory {
 							}
 						}
 					}
-				}
-				while (line != null);
+				} while (line != null);
 				theReader.Close();
 			}
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			Debug.Log(e.StackTrace);
 			return null;
 		}
 
-		int[] verticesDeletedBefore = new int[v];
+		// Delete unreferenced vertices
+		int[] verticesDeletedBefore = new int[v]; // How many vertices are deleted before the i-th vertex in the original vertices array
 		verticesDeletedBefore[0] = verticesIsUsed[0] ? 0 : 1;
 		for (int i = 1; i < v; i++) {
 			verticesDeletedBefore[i] = verticesIsUsed[i] ? verticesDeletedBefore[i-1] : verticesDeletedBefore[i-1] + 1;
 		}
+		// Save to a new vertices array
 		Vector3[] usedVertices = new Vector3[v - verticesDeletedBefore[v - 1]];
 		for (int i = 0; i < v; i++) {
 			if (verticesIsUsed[i]) {
 				usedVertices[i - verticesDeletedBefore[i]] = vertices[i];
 			}
 		}
+		// Shift triangle indices
 		for (int i = 0; i < 3 * f; i++) {
 			triangles[i] -= verticesDeletedBefore[triangles[i]];
 		}
 
+		// Create mesh object
 		Mesh m = new Mesh();
 		Debug.Log("New mesh loaded: "+file+" \nVertex count = "+usedVertices.Length+" triangle count = "+triangles.Length);
 		m.vertices = usedVertices;
@@ -143,6 +171,10 @@ public class MeshFactory {
 		return m;
 	}
 
+	/// <summary>
+	/// Creates a sphere mesh.
+	/// c is the segment count.
+	/// </summary>
 	public static Mesh CreateSphere(float radius, int c) {
 		Vector3[] vertices = new Vector3[2+(c-1)*2*c];
 		vertices[0] = new Vector3(0, 0, radius);
@@ -184,6 +216,9 @@ public class MeshFactory {
 		return m;
 	}
 
+	/// <summary>
+	/// Applys a transform to a mesh.
+	/// </summary>
 	public static void TransformMesh(Mesh mesh, Vector3 offset, Quaternion rot) {
 		Vector3[] verts = mesh.vertices;
 		for (int i = 0; i < verts.Length; i++) {
@@ -193,6 +228,9 @@ public class MeshFactory {
 		mesh.RecalculateNormals();
 	}
 
+	/// <summary>
+	/// Creates a striped texture.
+	/// </summary>
 	public static Texture2D CreateStripedTexture(int size, int stripePeriod, int stripeWidth, int offset, ColorMixer background, ColorMixer stripe, bool colorEveryPeriod = false) {
 		Texture2D result = new Texture2D(size, 1, TextureFormat.ARGB32, false);
 		for (int i = 0; i < size; i++) {
