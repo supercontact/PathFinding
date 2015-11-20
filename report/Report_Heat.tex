@@ -1,0 +1,120 @@
+\documentclass[a4paper,12pt,twoside]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{url,csquotes}
+\usepackage[hidelinks,hyperfootnotes=false]{hyperref}
+\usepackage[titlepage,fancysections,pagenumber]{polytechnique}
+
+
+\title{Shortest Paths on Surfaces\\ Geodesics in Heat}
+\subtitle{INF555 Digital Representation\\ and Analysis of Shapes }
+\author{Ruoqi \bsc{He} \& Chia-Man \bsc{Hung}}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+In this project we present practical methods for computing approximate shortest paths (geodesics) on a triangle mesh. We implemented a naive method based on Dijkstra's algorithm and a method based on heat flow, proposed by Crane [2013]. We created a walking man on surface to represent the shortest path taken. The implementation is done in C\# on the Unity platform.
+
+\section{Algorithms}
+
+In this section we explain the main algorithms used in this project.
+
+\subsection{Dijkstra}
+
+\subsection{Heat flow}
+This algorithm determines the geodesic distance to a specified subset of a given domain. 
+
+Notations: heat flow $u$, vector field $X$, distance function $\phi$.
+
+\subsubsection{First Step}
+Integrate the heat flow $\dot{u} = \Delta u$.
+
+$u$ of a point on a considered surface is a value between 0 and 1. Source have 1 as its value.
+
+\subsubsection{Second Step}
+Evaluate the vector field $X = -\nabla u / \left | \nabla u \right |$.
+
+We are only interested in the direction of $\nabla u$ and not in its value. $X$ points to the opposite direction of the source. 
+
+\subsubsection{Third Step}
+
+Solve the Poisson equation $\Delta \phi = \nabla \cdot X$.
+
+If a distance function $\phi$ exists, $\nabla \phi$ should give us a unit vector on every point, pointing to the opposite directin of the source. We approximate such a distance function $\phi$ by minimizing $\int \left | \nabla \phi - X \right |^{2}$, which is equivalent to solving the Poisson equation $\Delta \phi = \nabla \cdot X$.
+
+\subsection{Walking man}
+
+We also implemented a navigation system, represented by a walking man. He is positioned on the surface of the mesh and moves toward a given source point. 
+
+A walking man's position is defined by barycentric coordinates of a triangle of the mesh. A walk function takes a distance as its argument and first applys on the triangle on which he is standing and then recursively calls itself at the next triangle he comes across, until walking the given distance or reaching the source.
+
+\section{Implementation}
+
+\subsection{Dijkstra}
+
+\subsection{Heat Flow}
+
+We used the half-edge data structure to present triangle meshes.
+
+\subsubsection{First Step}
+
+
+
+\subsubsection{Second Step}
+
+\subsubsection{Third Step}
+%symetric negative, add epsilon
+
+
+\subsection{Mapping}
+
+
+%\subsubsection{Albedo}
+
+%\subsubsection{Normal}
+
+%\subsubsection{Specular Smoothness}
+
+%\subsubsection{Emission}
+
+Il faut chercher où se trouve le répertoire de ton installation LaTeX. Pour cela (et quelque soit ton système d'exploitation), ouvre une ligne de commandes et tape :
+\begin{verbatim}
+kpsewhich -var-value TEXMFMAIN
+\end{verbatim}
+Rends-toi alors dans le répertoire indiqué que l'on nommera par la suite \emph{INSTALL}. Dans une autre fenêtre de ton explorateur de fichiers, extrais l'archive téléchargée et ouvre le dossier \emph{source}. Il suffit ensuite de copier tous les fichiers \texttt{.pdf}, \texttt{.eps} et \texttt{polytechnique.sty} vers le dossier \emph{INSTALL/tex/latex/polytechnique}. 
+
+Il te faut enfin mettre à jour la la liste de package de ta distribution. Pour Mac ou Linux, ouvre un terminal et entre \texttt{sudo texhash}. Pour Windows, ouvre dans tous les programmes l'utilitaire \emph{Settings (Admin)} et clique sur \emph{Refresh FNDB}.
+
+De cette manière, l'installation n'est pas complète mais le package marchera très bien en utilisation. Il te manquera par contre les fichiers source commentés si tu veux le modifier.
+
+\subsection{Walking Man}
+
+La documentation du package ets le fichier \texttt{polytechnique.pdf} qui se trouve entre autres. dans le dossier \emph{source} de l'archive extraite.
+
+\section{Difficulties}
+
+choice of $t$ (numerical error)
+
+boundary conditions
+
+mesh: triceratops, sphere
+
+\section{Results}
+
+\subsection{Comparison between Dijstra and heat flow}
+
+\subsection{Added values}
+OFF parser
+
+mesh: sphere + maze
+
+math proof (matrix definite negative)
+
+mapping
+
+\end{document}
