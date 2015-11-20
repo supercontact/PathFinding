@@ -46,11 +46,11 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Script\Constant.cs" />
      <Compile Include="Assets\Script\Geometry.cs" />
      <Compile Include="Assets\Script\HeatGeodesics.cs" />
      <Compile Include="Assets\Script\MeshFactory.cs" />
      <Compile Include="Assets\Script\ObserveCamera.cs" />
+     <Compile Include="Assets\Script\Settings.cs" />
      <Compile Include="Assets\Script\TestPathFinding.cs" />
      <Compile Include="Assets\Script\WalkMesh.cs" />
      <Compile Include="Assets\Script\WalkingMan.cs" />

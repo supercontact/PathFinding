@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+
 public class Vertex {
 	/// <summary>
 	/// The position of the vertex.
@@ -17,9 +18,12 @@ public class Vertex {
 	/// </summary>
 	public List<Halfedge> edges;
 	/// <summary>
-	/// A temporary variable to store an index of the vertex.
+	/// The index of the vertex in the vertices array.
 	/// </summary>
 	public int index = 0;
+	/// <summary>
+	/// Whether the vertex is on a border.
+	/// </summary>
 	public bool onBorder;
 
 	public Vertex(Vector3 pos) {
@@ -27,6 +31,9 @@ public class Vertex {
 		onBorder = true;
 	}
 
+	/// <summary>
+	/// Calculates the weight of the vertex (A third of the areas of its neighboring triangles).
+	/// </summary>
 	public double CalculateVertexAreaTri() {
 		double result = 0;
 		FillEdgeArray();
@@ -39,6 +46,10 @@ public class Vertex {
 		ClearEdgeArray();
 		return result;
 	}
+
+	/// <summary>
+	/// Calculates the average normal of its neighboring triangles.
+	/// </summary>
 	public Vector3 CalculateNormalTri() {
 		Vector3 result = new Vector3();
 		FillEdgeArray();
@@ -51,6 +62,10 @@ public class Vertex {
 		ClearEdgeArray();
 		return result;
 	}
+
+	/// <summary>
+	/// Fills the edges array which stores all incident halfedges.
+	/// </summary>
 	public void FillEdgeArray() {
 		edges = new List<Halfedge>();
 		Halfedge first = edge, temp = edge;
@@ -66,10 +81,15 @@ public class Vertex {
 			}
 		}
 	}
+
+	/// <summary>
+	/// Clears the edges array.
+	/// </summary>
 	public void ClearEdgeArray() {
 		edges = null;
 	}
 }
+
 
 public class Face {
 	/// <summary>
@@ -80,20 +100,32 @@ public class Face {
 	/// A temporary list to store all edges.
 	/// </summary>
 	public List<Halfedge> edges;
+	/// <summary>
+	/// The index of the face in the faces array.
+	/// </summary>
 	public int index;
 
+	/// <summary>
+	/// Calculates the area of the triangle face.
+	/// </summary>
 	public double CalculateAreaTri() {
 		Vector3 a = edge.vertex.p;
 		Vector3 b = edge.next.vertex.p;
 		Vector3 c = edge.prev.vertex.p;
 		return Vector3.Cross((b-a), (c-a)).magnitude / 2;
 	}
+	/// <summary>
+	/// Calculates the normal of the triangle face.
+	/// </summary>
 	public Vector3 CalculateNormalTri() {
 		Vector3 a = edge.vertex.p;
 		Vector3 b = edge.next.vertex.p;
 		Vector3 c = edge.prev.vertex.p;
 		return Vector3.Cross((b-a), (c-a)).normalized;
 	}
+	/// <summary>
+	/// Calculates the center of the face.
+	/// </summary>
 	public Vector3 CalculateCenter() {
 		FillEdgeArray();
 		Vector3 c = new Vector3();
@@ -104,6 +136,9 @@ public class Face {
 		ClearEdgeArray();
 		return c;
 	}
+	/// <summary>
+	/// Fills the edges array which stores all halfedges on the face.
+	/// </summary>
 	public void FillEdgeArray() {
 		edges = new List<Halfedge>();
 		Halfedge first = edge, temp = edge;
@@ -112,10 +147,14 @@ public class Face {
 			temp = temp.next;
 		} while (temp != first);
 	}
+	/// <summary>
+	/// Clears the edges array.
+	/// </summary>
 	public void ClearEdgeArray() {
 		edges = null;
 	}
 }
+
 
 public class Halfedge {
 	public Halfedge next;
@@ -132,13 +171,30 @@ public class Halfedge {
 	}
 }
 
+
+/// <summary>
+/// The halfedge representation of a mesh.
+/// </summary>
 public class Geometry {
+
+	/// <summary>
+	/// The mesh linked to this geometry.
+	/// </summary>
 	public Mesh linkedMesh;
+	
 	public List<Vertex> vertices;
 	public List<Halfedge> halfedges;
 	public List<Face> faces;
 	public List<Face> boundaries;
+
+	/// <summary>
+	/// The max edge length.
+	/// </summary>
 	public double h;
+	public bool hasBorder {
+		get {return boundaries.Count > 0;}
+	}
+
 	public Geometry() {
 		vertices = new List<Vertex>();
 		halfedges = new List<Halfedge>();
@@ -157,6 +213,9 @@ public class Geometry {
 		Clear();
 	}
 
+	/// <summary>
+	/// Unreferences all objects, letting them be collected by GC.
+	/// </summary>
 	public void Clear() {
 		foreach (Vertex v in vertices) {
 			v.edge = null;
@@ -179,16 +238,22 @@ public class Geometry {
 		faces.Clear();
 	}
 
+	/// <summary>
+	/// Construct the geometry from a mesh.
+	/// </summary>
 	public void FromMesh(Mesh mesh) {
 		linkedMesh = mesh;
 		Clear();
+
+		// Build vertices
 		Vector3[] meshVerts = mesh.vertices;
 		for (int i = 0; i < meshVerts.Length; i++) {
 			vertices.Add(new Vertex(meshVerts[i]));
 			vertices[i].index = i;
 			vertices[i].edges = new List<Halfedge>();
 		}
-		
+
+		// Build faces and halfedges, linked to vertices
 		int[] meshFaces = mesh.triangles;
 		for (int i = 0; i < meshFaces.Length / 3; i++) {
 			Face trig = new Face();
@@ -219,7 +284,8 @@ public class Geometry {
 			e3.vertex.edge = e3;
 			e3.vertex.edges.Add(e3);
 		}
-		
+
+		// Set the corresponding opposite to each halfedge
 		for (int i = 0; i < vertices.Count; i++) {
 			for (int j = 0; j < vertices[i].edges.Count; j++) {
 				vertices[i].onBorder = false;
@@ -233,24 +299,29 @@ public class Geometry {
 							break;
 						}
 					}
+
+					// If no opposite, we are on a boundary
 					if (et.opposite == null) {
 						vertices[i].onBorder = true;
 						et.opposite = new Halfedge();
 						et.opposite.opposite = et;
 						et.opposite.vertex = et.prev.vertex;
 						halfedges.Add(et.opposite);
-						//et.prev.vertex.edges.Add(et.opposite);
 					}
 				}
 			}
 		}
+
+		// Reconnect all newly created halfedges on a boundary
 		for (int i = 0; i < halfedges.Count; i++) {
 			if (halfedges[i].next == null) {
-				// Connect all halfedges of this boundary
+				// This halfedge is on a boundary, adding a new boundary face.
 				Face boundary = new Face();
 				boundaries.Add(boundary);
 				boundary.edge = halfedges[i];
 				boundary.index = -1;
+
+				// Connect all halfedges of this boundary
 				Halfedge first = halfedges[i], temp = halfedges[i];
 				do {
 					Halfedge next = temp.opposite;
@@ -266,15 +337,11 @@ public class Geometry {
 			}
 		}
 
-		/*for (int i = 0; i < boundaries.Count; i++) {
-			boundaries[i].FillEdgeArray();
-			Debug.Log("C: "+boundaries[i].edges.Count);
-		}*/
-
 		for (int i = 0; i < vertices.Count; i++) {
 			vertices[i].ClearEdgeArray();
 		}
 
+		// Calculate the max edge length
 		h = 0;
 		foreach (Halfedge e in halfedges) {
 			if (e.Length() > h) {
@@ -284,7 +351,7 @@ public class Geometry {
 		}
 		//h /= halfedges.Count;
 	}
-
+	
 	public void ToMesh(Mesh mesh) {
 		Vector3[] verts = new Vector3[vertices.Count];
 		for (int i = 0; i < vertices.Count; i++) {
@@ -299,70 +366,87 @@ public class Geometry {
 		}
 		mesh.vertices = verts;
 		mesh.triangles = trigs;
+		mesh.RecalculateNormals();
 	}
-	
-	public alglib.sparsematrix CalculateLcMatrixSparse(double factor = 1) {
+
+	/// <summary>
+	/// Calculates the Lc sparse matrix (unweighted laplacien matrix) multilied by the factor.
+	/// If considerBorder is set to true, the rows and columns of the border vertices will be set to 0 (Dirichlet condition).
+	/// </summary>
+	public alglib.sparsematrix CalculateLcMatrixSparse(double factor = 1, bool considerBorder = false) {
 		int n = vertices.Count;
 		alglib.sparsematrix result;
 		alglib.sparsecreate(n, n, out result);
 		for (int i = 0; i < n; i++) {
-			vertices[i].FillEdgeArray();
-			Vector3 vi = vertices[i].p;
-			double aii = 0;
-			foreach (Halfedge e in vertices[i].edges) {
-				int j = e.prev.vertex.index;
-				Vector3 vj = e.prev.vertex.p;
-				Vector3 va = e.next.vertex.p;
-				Vector3 vb = e.opposite.next.vertex.p;
-				double cosa = Vector3.Dot((vi - va), (vj - va)) / (vi - va).magnitude / (vj - va).magnitude;
-				double cota = cosa / Math.Sqrt(1 - cosa * cosa);
-				if (double.IsNaN(cota) || System.Math.Abs(cota) > Constant.cotLimit) {
-					cota = cosa > 0 ? Constant.cotLimit : -Constant.cotLimit;
+			if (!considerBorder || !vertices[i].onBorder) {
+				vertices[i].FillEdgeArray();
+				Vector3 vi = vertices[i].p;
+				double aii = 0;
+				foreach (Halfedge e in vertices[i].edges) {
+					int j = e.prev.vertex.index;
+					Vector3 vj = e.prev.vertex.p;
+					Vector3 va = e.next.vertex.p;
+					Vector3 vb = e.opposite.next.vertex.p;
+					double cota = 0;
+					double cotb = 0;
+
+					if (e.face.index != -1) {
+						double cosa = Vector3.Dot((vi - va), (vj - va)) / (vi - va).magnitude / (vj - va).magnitude;
+						cota = cosa / Math.Sqrt(1 - cosa * cosa);
+						if (double.IsNaN(cota) || System.Math.Abs(cota) > Settings.cotLimit) {
+							cota = cosa > 0 ? Settings.cotLimit : -Settings.cotLimit;
+						}
+					}
+
+					if (e.opposite.face.index != -1) {
+						double cosb = Vector3.Dot((vi - vb), (vj - vb)) / (vi - vb).magnitude / (vj - vb).magnitude;
+						cotb = cosb / Math.Sqrt(1 - cosb * cosb);
+						if (double.IsNaN(cotb) || System.Math.Abs(cotb) > Settings.cotLimit) {
+							cotb = cosb > 0 ? Settings.cotLimit : -Settings.cotLimit;
+						}
+					}
+
+					aii -= factor * (cota + cotb) / 2;
+					if (!considerBorder || !vertices[j].onBorder) {
+						alglib.sparseset(result, i, j, factor * (cota + cotb) / 2);
+					}
 				}
-				double cosb = Vector3.Dot((vi - vb), (vj - vb)) / (vi - vb).magnitude / (vj - vb).magnitude;
-				double cotb = cosb / Math.Sqrt(1 - cosb * cosb);
-				if (double.IsNaN(cotb) || System.Math.Abs(cotb) > Constant.cotLimit) {
-					cotb = cosb > 0 ? Constant.cotLimit : -Constant.cotLimit;
-				}
-				aii -= factor * (cota + cotb) / 2;
-				alglib.sparseset(result, i, j, factor * (cota + cotb) / 2);
+				alglib.sparseset(result, i, i, aii);
 			}
-			alglib.sparseset(result, i, i, aii);
 		}
 		return result;
 	}
 
-	/*public SparseMatrix CalculateLcMatrixSparse(double factor = 1) {
-		int n = vertices.Count;
-		DOKSparseMatrix result = new DOKSparseMatrix(n, n);
-		for (int i = 0; i < n; i++) {
-			vertices[i].FillEdgeArray();
-			Vector3 vi = vertices[i].p;
-			double aii = 0;
-			foreach (Halfedge e in vertices[i].edges) {
-				int j = e.prev.vertex.index;
-				Vector3 vj = e.prev.vertex.p;
-				Vector3 va = e.next.vertex.p;
-				Vector3 vb = e.opposite.next.vertex.p;
-				double cosa = Vector3.Dot((vi - va), (vj - va)) / (vi - va).magnitude / (vj - va).magnitude;
-				double cota = cosa / Math.Sqrt(1 - cosa * cosa);
-				double limit = 10000;
-				if (double.IsNaN(cota) || System.Math.Abs(cota) > limit) {
-					cota = cosa > 0 ? limit : -limit;
+	/// <summary>
+	/// Calculates 3 values of cotangent * opposite edge vector of every triangle.
+	/// Stored in an array of 3*nFace elements.
+	/// It can be used to calculate divergence.
+	/// </summary>
+	public Vector3[] CalculateDivData() {
+		Vector3[] result = new Vector3[faces.Count * 3];
+		int counter = 0;
+		for (int i = 0; i < faces.Count; i++) {
+			faces[i].FillEdgeArray();
+			foreach (Halfedge edge in faces[i].edges) {
+				Vector3 v = edge.vertex.p;
+				Vector3 v1 = edge.prev.vertex.p;
+				Vector3 v2 = edge.next.vertex.p;
+				double cos = Vector3.Dot(v1-v, v2-v) / (v1-v).magnitude / (v2-v).magnitude;
+				double cot = cos / System.Math.Sqrt(1 - cos * cos);
+				if (double.IsNaN(cot) || System.Math.Abs(cot) > Settings.cotLimit) {
+					cot = cos > 0 ? Settings.cotLimit : -Settings.cotLimit;
 				}
-				double cosb = Vector3.Dot((vi - vb), (vj - vb)) / (vi - vb).magnitude / (vj - vb).magnitude;
-				double cotb = cosb / Math.Sqrt(1 - cosb * cosb);
-				if (double.IsNaN(cotb) || System.Math.Abs(cotb) > limit) {
-					cotb = cosb > 0 ? limit : -limit;
-				}
-				aii -= factor * (cota + cotb) / 2;
-				result.set (i + 1, j + 1, factor * (cota + cotb) / 2);
+				result[counter++] = (float) cot * (v2 - v1) / 2;
 			}
-			result.set (i + 1, i + 1, aii);
+			faces[i].ClearEdgeArray();
 		}
 		return result;
-	}*/
+	}
 
+
+	/// <summary>
+	/// Sets the position of a vertex to the average position of its neighboring vertices.
+	/// </summary>
 	public void FixVertex(int index) {
 		vertices[index].FillEdgeArray();
 		Vector3 pos = new Vector3();

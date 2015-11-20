@@ -6,6 +6,7 @@ public class WalkMesh : MonoBehaviour {
 	public GameObject stick;
 	Geometry g;
 	Halfedge h;
+
 	// Use this for initialization
 	void Start () {
 		g = new Geometry(GetComponent<MeshFilter>().mesh);

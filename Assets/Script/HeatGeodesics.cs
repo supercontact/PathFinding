@@ -1,69 +1,90 @@
 ﻿using UnityEngine;
 using System.Collections;
-/*using com.numericalmethod.suanshu.algebra.linear.vector.doubles;
-using com.numericalmethod.suanshu.algebra.linear.vector.doubles.dense;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles.matrixtype.sparse.solver.iterative.nonstationary;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles.linearsystem;
-using com.numericalmethod.suanshu.misc.algorithm.iterative.tolerance;
-using com.numericalmethod.suanshu.algebra.linear.matrix.doubles.factorization.triangle.cholesky;*/
 
+/// <summary>
+/// The class which performs heat method on a geometry to calculate distance field.
+/// </summary>
 public class HeatGeodesics {
 
+	/// <summary>
+	/// The geometry (mesh) the heat method is running on.
+	/// </summary>
 	public Geometry g;
-	public alglib.sparsematrix A1, A2;
-	//public SparseMatrix A1, A2;
-	//public Matrix L1, L2;
-
-	//public LSProblem P1, P2;
-	public double[] u;
-	public Vector3[] X;
-	public double[] divX;
-	public double[] phi;
-	public Vector3[] X2;
-
+	/// <summary>
+	/// The source vertex.
+	/// </summary>
 	public Vertex s;
 
+	// Precalculated matrices and data
+	public alglib.sparsematrix A1, A1b, A2;
+	public Vector3[] div;
+
+	/// <summary>
+	/// The heat field, stored on vertices.
+	/// </summary>
+	public double[] u;
+	/// <summary>
+	/// Normalized gradient of heat field, stored on triangles.
+	/// </summary>
+	public Vector3[] X;
+	/// <summary>
+	/// Div(X), stored on vertices.
+	/// </summary>
+	public double[] divX;
+	/// <summary>
+	/// The distance field, stored on vertices.
+	/// </summary>
+	public double[] phi;
+	/// <summary>
+	/// Gradient of distance field, stored on triangles.
+	/// </summary>
+	public Vector3[] GradPhi;
 
 	public HeatGeodesics(Geometry g) {
 		this.g = g;
 	}
 
+	/// <summary>
+	/// Call this to build matrices.
+	/// </summary>
 	public void Initialize() {
 		int n = g.vertices.Count;
-		A1 = g.CalculateLcMatrixSparse(- Constant.tFactor * g.h * g.h);
+
+		// Heat matrix (Neumann condition)
+		A1 = g.CalculateLcMatrixSparse(- Settings.tFactor * g.h * g.h);
 		for (int i = 0; i < n; i++) {
 			alglib.sparseadd(A1, i, i, g.vertices[i].CalculateVertexAreaTri());
-			//A1.set(i + 1, i + 1, A1.get(i + 1, i + 1) + g.vertices[i].CalculateVertexAreaTri());
 		}
-		A2 = g.CalculateLcMatrixSparse(-1);
-		for (int i = 0; i < n; i++) {
-			//alglib.sparseadd(A2, i, i, 0.1);
-			//A1.set(i + 1, i + 1, A1.get(i + 1, i + 1) + g.vertices[i].CalculateVertexAreaTri());
-		}
-	
 		alglib.sparseconverttocrs(A1);
+
+		if (g.hasBorder) {
+			// Dirichlet condition heat matrix
+			A1b = g.CalculateLcMatrixSparse(- Settings.tFactor * g.h * g.h, true);
+			for (int i = 0; i < n; i++) {
+				alglib.sparseadd(A1b, i, i, g.vertices[i].CalculateVertexAreaTri());
+			}
+			alglib.sparseconverttocrs(A1b);
+		}
+
+		// Laplacien matrix
+		A2 = g.CalculateLcMatrixSparse(-1);
 		alglib.sparseconverttocrs(A2);
-		//A1 = new CSRSparseMatrix(A1);
-		//A2 = new CSRSparseMatrix(A2);
+
+		div = g.CalculateDivData();
 	}
 
+	/// <summary>
+	/// Start the calculation.
+	/// </summary>
 	public void CalculateGeodesics(Vertex source) {
 		s = source;
+		int n = g.vertices.Count;
+		int f = g.faces.Count;
+
 		float time = Time.realtimeSinceStartup;
 		Debug.Log("t = 0ms");
 
-		// Put the mark at the source vertex
-		GameObject pin = GameObject.Find("Pin");
-		pin.transform.position = source.p;
-		pin.transform.rotation = Quaternion.LookRotation(source.CalculateNormalTri());
-
-		// First equation
-		int n = g.vertices.Count;
-		int f = g.faces.Count;
+		// Solve heat equation
 		double[] b = new double[n];
 		b[source.index] = 1;
 
@@ -73,26 +94,24 @@ public class HeatGeodesics {
 		alglib.lincgsolvesparse(s1, A1, true, b);
 		alglib.lincgresults(s1, out u, out rep1);
 
-		/*Vector b = new DenseVector(n, 0);
-		b.set(source.index + 1, 1);
-		LSProblem P1 = new LSProblem(A1, b);
-		ConjugateGradientSolver solver = new ConjugateGradientSolver(100, new AbsoluteTolerance());
-		IterativeLinearSystemSolver.Solution sol1 = solver.solve(P1);
-		double[] u = sol1.search(new DenseVector(n)).toArray();*/
+		if (g.hasBorder) {
+			// Average of Neumann condition solution and Dirichlet condition solution
+			double[] u2;
+			alglib.lincgstate s1b;
+			alglib.lincgreport rep1b;
+			alglib.lincgcreate(n, out s1b);
+			alglib.lincgsolvesparse(s1b, A1b, true, b);
+			alglib.lincgresults(s1b, out u2, out rep1b);
+			for (int i = 0; i < u.Length; i++) {
+				u[i] = (u[i] + u2[i]) / 2;
+			}
+		}
 
 		Debug.Log("Solved first linear system, termination = " + rep1.terminationtype);
-		//Debug.Log("Solved first linear system");
 		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
 
-		// Visualize heat field
-		/*Color[] colors = new Color[n];
-		for (int i = 0; i < n; i++) {
-			colors[i] = Color.Lerp(Color.blue, Color.white, (float) (0.05 * System.Math.Log(u[i])+1));
-		}
-		g.linkedMesh.colors = colors;*/
 
-		// Calculate X, normalized gradient of heat flow
-		//GameObject visual = GameObject.Find("FlowVisualization");
+		// Calculate X, normalized gradient of heat field
 		X = new Vector3[f];
 		for (int i = 0; i < f; i++) {
 			Face face = g.faces[i];
@@ -112,83 +131,62 @@ public class HeatGeodesics {
 				X[i] = new Vector3((float) (gx / l), (float) (gy / l), (float) (gz / l));
 			}
 			face.ClearEdgeArray();
-
-			//Visualize flow
-			/*GameObject stick = GameObject.Instantiate(GameObject.Find("Edge"));
-			stick.transform.SetParent(visual.transform);
-			stick.transform.position = face.CalculateCenter();
-			stick.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
-			stick.transform.rotation = Quaternion.LookRotation(X[i], face.CalculateNormalTri());*/
 		}
 
 		Debug.Log("Gradient of heat flow calculated");
 		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
 
+
 		// Calculate div(X);
 		divX = new double[n];
+		double divXmean = 0;
 		for (int i = 0; i < n; i++) {
 			g.vertices[i].FillEdgeArray();
-			Vector3 v = g.vertices[i].p;
 			foreach (Halfedge edge in g.vertices[i].edges) {
 				if (edge.face.index != -1) {
-					Vector3 v1 = edge.prev.vertex.p;
-					Vector3 v2 = edge.next.vertex.p;
-					double cos1 = Vector3.Dot(v-v2, v1-v2) / (v-v2).magnitude / (v1-v2).magnitude;
-					double cot1 = cos1 / System.Math.Sqrt(1 - cos1 * cos1);
-					if (double.IsNaN(cot1) || System.Math.Abs(cot1) > Constant.cotLimit) {
-						cot1 = cos1 > 0 ? Constant.cotLimit : -Constant.cotLimit;
+					int edgeIndex;
+					if (edge == edge.face.edge) {
+						edgeIndex = 0;
+					} else if (edge == edge.face.edge.next) {
+						edgeIndex = 1;
+					} else {
+						edgeIndex = 2;
 					}
-					double cos2 = Vector3.Dot(v-v1, v2-v1) / (v-v1).magnitude / (v2-v1).magnitude;
-					double cot2 = cos2 / System.Math.Sqrt(1 - cos2 * cos2);
-					if (double.IsNaN(cot2) || System.Math.Abs(cot2) > Constant.cotLimit) {
-						cot2 = cos2 > 0 ? Constant.cotLimit : -Constant.cotLimit;
-					}
-					divX[i] += cot1 * Vector3.Dot(v1 - v, X[edge.face.index]) + cot2 * Vector3.Dot(v2 - v, X[edge.face.index]);
+					divX[i] += Vector3.Dot(div[3*edge.face.index+(edgeIndex+2)%3] - div[3*edge.face.index+(edgeIndex+1)%3], X[edge.face.index]);
 				}
 			}
-			divX[i] /= -2; //and make opposite
+			divXmean += divX[i];
+		}
+		divXmean /= n;
+		for (int i = 0; i < n; i++) {
+			divX[i] -= divXmean;
 		}
 
 		Debug.Log("Div of X calculated");
 		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
 
-		/*alglib.linlsqrstate s2;
-		alglib.linlsqrreport rep2;
-		alglib.linlsqrcreate(n, n, out s2);
-		alglib.linlsqrsolvesparse(s2, A2, divX);
-		alglib.linlsqrresults(s2, out phi, out rep2);*/
 
+		// Solve Poisson equation
 		alglib.lincgstate s2;
 		alglib.lincgreport rep2;
 		alglib.lincgcreate(n, out s2);
 		alglib.lincgsolvesparse(s2, A2, true, divX);
 		alglib.lincgresults(s2, out phi, out rep2);
 
-		/*Vector b2 = new DenseVector(divX);
-		LSProblem P2 = new LSProblem(A2, b2);
-		ConjugateGradientSolver solver2 = new ConjugateGradientSolver(200, new AbsoluteTolerance(0.0005));
-		IterativeLinearSystemSolver.Solution sol2 = solver2.solve(P2);
-		double[] phi = sol2.search(new DenseVector(n)).toArray();*/
-
 		double phi0 = phi[source.index];
-		double maxDistance = 4;
 		for (int i = 0; i < n; i++) {
 			phi[i] -= phi0;
-			/*if (phi[i] > maxDistance) {
-				maxDistance = phi[i];
-			}*/
 		}
 
-
 		Debug.Log("Distance field calculated (Second linear system), termination = " + rep2.terminationtype);
-		//Debug.Log("Distance field calculated (Second linear system)");
 		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
 
-
+		// Adjust uv coordinates of vertices in order to show the distance mapping
+		// Tangent field provides necessary information for normal mapping
 		Vector2[] uv = new Vector2[n];
 		Vector4[] tangents = new Vector4[n];
 		for (int i = 0; i < n; i++) {
-			uv[i] = new Vector2((float) (phi[i] / maxDistance), 0);
+			uv[i] = new Vector2((float) (phi[i] / Settings.mappingDistance), 0);
 			Vector3 tgt = new Vector3();
 			foreach (Halfedge e in g.vertices[i].edges) {
 				if (e.face.index != -1) {
@@ -202,8 +200,8 @@ public class HeatGeodesics {
 		g.linkedMesh.uv = uv;
 		g.linkedMesh.tangents = tangents;
 
-
-		X2 = new Vector3[f];
+		// Calculate gradient of the distance field
+		GradPhi = new Vector3[f];
 		for (int i = 0; i < f; i++) {
 			Face face = g.faces[i];
 			Vector3 normal = face.CalculateNormalTri();
@@ -216,15 +214,32 @@ public class HeatGeodesics {
 				gz -= phi[edge.vertex.index] * temp.z;
 			}
 			double l = System.Math.Sqrt(gx * gx + gy * gy + gz * gz);
-			X2[i] = new Vector3((float) (gx / l), (float) (gy / l), (float) (gz / l));
+			GradPhi[i] = new Vector3((float) (gx / l), (float) (gy / l), (float) (gz / l));
 			face.ClearEdgeArray();
-			
-			//Visualize flow2
-			/*GameObject stick = GameObject.Instantiate(GameObject.Find("Edge"));
-			stick.transform.position = face.CalculateCenter();
-			stick.transform.localScale = new Vector3(0.01f, 0.01f, 0.05f);
-			stick.transform.rotation = Quaternion.LookRotation(X2[i]);*/
 		}
+
+		/*
+		GameObject visual = GameObject.Find("FlowVisualization");
+		GameObject arrow = GameObject.Find("Arrow");
+		GameObject arrowAdded;
+
+		for (int i = 0; i < f; i++) {
+			Face face = g.faces[i];
+
+			//Visualize gradient of heat field
+			arrowAdded = GameObject.Instantiate(arrow);
+			arrowAdded.transform.SetParent(visual.transform);
+			arrowAdded.transform.position = face.CalculateCenter();
+			arrowAdded.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+			arrowAdded.transform.rotation = Quaternion.LookRotation(X[i], face.CalculateNormalTri());
+
+			//Visualize gradient of distance field
+			arrowAdded = GameObject.Instantiate(arrow);
+			arrowAdded.transform.SetParent(visual.transform);
+			arrowAdded.transform.position = face.CalculateCenter();
+			arrowAdded.transform.localScale = new Vector3(0.01f, 0.01f, 0.05f);
+			arrowAdded.transform.rotation = Quaternion.LookRotation(GradPhi[i], face.CalculateNormalTri());
+		}*/
 	}
 
 }
