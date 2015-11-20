@@ -15,14 +15,22 @@ public class TestPathFinding : MonoBehaviour {
 	public Mesh road;
 	public GameObject roadBase;
 	public Text triangleCounter;
+	public Text visualModeText;
+	public InputField inputT;
+	public GameObject visual;
+	public GameObject gradArrow;
 
 	Geometry g;
 	HeatGeodesics hg;
 
 	bool firstClick = true;
+	bool useDefaultSettings = true;
+	int levelIndex;
 	int textureIndex;
 	float t;
 	float offset = 0;
+	int visualState = 0;
+	GameObject[] arrows;
 
 	// Start is called at the beginng
 	void Start () {
@@ -72,6 +80,8 @@ public class TestPathFinding : MonoBehaviour {
 						GameObject.Find("Tutorial").SetActive(false);
 						firstClick = false;
 					}
+
+					UpdateVisualGradient();
 				}
 			}
 		}
@@ -138,8 +148,11 @@ public class TestPathFinding : MonoBehaviour {
 	/// Load a certain mesh.
 	/// </summary>
 	public void SetLevel(int level) {
+		levelIndex = level;
 
-		Settings.tFactor = 1;
+		double tFactor = 1;
+		int source = 42;
+		int manPos = 42;
 		Settings.cotLimit = 10000;
 
 		switch (level) {
@@ -147,52 +160,63 @@ public class TestPathFinding : MonoBehaviour {
 		default:
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
 			SetTexture(2);
-			Settings.defaultSource = 94;
-			Settings.initialManPos = 1947;
+			source = 94;
+			manPos = 1947;
 			break;
 		case 1:
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
 			SetTexture(0);
-			Settings.defaultSource = 175;
-			Settings.initialManPos = 230;
+			source = 175;
+			manPos = 230;
 			break;
 		case 2:
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/cow", 1.5f, new Vector3(0.15f, 0.15f, 0));
 			SetTexture(3);
-			Settings.defaultSource = 429;
-			Settings.initialManPos = 2129;
+			source = 429;
+			manPos = 2129;
 			break;
 		case 3:
 		case 6:
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops", 0.2f, new Vector3(0.15f, 0, 0));
 			SetTexture(4);
 			Settings.cotLimit = 5;
-			Settings.defaultSource = 42;
-			Settings.initialManPos = 918;
+			source = 42;
+			manPos = 918;
 			break;
 		case 4:
 			//earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.3f), Quaternion.Euler(-90, 0, 0));
 			SetTexture(5);
-			Settings.tFactor = 10;
-			Settings.defaultSource = 1559;
-			Settings.initialManPos = 31107;
+			tFactor = 10;
+			source = 1559;
+			manPos = 31107;
 			break;
 		case 5:
 			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.CreateSphere(1, 48);
 			SetTexture(0);
-			Settings.defaultSource = 42;
-			Settings.initialManPos = 42;
+			source = 42;
+			manPos = 42;
 			break;
 		case 7:
 			earth.GetComponent<MeshFilter>().sharedMesh = road;
 			SetTexture(1);
-			Settings.tFactor = 20;
-			Settings.defaultSource = 285;
-			Settings.initialManPos = 883;
+			tFactor = 20;
+			source = 285;
+			manPos = 883;
 			break;
 		}
 		roadBase.SetActive(level == 7);
+
+		if (useDefaultSettings) {
+			Settings.tFactor = tFactor;
+			Settings.defaultSource = source;
+			Settings.initialManPos = manPos;
+			inputT.text = Settings.tFactor.ToString();
+			ClearVisualGradient();
+		} else {
+			Settings.defaultSource = hg.s.index;
+			Settings.initialManPos = man.triangle.index;
+		}
 
 		// Set collider to detect mouse hit
 		earth.GetComponent<MeshCollider>().sharedMesh = earth.GetComponent<MeshFilter>().sharedMesh;
@@ -222,6 +246,10 @@ public class TestPathFinding : MonoBehaviour {
 
 		// Update counter
 		triangleCounter.text = "Triangle Count = " + g.faces.Count;
+
+		if (!useDefaultSettings) {
+			UpdateVisualGradient();
+		}
 	}
 
 	/// <summary>
@@ -479,4 +507,67 @@ public class TestPathFinding : MonoBehaviour {
 
 	}
 
+	public void SetTFactor(string t) {
+		if (double.TryParse(t, out Settings.tFactor)) {
+			inputT.text = Settings.tFactor.ToString();
+			useDefaultSettings = false;
+			SetLevel(levelIndex);
+			useDefaultSettings = true;
+		} else {
+			inputT.text = "invalid";
+		}
+	}
+
+	public void VisualizeGradient(bool heat) {
+		ClearVisualGradient();
+		arrows = new GameObject[g.faces.Count];
+		for (int i = 0; i < g.faces.Count; i++) {
+			arrows[i] = GameObject.Instantiate(gradArrow);
+		}
+		visualState = heat ? 2 : 1;
+		UpdateVisualGradient();
+		visualModeText.text = "Visualization Mode = " + (heat ? "Heat gradient" : "Distance gradient");
+	}
+
+	public void UpdateVisualGradient() {
+		if (visualState == 2) {
+			for (int i = 0; i < g.faces.Count; i++) {
+				Face face = g.faces[i];
+				arrows[i].transform.SetParent(visual.transform);
+				arrows[i].transform.position = face.CalculateCenter();
+				arrows[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+				arrows[i].transform.rotation = Quaternion.LookRotation(-hg.X[i], face.CalculateNormalTri());
+			}
+			visualModeText.text = "Visualization Mode = Heat gradient";
+		} else if (visualState == 1) {
+			for (int i = 0; i < g.faces.Count; i++) {
+				Face face = g.faces[i];
+				arrows[i].transform.SetParent(visual.transform);
+				arrows[i].transform.position = face.CalculateCenter();
+				arrows[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
+				arrows[i].transform.rotation = Quaternion.LookRotation(hg.GradPhi[i], face.CalculateNormalTri());
+			}
+			visualModeText.text = "Visualization Mode = Distance gradient";
+		}
+	}
+
+	public void ClearVisualGradient() {
+		for (int i = 0; i < visual.transform.childCount; i++) {
+			Destroy(visual.transform.GetChild(i).gameObject);
+		}
+		arrows = null;
+		visualState = 0;
+		visualModeText.text = "";
+	}
+
+	public void ToggleGradient() {
+		if (visualState == 0) {
+			VisualizeGradient(false);
+		} else if (visualState == 1) {
+			visualState = 2;
+			UpdateVisualGradient();
+		} else {
+			ClearVisualGradient();
+		}
+	}
 }

@@ -218,28 +218,6 @@ public class HeatGeodesics {
 			face.ClearEdgeArray();
 		}
 
-		/*
-		GameObject visual = GameObject.Find("FlowVisualization");
-		GameObject arrow = GameObject.Find("Arrow");
-		GameObject arrowAdded;
-
-		for (int i = 0; i < f; i++) {
-			Face face = g.faces[i];
-
-			//Visualize gradient of heat field
-			arrowAdded = GameObject.Instantiate(arrow);
-			arrowAdded.transform.SetParent(visual.transform);
-			arrowAdded.transform.position = face.CalculateCenter();
-			arrowAdded.transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
-			arrowAdded.transform.rotation = Quaternion.LookRotation(X[i], face.CalculateNormalTri());
-
-			//Visualize gradient of distance field
-			arrowAdded = GameObject.Instantiate(arrow);
-			arrowAdded.transform.SetParent(visual.transform);
-			arrowAdded.transform.position = face.CalculateCenter();
-			arrowAdded.transform.localScale = new Vector3(0.01f, 0.01f, 0.05f);
-			arrowAdded.transform.rotation = Quaternion.LookRotation(GradPhi[i], face.CalculateNormalTri());
-		}*/
 	}
 
 }

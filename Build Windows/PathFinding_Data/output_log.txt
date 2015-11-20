@@ -2,9 +2,9 @@ Initialize engine version: 5.1.2f1 (afd2369b692a)
 GfxDevice: creating device client; threaded=1
 Direct3D:
     Version:  Direct3D 11.0 [level 11.0]
-    Renderer: Intel(R) HD Graphics 4600 (ID=0x416)
-    Vendor:   Intel
-    VRAM:     128 MB
+    Renderer: NVIDIA GeForce GTX 760M (ID=0x11e3)
+    Vendor:   NVIDIA
+    VRAM:     1988 MB
 Begin MonoManager ReloadAssembly
 Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.dll (this message is harmless)
 Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.dll into Unity Child Domain
@@ -18,7 +18,7 @@ Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data
 Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
 Platform assembly: D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\alglibnet2.dll (this message is harmless)
 Loading D:\Unity Projects\Path Finding\Build Windows\PathFinding_Data\Managed\alglibnet2.dll into Unity Child Domain
-- Completed reload, in  0.046 seconds
+- Completed reload, in  0.047 seconds
 desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
@@ -38,7 +38,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 31.65704ms
+t = 31.2174ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -46,7 +46,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 39.45744ms
+t = 35.58028ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -54,7 +54,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 45.91241ms
+t = 41.28945ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -62,14 +62,54 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 78.31997ms
+t = 74.79179ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
 Setting up 2 worker threads for Enlighten.
-  Thread -> id: 5c4 -> priority: 1 
-  Thread -> id: 1b14 -> priority: 1 
-vertex hit = 161
+  Thread -> id: d60 -> priority: 1 
+  Thread -> id: 2464 -> priority: 1 
+t = 0ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Solved first linear system, termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 9.535551ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Gradient of heat flow calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 11.08527ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Div of X calculated
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 12.41946ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+Distance field calculated (Second linear system), termination = 1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+t = 25.23756ms
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+triangle hit = 631
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 412
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -81,7 +121,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 47.33491ms
+t = 30.78508ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -89,7 +129,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 51.24235ms
+t = 33.27274ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -97,7 +137,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 59.6962ms
+t = 35.40039ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -105,11 +145,15 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 92.32449ms
+t = 54.80099ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-vertex hit = 122
+triangle hit = 133
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 89
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -121,7 +165,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 49.40724ms
+t = 27.0443ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -129,7 +173,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 57.90567ms
+t = 30.59196ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -137,7 +181,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 64.41665ms
+t = 33.66137ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -145,11 +189,7 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 96.93146ms
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
-
-vertex hit = 175
+t = 53.09916ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -161,7 +201,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 56.08749ms
+t = 3.509521ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -169,7 +209,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 59.75914ms
+t = 6.280899ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -177,7 +217,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 68.2354ms
+t = 7.621765ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -185,11 +225,7 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 101.1915ms
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
-
-vertex hit = 35
+t = 19.96899ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -201,7 +237,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 59.02719ms
+t = 6.786346ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -209,7 +245,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 63.76553ms
+t = 8.315086ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -217,7 +253,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 70.02926ms
+t = 9.619713ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -225,12 +261,15 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 102.5262ms
+t = 21.88396ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-New mesh loaded: OFF/high_genus 
-Vertex count = 1660 triangle count = 9984
+triangle hit = 705
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 448
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -242,7 +281,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 6.828308ms
+t = 14.93359ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -250,7 +289,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 9.454727ms
+t = 18.36777ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -258,7 +297,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 13.70192ms
+t = 21.23451ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -266,11 +305,7 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 31.29721ms
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
-
-vertex hit = 921
+t = 44.74926ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -282,7 +317,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 27.78101ms
+t = 4.829407ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -290,7 +325,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 33.42819ms
+t = 6.374359ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -298,7 +333,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 42.74559ms
+t = 7.707596ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -306,11 +341,7 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 63.8814ms
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
-
-vertex hit = 1604
+t = 20.23697ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -322,7 +353,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 28.59592ms
+t = 8.924484ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -330,7 +361,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 38.88035ms
+t = 10.48279ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -338,7 +369,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 52.4559ms
+t = 11.81602ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -346,11 +377,7 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 80.55592ms
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
-
-vertex hit = 1585
+t = 24.0078ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -362,7 +389,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 6.334305ms
+t = 12.78877ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -370,7 +397,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 9.101868ms
+t = 18.35442ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -378,7 +405,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 14.24026ms
+t = 23.03505ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -386,11 +413,15 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 32.84168ms
+t = 51.37825ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-vertex hit = 1166
+triangle hit = 188
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+
+vertex hit = 120
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -402,7 +433,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 23.93436ms
+t = 16.05606ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -410,7 +441,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 29.07372ms
+t = 19.33289ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -418,7 +449,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 36.99017ms
+t = 20.72525ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -426,12 +457,7 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 64.13746ms
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
-
-New mesh loaded: OFF/cow 
-Vertex count = 2904 triangle count = 17412
+t = 33.50258ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -443,7 +469,7 @@ Solved first linear system, termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 36.05175ms
+t = 2.998352ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -451,7 +477,7 @@ Gradient of heat flow calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 40.49301ms
+t = 4.60434ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -459,7 +485,7 @@ Div of X calculated
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 47.36042ms
+t = 5.931854ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
@@ -467,330 +493,611 @@ Distance field calculated (Second linear system), termination = 1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-t = 114.8987ms
+t = 18.00919ms
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
 
-vertex hit = 404
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 73.77243ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 77.80838ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 84.52129ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 158.8945ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-vertex hit = 123
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 79.02145ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 83.02879ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 89.66064ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 165.7505ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-New mesh loaded: OFF/tri_triceratops 
-Vertex count = 2832 triangle count = 16980
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 34.3914ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 38.35487ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 45.02106ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 118.454ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-vertex hit = 509
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 53.68996ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 59.83353ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 67.32941ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 136.5757ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-New mesh loaded: OFF/tri_triceratops 
-Vertex count = 2832 triangle count = 16980
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 35.11238ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 39.62517ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 46.27609ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 114.5725ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-vertex hit = 736
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 59.3071ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 67.49153ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 73.95935ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 142.6945ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-New mesh loaded: OFF/horse1 
-Vertex count = 20000 triangle count = 119988
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 453.1841ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 477.5333ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 538.0955ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 1573.828ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-vertex hit = 13924
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 0ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Solved first linear system, termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 484.9319ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Gradient of heat flow calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 509.9926ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Div of X calculated
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 569.9902ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-Distance field calculated (Second linear system), termination = 1
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
 
-t = 1595.104ms
+Look rotation viewing vector is zero
  
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/UnityEngineDebugBindings.gen.cpp Line: 65)
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
+
+Look rotation viewing vector is zero
+ 
+(Filename:  Line: 71)
 
