@@ -13,6 +13,9 @@ public class TestPathFinding : MonoBehaviour {
 	public WalkingMan man;
 	public GameObject pin;
 	public Mesh road;
+	public Mesh sphere;
+	Mesh sphere2, sphere3;
+	public Mesh dragon;
 	public GameObject roadBase;
 	public Text triangleCounter;
 	public Text visualModeText;
@@ -34,8 +37,18 @@ public class TestPathFinding : MonoBehaviour {
 
 	// Start is called at the beginng
 	void Start () {
+		sphere = Instantiate<Mesh>(sphere);
+		sphere2 = Instantiate<Mesh>(sphere);
+		sphere3 = MeshFactory.CreateSphere(1, 48);
+		MeshFactory.MergeOverlappingPoints(sphere2);
+
 		road = Instantiate<Mesh>(road);
 		MeshFactory.TransformMesh(road, Vector3.zero, Quaternion.Euler(-180, 0, 0));
+
+		dragon = Instantiate<Mesh>(dragon);
+		MeshFactory.MergeOverlappingPoints(dragon);
+		MeshFactory.TransformMesh(dragon, Vector3.zero, Quaternion.Euler(0, 90, 0), new Vector3(0.75f, 0.75f, 0.75f));
+
 
 		SetLevel(1);
 
@@ -136,6 +149,19 @@ public class TestPathFinding : MonoBehaviour {
 			} else  {
 				mat.SetColor("_EmissionColor", new Color(0f, 0f, 0f));
 			}
+		} else if (textureIndex == 6) {
+			float tPeriod = 4f;
+			float tLight = 1f;
+			float c;
+			t = (t + Time.deltaTime) % tPeriod;
+			float tt = t % tLight;
+			if (t / tLight < 3) {
+				float cos = Mathf.Cos(Mathf.PI * (tt - tLight / 2) / tLight);
+				c = 0.9f * cos;
+				mat.SetColor("_EmissionColor", new Color(c, c, c));
+			} else {
+				mat.SetColor("_EmissionColor", new Color(0f, 0f, 0f));
+			}
 		}
 
 		// Quit the application
@@ -158,54 +184,75 @@ public class TestPathFinding : MonoBehaviour {
 		switch (level) {
 		case 0:
 		default:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
+			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
 			SetTexture(2);
 			source = 94;
 			manPos = 1947;
 			break;
 		case 1:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
+			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
 			SetTexture(0);
 			source = 175;
 			manPos = 230;
 			break;
 		case 2:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/cow", 1.5f, new Vector3(0.15f, 0.15f, 0));
+			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/cow", 1.5f, new Vector3(0.15f, 0.15f, 0));
 			SetTexture(3);
 			source = 429;
 			manPos = 2129;
 			break;
 		case 3:
 		case 6:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops", 0.2f, new Vector3(0.15f, 0, 0));
+			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops", 0.2f, new Vector3(0.15f, 0, 0));
 			SetTexture(4);
 			Settings.cotLimit = 5;
 			source = 42;
 			manPos = 918;
 			break;
 		case 4:
-			//earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.3f), Quaternion.Euler(-90, 0, 0));
+			//earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
+			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.3f), Quaternion.Euler(-90, 0, 0));
 			SetTexture(5);
 			tFactor = 10;
 			source = 1559;
 			manPos = 31107;
 			break;
 		case 5:
-			earth.GetComponent<MeshFilter>().sharedMesh = MeshFactory.CreateSphere(1, 48);
-			SetTexture(0);
-			source = 42;
-			manPos = 42;
-			break;
-		case 7:
-			earth.GetComponent<MeshFilter>().sharedMesh = road;
+			earth.GetComponent<MeshFilter>().mesh = road;
 			SetTexture(1);
 			tFactor = 20;
 			source = 285;
 			manPos = 883;
 			break;
+		case 7:
+			earth.GetComponent<MeshFilter>().mesh = sphere3;
+			SetTexture(0);
+			tFactor = 1;
+			source = 3341;
+			manPos = 7073;
+			break;
+		case 8:
+			earth.GetComponent<MeshFilter>().mesh = sphere;
+			SetTexture(0);
+			tFactor = 1;
+			source = 42;
+			manPos = 775;
+			break;
+		case 9:
+			earth.GetComponent<MeshFilter>().mesh = sphere2;
+			SetTexture(0);
+			tFactor = 1;
+			source = 42;
+			manPos = 775;
+			break;
+		case 10:
+			earth.GetComponent<MeshFilter>().mesh = dragon;
+			SetTexture(6);
+			source = 42;
+			manPos = 7284;
+			break;
 		}
-		roadBase.SetActive(level == 7);
+		roadBase.SetActive(level == 5);
 
 		if (useDefaultSettings) {
 			Settings.tFactor = tFactor;
@@ -219,10 +266,10 @@ public class TestPathFinding : MonoBehaviour {
 		}
 
 		// Set collider to detect mouse hit
-		earth.GetComponent<MeshCollider>().sharedMesh = earth.GetComponent<MeshFilter>().sharedMesh;
+		earth.GetComponent<MeshCollider>().sharedMesh = earth.GetComponent<MeshFilter>().mesh;
 
 		// Build geometry data
-		g = new Geometry(GetComponent<MeshFilter>().sharedMesh);
+		g = new Geometry(GetComponent<MeshFilter>().mesh);
 
 		if (level == 6) {
 			// Fix certain broken triangles for the triceratops
@@ -284,15 +331,16 @@ public class TestPathFinding : MonoBehaviour {
 			background.InsertColorNode(Color.black, 0.8f);
 			background.InsertColorNode(Color.red, 0.9f);
 			background.InsertColorNode(Color.yellow, 1f);
-			stripe.InsertColorNode(new Color(1,1,0.5f), 0);
+			stripe.InsertColorNode(new Color(1f,1f,0.5f), 0);
 			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
 			mat.mainTexture = tex;
 			
 			background = new ColorMixer();
 			stripe = new ColorMixer();
 			background.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0);
-			stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 1f), 0);
-			stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0f), 1);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 1f), 0);
+			//stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0.5f);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 0f), 1);
 			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe, true);
 			mat.SetTexture("_BumpMap", tex);
 			mat.EnableKeyword("_NORMALMAP");
@@ -503,6 +551,75 @@ public class TestPathFinding : MonoBehaviour {
 
 			mat.DisableKeyword("_EMISSION");
 			break;
+
+		case 6:
+			// Yellow-red-black rubber,
+			period = 82;
+			width = 12;
+			Settings.mappingDistance = 3;
+			Settings.ScrollSpeed = 0.066f;
+			
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(Color.yellow, 0.1f);
+			background.InsertColorNode(Color.red, 0.4f);
+			background.InsertColorNode(Color.black, 0.7f);
+			background.InsertColorNode(Color.black, 0.8f);
+			background.InsertColorNode(Color.red, 0.9f);
+			background.InsertColorNode(Color.yellow, 1f);
+			stripe.InsertColorNode(Color.yellow, 0.1f);
+			stripe.InsertColorNode(Color.red, 0.4f);
+			stripe.InsertColorNode(Color.black, 0.7f);
+			stripe.InsertColorNode(Color.black, 0.8f);
+			stripe.InsertColorNode(Color.red, 0.9f);
+			stripe.InsertColorNode(Color.yellow, 1f);
+			//stripe.InsertColorNode(new Color(1f,1f,0.5f), 0);
+			/*stripe.InsertColorNode(new Color(1,1,0.5f), 0.1f);
+			stripe.InsertColorNode(Color.yellow, 0.2f);
+			stripe.InsertColorNode(Color.red, 0.5f);
+			stripe.InsertColorNode(Color.black, 0.75f);
+			stripe.InsertColorNode(Color.red, 0.85f);
+			stripe.InsertColorNode(Color.yellow, 0.95f);
+			stripe.InsertColorNode(new Color(1,1,0.5f), 1f);*/
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
+			mat.mainTexture = tex;
+
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(Color.black, 0f);
+			stripe.InsertColorNode(Color.yellow, 0.1f);
+			stripe.InsertColorNode(Color.red, 0.4f);
+			stripe.InsertColorNode(Color.black, 0.7f);
+			stripe.InsertColorNode(Color.black, 0.8f);
+			stripe.InsertColorNode(Color.red, 0.9f);
+			stripe.InsertColorNode(Color.yellow, 1f);
+			//stripe.InsertColorNode(new Color(1f,1f,0.5f), 0);
+			/*stripe.InsertColorNode(new Color(1,1,0.5f), 0.1f);
+			stripe.InsertColorNode(Color.yellow, 0.2f);
+			stripe.InsertColorNode(Color.red, 0.5f);
+			stripe.InsertColorNode(Color.black, 0.75f);
+			stripe.InsertColorNode(Color.red, 0.85f);
+			stripe.InsertColorNode(Color.yellow, 0.95f);
+			stripe.InsertColorNode(new Color(1,1,0.5f), 1f);*/
+			tex = MeshFactory.CreateStripedTexture(2048, period, width-2, 21, background, stripe);
+			mat.SetTexture("_EmissionMap", tex);
+			mat.SetColor("_EmissionColor", new Color(0.5f, 0.5f, 0.5f));
+			mat.EnableKeyword("_EMISSION");
+			
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.1f, 0f), 0);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0.2f);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0.8f);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.1f, 1f), 1);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe, true);
+			mat.SetTexture("_BumpMap", tex);
+			mat.EnableKeyword("_NORMALMAP");
+
+			//mat.DisableKeyword("_EMISSION");
+			mat.DisableKeyword("_SPECGLOSSMAP");
+			break;
 		}
 
 	}
@@ -536,7 +653,11 @@ public class TestPathFinding : MonoBehaviour {
 				arrows[i].transform.SetParent(visual.transform);
 				arrows[i].transform.position = face.CalculateCenter();
 				arrows[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
-				arrows[i].transform.rotation = Quaternion.LookRotation(-hg.X[i], face.CalculateNormalTri());
+				if (hg.X[i] != Vector3.zero) {
+					arrows[i].transform.rotation = Quaternion.LookRotation(hg.X[i], face.CalculateNormalTri());
+				} else {
+					arrows[i].transform.rotation = Quaternion.LookRotation(face.CalculateNormalTri());
+				}
 			}
 			visualModeText.text = "Visualization Mode = Heat gradient";
 		} else if (visualState == 1) {
@@ -545,7 +666,11 @@ public class TestPathFinding : MonoBehaviour {
 				arrows[i].transform.SetParent(visual.transform);
 				arrows[i].transform.position = face.CalculateCenter();
 				arrows[i].transform.localScale = new Vector3(0.02f, 0.02f, 0.02f);
-				arrows[i].transform.rotation = Quaternion.LookRotation(hg.GradPhi[i], face.CalculateNormalTri());
+				if (hg.GradPhi[i] != Vector3.zero) {
+					arrows[i].transform.rotation = Quaternion.LookRotation(-hg.GradPhi[i], face.CalculateNormalTri());
+				} else {
+					arrows[i].transform.rotation = Quaternion.LookRotation(face.CalculateNormalTri());
+				}
 			}
 			visualModeText.text = "Visualization Mode = Distance gradient";
 		}

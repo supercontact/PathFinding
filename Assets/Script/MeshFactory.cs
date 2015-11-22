@@ -171,6 +171,83 @@ public class MeshFactory {
 		return m;
 	}
 
+	public static void MergeOverlappingPoints(Mesh mesh, float threshold = 0.0001f) {
+		Vector3[] verts = mesh.vertices;
+		int[] triangles = mesh.triangles;
+
+		int v = verts.Length;
+		int f = triangles.Length / 3;
+
+		KDTree kd = KDTree.MakeFromPoints(verts);
+		int[] replacement = new int[verts.Length];
+		for (int i = 0; i < v; i++) {
+			replacement[i] = -1;
+		}
+
+
+		for (int i = 0; i < v; i++) {
+			if (replacement[i] == -1) {
+				// Replace all vertices within the threshold radius by this vertex
+				int[] pts = kd.RangeSearch(verts[i], threshold);
+				if (pts.Length > 1) {
+					Debug.Log("merged " + pts.Length + " points!");
+				}
+				for (int j = 0; j < pts.Length; j++) {
+					if (pts[j] != i) {
+						replacement[pts[j]] = i;
+					}
+				}
+			}
+		}
+
+		// Delete merged vertices
+		int[] verticesDeletedBefore = new int[v]; // How many vertices are deleted before the i-th vertex in the original vertices array
+		verticesDeletedBefore[0] = (replacement[0] == -1) ? 0 : 1;
+		for (int i = 1; i < v; i++) {
+			verticesDeletedBefore[i] = (replacement[i] == -1) ? verticesDeletedBefore[i-1] : verticesDeletedBefore[i-1] + 1;
+		}
+		// Save to a new vertices array
+		Vector3[] usedVertices = new Vector3[v - verticesDeletedBefore[v - 1]];
+		for (int i = 0; i < v; i++) {
+			if (replacement[i] == -1) {
+				usedVertices[i - verticesDeletedBefore[i]] = verts[i];
+			}
+		}
+		// Shift triangle indices
+		for (int i = 0; i < 3 * f; i++) {
+			if (replacement[triangles[i]] != -1) {
+				triangles[i] = replacement[triangles[i]];
+			}
+			triangles[i] -= verticesDeletedBefore[triangles[i]];
+		}
+
+		// Update mesh object
+		mesh.triangles = triangles;
+		mesh.vertices = usedVertices;
+		mesh.RecalculateNormals();
+	}
+	
+	/// <summary>
+	/// Applys a transform to a mesh.
+	/// </summary>
+	public static void TransformMesh(Mesh mesh, Vector3 offset, Quaternion rot = default(Quaternion), Vector3 scale = default(Vector3)) {
+		if (rot == default(Quaternion)) {
+			rot = Quaternion.identity;
+		}
+		if (scale == default(Vector3)) {
+			scale = new Vector3(1,1,1);
+		}
+
+		Vector3[] verts = mesh.vertices;
+		for (int i = 0; i < verts.Length; i++) {
+			verts[i] = new Vector3(verts[i].x * scale.x, verts[i].y * scale.y, verts[i].z * scale.z);
+			verts[i] = rot * verts[i] + offset;
+		}
+		mesh.vertices = verts;
+		mesh.RecalculateNormals();
+	}
+
+
 	/// <summary>
 	/// Creates a sphere mesh.
 	/// c is the segment count.
@@ -214,18 +291,6 @@ public class MeshFactory {
 		m.triangles = triangles;
 		m.RecalculateNormals();
 		return m;
-	}
-
-	/// <summary>
-	/// Applys a transform to a mesh.
-	/// </summary>
-	public static void TransformMesh(Mesh mesh, Vector3 offset, Quaternion rot) {
-		Vector3[] verts = mesh.vertices;
-		for (int i = 0; i < verts.Length; i++) {
-			verts[i] = rot * verts[i] + offset;
-		}
-		mesh.vertices = verts;
-		mesh.RecalculateNormals();
 	}
 
 	/// <summary>
