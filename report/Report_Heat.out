@@ -1,20 +1,23 @@
 \BOOKMARK [1][-]{section.1}{Introduction}{}% 1
 \BOOKMARK [1][-]{section.2}{Algorithms}{}% 2
-\BOOKMARK [2][-]{subsection.2.1}{Dijkstra}{section.2}% 3
-\BOOKMARK [2][-]{subsection.2.2}{Heat flow}{section.2}% 4
-\BOOKMARK [3][-]{subsubsection.2.2.1}{First Step}{subsection.2.2}% 5
-\BOOKMARK [3][-]{subsubsection.2.2.2}{Second Step}{subsection.2.2}% 6
-\BOOKMARK [3][-]{subsubsection.2.2.3}{Third Step}{subsection.2.2}% 7
-\BOOKMARK [2][-]{subsection.2.3}{Walking man}{section.2}% 8
-\BOOKMARK [1][-]{section.3}{Implementation}{}% 9
-\BOOKMARK [2][-]{subsection.3.1}{Dijkstra}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.2}{Heat Flow}{section.3}% 11
-\BOOKMARK [3][-]{subsubsection.3.2.1}{First Step}{subsection.3.2}% 12
-\BOOKMARK [3][-]{subsubsection.3.2.2}{Second Step}{subsection.3.2}% 13
-\BOOKMARK [3][-]{subsubsection.3.2.3}{Third Step}{subsection.3.2}% 14
-\BOOKMARK [2][-]{subsection.3.3}{Mapping}{section.3}% 15
-\BOOKMARK [2][-]{subsection.3.4}{Walking Man}{section.3}% 16
-\BOOKMARK [1][-]{section.4}{Difficulties}{}% 17
-\BOOKMARK [1][-]{section.5}{Results}{}% 18
-\BOOKMARK [2][-]{subsection.5.1}{Comparison between Dijstra and heat flow}{section.5}% 19
-\BOOKMARK [2][-]{subsection.5.2}{Added values}{section.5}% 20
+\BOOKMARK [2][-]{subsection.2.1}{Heat flow}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{First Step}{subsection.2.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Second Step}{subsection.2.1}% 5
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Third Step}{subsection.2.1}% 6
+\BOOKMARK [2][-]{subsection.2.2}{Navigation}{section.2}% 7
+\BOOKMARK [1][-]{section.3}{Implementation}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Heat Flow}{section.3}% 9
+\BOOKMARK [3][-]{subsubsection.3.1.1}{First Step}{subsection.3.1}% 10
+\BOOKMARK [3][-]{subsubsection.3.1.2}{Second Step}{subsection.3.1}% 11
+\BOOKMARK [3][-]{subsubsection.3.1.3}{Third Step}{subsection.3.1}% 12
+\BOOKMARK [2][-]{subsection.3.2}{Navigation}{section.3}% 13
+\BOOKMARK [2][-]{subsection.3.3}{boundary conditions}{section.3}% 14
+\BOOKMARK [1][-]{section.4}{Results}{}% 15
+\BOOKMARK [2][-]{subsection.4.1}{Main results}{section.4}% 16
+\BOOKMARK [2][-]{subsection.4.2}{Comparison between Dijstra and heat flow}{section.4}% 17
+\BOOKMARK [2][-]{subsection.4.3}{Added values}{section.4}% 18
+\BOOKMARK [3][-]{subsubsection.4.3.1}{How we obtain meshes?}{subsection.4.3}% 19
+\BOOKMARK [3][-]{subsubsection.4.3.2}{Optimisation}{subsection.4.3}% 20
+\BOOKMARK [3][-]{subsubsection.4.3.3}{Mapping}{subsection.4.3}% 21
+\BOOKMARK [3][-]{subsubsection.4.3.4}{Navigation}{subsection.4.3}% 22
+\BOOKMARK [1][-]{section.5}{Extensions}{}% 23

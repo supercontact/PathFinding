@@ -16,15 +16,15 @@
 
 \maketitle
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-In this project we present practical methods for computing approximate shortest paths (geodesics) on a triangle mesh. We implemented a naive method based on Dijkstra's algorithm and a method based on heat flow, proposed by Crane [2013]. We created a walking man on surface to represent the shortest path taken. The implementation is done in C\# on the Unity platform.
+In this project we present practical methods for computing approximate shortest paths (geodesics) on a triangle mesh. We implemented a naive method based on Dijkstra's algorithm and a method of Heat Flow based on \og Geodesics in Heat: A New Approach to Computing Distance Based on Heat Flow \fg{}, written by Crane [2013]. We created a walking man on surface to represent the shortest path taken. The implementation is done in C\# on the Unity platform.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Algorithms}
 
-In this section we explain the main algorithms used in this project.
-
-\subsection{Dijkstra}
+In this section we explain the main algorithms used in this project. The first part is a quick description of the method introduced in the paper. The second part is an algorithm created on our own.
 
 \subsection{Heat flow}
 This algorithm determines the geodesic distance to a specified subset of a given domain. 
@@ -47,15 +47,14 @@ Solve the Poisson equation $\Delta \phi = \nabla \cdot X$.
 
 If a distance function $\phi$ exists, $\nabla \phi$ should give us a unit vector on every point, pointing to the opposite directin of the source. We approximate such a distance function $\phi$ by minimizing $\int \left | \nabla \phi - X \right |^{2}$, which is equivalent to solving the Poisson equation $\Delta \phi = \nabla \cdot X$.
 
-\subsection{Walking man}
+\subsection{Navigation}
 
 We also implemented a navigation system, represented by a walking man. He is positioned on the surface of the mesh and moves toward a given source point. 
 
 A walking man's position is defined by barycentric coordinates of a triangle of the mesh. A walk function takes a distance as its argument and first applys on the triangle on which he is standing and then recursively calls itself at the next triangle he comes across, until walking the given distance or reaching the source.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation}
-
-\subsection{Dijkstra}
 
 \subsection{Heat Flow}
 
@@ -63,58 +62,69 @@ We used the half-edge data structure to present triangle meshes.
 
 \subsubsection{First Step}
 
-
-
 \subsubsection{Second Step}
 
 \subsubsection{Third Step}
 %symetric negative, add epsilon
 
 
-\subsection{Mapping}
+\subsection{Navigation}
 
 
-%\subsubsection{Albedo}
 
-%\subsubsection{Normal}
+\subsection{boundary conditions}
+Dirichlet condition
 
-%\subsubsection{Specular Smoothness}
+Neumann condition
 
-%\subsubsection{Emission}
-
-Il faut chercher où se trouve le répertoire de ton installation LaTeX. Pour cela (et quelque soit ton système d'exploitation), ouvre une ligne de commandes et tape :
-\begin{verbatim}
-kpsewhich -var-value TEXMFMAIN
-\end{verbatim}
-Rends-toi alors dans le répertoire indiqué que l'on nommera par la suite \emph{INSTALL}. Dans une autre fenêtre de ton explorateur de fichiers, extrais l'archive téléchargée et ouvre le dossier \emph{source}. Il suffit ensuite de copier tous les fichiers \texttt{.pdf}, \texttt{.eps} et \texttt{polytechnique.sty} vers le dossier \emph{INSTALL/tex/latex/polytechnique}. 
-
-Il te faut enfin mettre à jour la la liste de package de ta distribution. Pour Mac ou Linux, ouvre un terminal et entre \texttt{sudo texhash}. Pour Windows, ouvre dans tous les programmes l'utilitaire \emph{Settings (Admin)} et clique sur \emph{Refresh FNDB}.
-
-De cette manière, l'installation n'est pas complète mais le package marchera très bien en utilisation. Il te manquera par contre les fichiers source commentés si tu veux le modifier.
-
-\subsection{Walking Man}
-
-La documentation du package ets le fichier \texttt{polytechnique.pdf} qui se trouve entre autres. dans le dossier \emph{source} de l'archive extraite.
-
-\section{Difficulties}
-
-choice of $t$ (numerical error)
-
-boundary conditions
-
-mesh: triceratops, sphere
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
+
+\subsection{Main results}
+lots of graphs here!
+
+numerical error when t = 1 (choice of $t$), tweak parameter
 
 \subsection{Comparison between Dijstra and heat flow}
 
 \subsection{Added values}
-OFF parser
 
-mesh: sphere + maze
+\subsubsection{How we obtain meshes?}
+Below are the four options we used.
 
-math proof (matrix definite negative)
+1. OFF format (high genus, bague, triceratops, horse) -> mesh -> halfedge mesh
 
-mapping
+2. FBX format (dragon) -> processing (weld uv seams) -> halfedge mesh
+
+3. 3Dmax handmade mesh (maze) -> halfedge mesh
+
+4. Code generated mesh (sphere) -> halfedge mesh
+
+weld uv seams by Kd tree
+
+Fix vertices (triceratops)
+
+\subsubsection{Optimisation}
+Our solver ALGLIB solves parse symetric positve-definite matrix system a lot faster than only symetric matrix system.
+We noticed that $-Lc$ is a symetric positve-semidefinite matrix.
+Therefore, $A-tLc$ (for $t>0$) in the first step is a symetric positve-definite matrix and $\epsilon I-Lc$ (for $\epsilon >0$) in the third step is also a symetric positve-definite matrix. Below is a math proof.
+
+Prove that $-Lc$ is a symetric positve-semidefinite matrix.
+
+We note $U_{ij}=E_{ii}+E_{jj}-E_{ij}-E_{ji}$ where $E_{ij}$ is an elementary matrix with only one nonnull value $1$ on position $(i,j)$. By definition, $-Lc$ is in form  $-Lc=\sum_{i,j}u_{ij}U_{ij}$ with all $u_{ij}>0$. Since the eigenvalues of $U_{ij}$ is $0$ and $2$, it is a symetric positve-semidefinite matrix. We conclude by saying that any positive combination of symetric positve-semidefinite matrices is also a symetric positve-semidefinite matrix.\\
+
+stock a Lc matrix, a cot array
+
+\subsubsection{Mapping}
+Albedo, Normal, Specular Smoothness, Emission
+
+\subsubsection{Navigation}
+See above.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Extensions}
+add weight
+
+applications : video games, robotics
 
 \end{document}

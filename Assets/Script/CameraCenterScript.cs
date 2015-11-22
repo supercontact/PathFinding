@@ -10,7 +10,7 @@ public class CameraCenterScript : MonoBehaviour {
 	public Transform Y;
 	public Transform Z;
 	public Transform O;
-	public float smoothT = 0.3f;
+	public float smoothT = 0.1f;
 
 	private bool visible = false;
 	private float progress = 0;
