@@ -53,6 +53,7 @@
      <Compile Include="Assets\Script\MeshFactory.cs" />
      <Compile Include="Assets\Script\ObserveCamera.cs" />
      <Compile Include="Assets\Script\Settings.cs" />
+     <Compile Include="Assets\Script\SurfaceObject.cs" />
      <Compile Include="Assets\Script\TestPathFinding.cs" />
      <Compile Include="Assets\Script\WalkMesh.cs" />
      <Compile Include="Assets\Script\WalkingMan.cs" />
@@ -64,6 +65,7 @@
      <None Include="Assets\Resources\OFF\star.txt" />
      <None Include="Assets\Resources\OFF\tetrahedron.txt" />
      <None Include="Assets\Resources\OFF\cube.txt" />
+     <None Include="Assets\Materials\Wireframe.shader" />
      <None Include="Assets\Resources\OFF\high_genus.txt" />
      <None Include="Assets\Resources\OFF\torus_33.txt" />
      <None Include="Assets\Resources\OFF\tore.txt" />

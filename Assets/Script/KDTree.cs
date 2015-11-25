@@ -15,6 +15,12 @@
 //	array of points is available for the lifetime of the tree, and the index refers to that
 //	array.
 
+
+
+//  HE Ruoqi and HUNG Chia-Man : We added the method RangeSearch() to this class.
+
+
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -189,7 +195,8 @@ public class KDTree {
 		}
 	}
 
-//	Find all points in the set within radius of the supplied point.
+
+	// Find all points in the set within radius of the supplied point.
 	public int[] RangeSearch(Vector3 pt, float radius) {
 		List<int> results = new List<int>();
 
@@ -198,7 +205,7 @@ public class KDTree {
 		return results.ToArray();
 	}
 
-//	Recursively search the tree.
+	// Recursively search the tree.
 	void RangeSearchInner(Vector3 pt, float radius, List<int> results) {
 		float mySqDist = (pivot - pt).sqrMagnitude;
 

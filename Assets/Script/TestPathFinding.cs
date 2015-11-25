@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// The main program.
@@ -8,24 +10,33 @@ using System.Collections;
 public class TestPathFinding : MonoBehaviour {
 
 	// Public variables that are linked via Unity inspector
-	public Camera cam;
 	public GameObject earth;
+	public Camera cam;
 	public WalkingMan man;
-	public GameObject pin;
 	public Mesh road;
 	public Mesh sphere;
+	public Mesh hemisphere;
 	Mesh sphere2, sphere3;
 	public Mesh dragon;
-	public GameObject roadBase;
 	public Text triangleCounter;
 	public Text visualModeText;
+	public Text heatInfo;
+	public Text warning;
 	public InputField inputT;
+	public Image background;
+	public GameObject pin;
+	public GameObject roadBase;
+	public GameObject hemiCap;
 	public GameObject visual;
 	public GameObject gradArrow;
+	public GameObject cursor;
+	public Material wireframe;
+	public LineRenderer line;
 
-	Geometry g;
-	HeatGeodesics hg;
-
+	Geometry g; // The main geometry (mesh)
+	HeatGeodesics hg; // The heat geodesics calculation module
+	
+	bool clicking = false;
 	bool firstClick = true;
 	bool useDefaultSettings = true;
 	int levelIndex;
@@ -34,6 +45,10 @@ public class TestPathFinding : MonoBehaviour {
 	float offset = 0;
 	int visualState = 0;
 	GameObject[] arrows;
+	List<GameObject> pins;
+	Material mainMat;
+	int materialMode = 0;
+	float changedBoundaryCond = -1f;
 
 	// Start is called at the beginng
 	void Start () {
@@ -42,6 +57,10 @@ public class TestPathFinding : MonoBehaviour {
 		sphere3 = MeshFactory.CreateSphere(1, 48);
 		MeshFactory.MergeOverlappingPoints(sphere2);
 
+		hemisphere = Instantiate<Mesh>(hemisphere);
+		MeshFactory.MergeOverlappingPoints(hemisphere);
+		MeshFactory.TransformMesh(hemisphere, Vector3.zero, Quaternion.Euler(-90, 0, 0));
+
 		road = Instantiate<Mesh>(road);
 		MeshFactory.TransformMesh(road, Vector3.zero, Quaternion.Euler(-180, 0, 0));
 
@@ -49,44 +68,81 @@ public class TestPathFinding : MonoBehaviour {
 		MeshFactory.MergeOverlappingPoints(dragon);
 		MeshFactory.TransformMesh(dragon, Vector3.zero, Quaternion.Euler(0, 90, 0), new Vector3(0.75f, 0.75f, 0.75f));
 
+		mainMat = earth.GetComponent<MeshRenderer>().material;
+		pins = new List<GameObject>();
 
-		SetLevel(1);
-
-		/*PathFinding pf = new PathFinding();
-		Geometry g = new Geometry(GetComponent<MeshFilter>().mesh);
-		pf.ShortestPathSimple(g, g.vertices[42]);
-		pf.DrawPathFrom(g.vertices[805]);
-		pf.DrawAllBorder();*/
+		SetLevel(0);
+		UpdateInfoText();
 	}
 
 	// Update is called once per frame
 	void Update () {
+		line.enabled = false;
 
 		// When clicking on the surface of the mesh, reset source
-		if (Input.GetMouseButtonDown(0)) {
-			Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-			RaycastHit info;
-			if (Physics.Raycast(ray, out info)) {
-				Debug.Log("triangle hit = " + info.triangleIndex);
-				if (info.triangleIndex != -1) {
-					Face f = g.faces[info.triangleIndex];
+		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+		RaycastHit info;
+		cursor.transform.position = new Vector3(1000, 0, 0);
+		heatInfo.rectTransform.position = new Vector3(10000, 0, 0);
+		//bool clicking = Input.GetMouseButtonDown(0);
+		bool pressingAlt = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+		if ((clicking || pressingAlt) && Physics.Raycast(ray, out info)) {
+			if (info.triangleIndex != -1) {
+				Face f = g.faces[info.triangleIndex];
 
-					// Find the closest vertex to the mouse in the hit triangle
-					f.FillEdgeArray();
-					Vertex v = f.edges[0].vertex;
-					if ((f.edges[1].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
-						v = f.edges[1].vertex;
-					if ((f.edges[2].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
-						v = f.edges[2].vertex;
-					f.ClearEdgeArray();
+				// Find the closest vertex to the mouse in the hit triangle
+				f.FillEdgeArray();
+				Vertex v = f.edges[0].vertex;
+				if ((f.edges[1].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
+					v = f.edges[1].vertex;
+				if ((f.edges[2].vertex.p - info.point).sqrMagnitude < (v.p - info.point).sqrMagnitude)
+					v = f.edges[2].vertex;
+				f.ClearEdgeArray();
+
+				if (pressingAlt) {
+					// Show vertex info
+					cursor.transform.position = v.p;
+					Vector3 vertScreenPoint = cam.WorldToScreenPoint(v.p);
+					heatInfo.rectTransform.position = new Vector3(Mathf.Round(vertScreenPoint.x) + 170, Mathf.Round(vertScreenPoint.y) - 32, 0);
+					heatInfo.text = "Vertex distance = " + hg.phi[v.index];
+					heatInfo.text += "\nVertex heat = " + hg.u[v.index];
+					heatInfo.text += "\nVertex index = " + v.index;
+					if (v.onBorder) {
+						heatInfo.text += "\n<color=#ff2200>Boundary vertex</color>";
+					}
+
+					// Trace the shortest path
+					line.enabled = true;
+					SurfaceObject obj = new SurfaceObject(g, hg, f, info.point);
+					List<Vector3> traj = obj.GoForward(500, 500, 0.001f);
+					line.SetVertexCount(traj.Count);
+					int i = 0;
+					foreach (Vector3 pt in traj) {
+						line.SetPosition(i, pt);
+						i++;
+					}
+				}
+
+				if (clicking) {
+					Debug.Log("triangle hit = " + info.triangleIndex);
 					Debug.Log("vertex hit = " + v.index);
 
 					// Set the source
-					hg.CalculateGeodesics(v);
+					bool additional = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
+					hg.CalculateGeodesics(v, additional);
+					warning.gameObject.SetActive(additional && Settings.useCholesky);
 
 					// Put the mark at the source vertex
-					pin.transform.position = v.p;
-					pin.transform.rotation = Quaternion.LookRotation(v.CalculateNormalTri());
+					if (!additional) {
+						foreach (GameObject oldPin in pins) {
+							Destroy(oldPin);
+						}
+						pins.Clear();
+					}
+					GameObject newPin = Instantiate(pin);
+					pins.Add(newPin);
+					newPin.transform.position = v.p;
+					newPin.transform.rotation = Quaternion.LookRotation(v.CalculateNormalTri());
 
 					// Hide tutorial text
 					if (firstClick) {
@@ -98,13 +154,23 @@ public class TestPathFinding : MonoBehaviour {
 				}
 			}
 		}
+		clicking = false;
+
+		// User changed the boundary condition through the slider
+		if (Input.GetMouseButtonUp(0) && changedBoundaryCond >= 0) {
+			Settings.boundaryCondition = changedBoundaryCond;
+			useDefaultSettings = false;
+			SetLevel(levelIndex);
+			useDefaultSettings = true;
+			changedBoundaryCond = -1;
+		}
 
 		// Scrolling the surface texture
-		Material mat = earth.GetComponent<MeshRenderer>().material;
 		offset -= Settings.ScrollSpeed * Time.deltaTime;
-		mat.mainTextureOffset = new Vector2(offset, 0);
+		mainMat.mainTextureOffset = new Vector2(offset, 0);
 
 		// Emission texture animation
+		Material mat = mainMat;
 		if (textureIndex == 2) {
 			float tPhase = 3f;
 			float tBlink = 0.10f;
@@ -179,20 +245,23 @@ public class TestPathFinding : MonoBehaviour {
 		double tFactor = 1;
 		int source = 42;
 		int manPos = 42;
+		int reorder = -1;
 		Settings.cotLimit = 10000;
 
 		switch (level) {
 		case 0:
 		default:
 			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
+			reorder = 0;
 			SetTexture(2);
-			source = 94;
+			source = 1537;
 			manPos = 1947;
 			break;
 		case 1:
 			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
+			reorder = 0;
 			SetTexture(0);
-			source = 175;
+			source = 280;
 			manPos = 230;
 			break;
 		case 2:
@@ -212,64 +281,77 @@ public class TestPathFinding : MonoBehaviour {
 		case 4:
 			//earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
 			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.3f), Quaternion.Euler(-90, 0, 0));
+			reorder = 2;
 			SetTexture(5);
 			tFactor = 10;
-			source = 1559;
+			source = 435;
 			manPos = 31107;
 			break;
 		case 5:
 			earth.GetComponent<MeshFilter>().mesh = road;
 			SetTexture(1);
-			tFactor = 20;
 			source = 285;
 			manPos = 883;
 			break;
 		case 7:
 			earth.GetComponent<MeshFilter>().mesh = sphere3;
-			SetTexture(0);
-			tFactor = 1;
+			SetTexture(7);
 			source = 3341;
 			manPos = 7073;
 			break;
 		case 8:
 			earth.GetComponent<MeshFilter>().mesh = sphere;
-			SetTexture(0);
-			tFactor = 1;
+			SetTexture(7);
 			source = 42;
 			manPos = 775;
 			break;
 		case 9:
 			earth.GetComponent<MeshFilter>().mesh = sphere2;
-			SetTexture(0);
-			tFactor = 1;
+			SetTexture(7);
 			source = 42;
 			manPos = 775;
 			break;
+		case 11:
+			earth.GetComponent<MeshFilter>().mesh = hemisphere;
+			SetTexture(7);
+			source = 1331;
+			manPos = 475;
+			break;
 		case 10:
 			earth.GetComponent<MeshFilter>().mesh = dragon;
+			reorder = 0;
 			SetTexture(6);
-			source = 42;
+			source = 7561;
 			manPos = 7284;
 			break;
 		}
 		roadBase.SetActive(level == 5);
+		hemiCap.SetActive(level == 11);
+
+		// Reorder the vertex indices of the mesh in order to decrease fill-in of a Cholesky decomposition.
+		if (reorder >= 0) {
+			MeshFactory.ReorderVertexIndices(earth.GetComponent<MeshFilter>().mesh, reorder);
+		}
 
 		if (useDefaultSettings) {
 			Settings.tFactor = tFactor;
-			Settings.defaultSource = source;
+			Settings.defaultSource = new List<int>();
+			Settings.defaultSource.Add(source);
 			Settings.initialManPos = manPos;
 			inputT.text = Settings.tFactor.ToString();
-			ClearVisualGradient();
 		} else {
-			Settings.defaultSource = hg.s.index;
-			Settings.initialManPos = man.triangle.index;
+			Settings.defaultSource = new List<int>();
+			foreach (Vertex sourceVertex in hg.s) {
+				Settings.defaultSource.Add(sourceVertex.index);
+			}
+			Settings.initialManPos = man.coord.triangle.index;
 		}
 
 		// Set collider to detect mouse hit
 		earth.GetComponent<MeshCollider>().sharedMesh = earth.GetComponent<MeshFilter>().mesh;
 
 		// Build geometry data
-		g = new Geometry(GetComponent<MeshFilter>().mesh);
+		g = new Geometry(earth.GetComponent<MeshFilter>().mesh);
 
 		if (level == 6) {
 			// Fix certain broken triangles for the triceratops
@@ -280,22 +362,40 @@ public class TestPathFinding : MonoBehaviour {
 		}
 
 		// Start heat method
-		hg = new HeatGeodesics(g);
+		hg = new HeatGeodesics(g, Settings.useCholesky);
 		hg.Initialize();
-		hg.CalculateGeodesics(g.vertices[Settings.defaultSource]);
+		List<Vertex> sources = new List<Vertex>();
+		foreach (int ind in Settings.defaultSource) {
+			sources.Add(g.vertices[ind]);
+		}
+		hg.CalculateGeodesics(sources);
 		if (man.isActiveAndEnabled) {
 			man.GetReady(g, hg, g.faces[Settings.initialManPos]);
 		}
 
-		// Put the mark at the source vertex
-		pin.transform.position = g.vertices[Settings.defaultSource].p;
-		pin.transform.rotation = Quaternion.LookRotation(g.vertices[Settings.defaultSource].CalculateNormalTri());
+		// Put the mark at the source vertices
+		if (useDefaultSettings) {
+			foreach (GameObject oldPin in pins) {
+				Destroy(oldPin);
+			}
+			pins.Clear();
+			foreach (int ind in Settings.defaultSource) {
+				GameObject newPin = Instantiate(pin);
+				pins.Add(newPin);
+				newPin.transform.position = g.vertices[ind].p;
+				newPin.transform.rotation = Quaternion.LookRotation(g.vertices[ind].CalculateNormalTri());
+			}
+		}
 
 		// Update counter
 		triangleCounter.text = "Triangle Count = " + g.faces.Count;
 
-		if (!useDefaultSettings) {
-			UpdateVisualGradient();
+		if (visualState != 0) {
+			if (useDefaultSettings) {
+				VisualizeGradient(visualState == 2);
+			} else {
+				UpdateVisualGradient();
+			}
 		}
 	}
 
@@ -308,7 +408,7 @@ public class TestPathFinding : MonoBehaviour {
 		ColorMixer background;
 		ColorMixer stripe;
 		Texture2D tex;
-		Material mat = earth.GetComponent<MeshRenderer>().material;
+		Material mat = mainMat;
 
 		int period;
 		int width;
@@ -317,7 +417,7 @@ public class TestPathFinding : MonoBehaviour {
 
 		case 0:
 		default:
-			// Yellow-red-black rubber, bright yellow gap
+			// White purple rubber, bright yellow gap
 			period = 82;
 			width = 11;
 			Settings.mappingDistance = 3;
@@ -325,13 +425,13 @@ public class TestPathFinding : MonoBehaviour {
 
 			background = new ColorMixer();
 			stripe = new ColorMixer();
-			background.InsertColorNode(Color.yellow, 0.1f);
-			background.InsertColorNode(Color.red, 0.4f);
-			background.InsertColorNode(Color.black, 0.7f);
-			background.InsertColorNode(Color.black, 0.8f);
-			background.InsertColorNode(Color.red, 0.9f);
-			background.InsertColorNode(Color.yellow, 1f);
-			stripe.InsertColorNode(new Color(1f,1f,0.5f), 0);
+			background.InsertColorNode(new Color(1f, 0.9f, 1f), 0.1f);
+			background.InsertColorNode(new Color(1f, 0, 1f), 0.4f);
+			background.InsertColorNode(new Color(0.4f, 0, 0.6f), 0.7f);
+			background.InsertColorNode(new Color(0.4f, 0, 0.6f), 0.8f);
+			background.InsertColorNode(new Color(1f, 0, 1f), 0.9f);
+			background.InsertColorNode(new Color(1f, 0.9f, 1f), 1f);
+			stripe.InsertColorNode(new Color(0.9f,0.9f,0.45f), 0);
 			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
 			mat.mainTexture = tex;
 			
@@ -339,7 +439,6 @@ public class TestPathFinding : MonoBehaviour {
 			stripe = new ColorMixer();
 			background.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0);
 			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 1f), 0);
-			//stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0.5f);
 			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 0f), 1);
 			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe, true);
 			mat.SetTexture("_BumpMap", tex);
@@ -553,7 +652,7 @@ public class TestPathFinding : MonoBehaviour {
 			break;
 
 		case 6:
-			// Yellow-red-black rubber,
+			// Yellow-red-black rubber + light
 			period = 82;
 			width = 12;
 			Settings.mappingDistance = 3;
@@ -567,21 +666,7 @@ public class TestPathFinding : MonoBehaviour {
 			background.InsertColorNode(Color.black, 0.8f);
 			background.InsertColorNode(Color.red, 0.9f);
 			background.InsertColorNode(Color.yellow, 1f);
-			stripe.InsertColorNode(Color.yellow, 0.1f);
-			stripe.InsertColorNode(Color.red, 0.4f);
-			stripe.InsertColorNode(Color.black, 0.7f);
-			stripe.InsertColorNode(Color.black, 0.8f);
-			stripe.InsertColorNode(Color.red, 0.9f);
-			stripe.InsertColorNode(Color.yellow, 1f);
-			//stripe.InsertColorNode(new Color(1f,1f,0.5f), 0);
-			/*stripe.InsertColorNode(new Color(1,1,0.5f), 0.1f);
-			stripe.InsertColorNode(Color.yellow, 0.2f);
-			stripe.InsertColorNode(Color.red, 0.5f);
-			stripe.InsertColorNode(Color.black, 0.75f);
-			stripe.InsertColorNode(Color.red, 0.85f);
-			stripe.InsertColorNode(Color.yellow, 0.95f);
-			stripe.InsertColorNode(new Color(1,1,0.5f), 1f);*/
-			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
+			tex = MeshFactory.CreateStripedTexture(2048, period, 0, 20, background, stripe);
 			mat.mainTexture = tex;
 
 			background = new ColorMixer();
@@ -593,14 +678,6 @@ public class TestPathFinding : MonoBehaviour {
 			stripe.InsertColorNode(Color.black, 0.8f);
 			stripe.InsertColorNode(Color.red, 0.9f);
 			stripe.InsertColorNode(Color.yellow, 1f);
-			//stripe.InsertColorNode(new Color(1f,1f,0.5f), 0);
-			/*stripe.InsertColorNode(new Color(1,1,0.5f), 0.1f);
-			stripe.InsertColorNode(Color.yellow, 0.2f);
-			stripe.InsertColorNode(Color.red, 0.5f);
-			stripe.InsertColorNode(Color.black, 0.75f);
-			stripe.InsertColorNode(Color.red, 0.85f);
-			stripe.InsertColorNode(Color.yellow, 0.95f);
-			stripe.InsertColorNode(new Color(1,1,0.5f), 1f);*/
 			tex = MeshFactory.CreateStripedTexture(2048, period, width-2, 21, background, stripe);
 			mat.SetTexture("_EmissionMap", tex);
 			mat.SetColor("_EmissionColor", new Color(0.5f, 0.5f, 0.5f));
@@ -617,13 +694,54 @@ public class TestPathFinding : MonoBehaviour {
 			mat.SetTexture("_BumpMap", tex);
 			mat.EnableKeyword("_NORMALMAP");
 
-			//mat.DisableKeyword("_EMISSION");
 			mat.DisableKeyword("_SPECGLOSSMAP");
+			break;
+
+		case 7:
+			// White-yellow-orange plaster, black stripe
+			period = 82;
+			width = 11;
+			Settings.mappingDistance = 3;
+			Settings.ScrollSpeed = 0.066f;
+			
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(1f, 1f, 0.8f), 0.1f);
+			background.InsertColorNode(new Color(1f, 1f, 0f), 0.3f);
+			background.InsertColorNode(new Color(1f, 0.3f, 0f), 0.7f);
+			background.InsertColorNode(new Color(1f, 0.3f, 0f), 0.8f);
+			background.InsertColorNode(new Color(1f, 1f, 0f), 0.93f);
+			background.InsertColorNode(new Color(1f, 1f, 0.8f), 1f);
+			stripe.InsertColorNode(new Color(0.1f, 0.1f, 0.1f), 0);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
+			mat.mainTexture = tex;
+
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(0.33f, 0.33f, 0.33f, 0.33f), 0);
+			stripe.InsertColorNode(new Color(0.4f, 0.4f, 0.4f, 0.5f), 0);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
+			mat.SetTexture("_SpecGlossMap", tex);
+			mat.EnableKeyword("_SPECGLOSSMAP");
+
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 1f), 0);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 0f), 1);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe, true);
+			mat.SetTexture("_BumpMap", tex);
+			mat.EnableKeyword("_NORMALMAP");
+			
+			mat.DisableKeyword("_EMISSION");
 			break;
 		}
 
 	}
 
+	/// <summary>
+	/// This function is executed when the user changes the value of t using the input field.
+	/// </summary>
 	public void SetTFactor(string t) {
 		if (double.TryParse(t, out Settings.tFactor)) {
 			inputT.text = Settings.tFactor.ToString();
@@ -635,6 +753,10 @@ public class TestPathFinding : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Actives the gradient visualization.
+	/// If heat is set to true, the gradient of the heat field will be drawn instead of the distance gradient.
+	/// </summary>
 	public void VisualizeGradient(bool heat) {
 		ClearVisualGradient();
 		arrows = new GameObject[g.faces.Count];
@@ -643,11 +765,15 @@ public class TestPathFinding : MonoBehaviour {
 		}
 		visualState = heat ? 2 : 1;
 		UpdateVisualGradient();
-		visualModeText.text = "Visualization Mode = " + (heat ? "Heat gradient" : "Distance gradient");
+		UpdateInfoText();
 	}
 
+	/// <summary>
+	/// Updates the gradient visualization.
+	/// </summary>
 	public void UpdateVisualGradient() {
 		if (visualState == 2) {
+			// Heat gradient
 			for (int i = 0; i < g.faces.Count; i++) {
 				Face face = g.faces[i];
 				arrows[i].transform.SetParent(visual.transform);
@@ -659,8 +785,9 @@ public class TestPathFinding : MonoBehaviour {
 					arrows[i].transform.rotation = Quaternion.LookRotation(face.CalculateNormalTri());
 				}
 			}
-			visualModeText.text = "Visualization Mode = Heat gradient";
+			UpdateInfoText();
 		} else if (visualState == 1) {
+			// Distance gradient
 			for (int i = 0; i < g.faces.Count; i++) {
 				Face face = g.faces[i];
 				arrows[i].transform.SetParent(visual.transform);
@@ -672,19 +799,25 @@ public class TestPathFinding : MonoBehaviour {
 					arrows[i].transform.rotation = Quaternion.LookRotation(face.CalculateNormalTri());
 				}
 			}
-			visualModeText.text = "Visualization Mode = Distance gradient";
+			UpdateInfoText();
 		}
 	}
 
+	/// <summary>
+	/// Clears the gradient visualization.
+	/// </summary>
 	public void ClearVisualGradient() {
 		for (int i = 0; i < visual.transform.childCount; i++) {
 			Destroy(visual.transform.GetChild(i).gameObject);
 		}
 		arrows = null;
 		visualState = 0;
-		visualModeText.text = "";
+		UpdateInfoText();
 	}
 
+	/// <summary>
+	/// Toggles between distance gradient, heat gradient and nothing.
+	/// </summary>
 	public void ToggleGradient() {
 		if (visualState == 0) {
 			VisualizeGradient(false);
@@ -693,6 +826,56 @@ public class TestPathFinding : MonoBehaviour {
 			UpdateVisualGradient();
 		} else {
 			ClearVisualGradient();
+		}
+	}
+
+	/// <summary>
+	/// Toggles between wireframe and normal material.
+	/// </summary>
+	public void ToggleMaterialMode() {
+		if (materialMode == 0) {
+			materialMode = 1;
+			earth.GetComponent<MeshRenderer>().material = wireframe;
+		} else {
+			materialMode = 0;
+			earth.GetComponent<MeshRenderer>().material = mainMat;
+		}
+		UpdateInfoText();
+	}
+
+	/// <summary>
+	/// Toggles usage of Cholesky decomposition.
+	/// </summary>
+	public void ToggleCholesky(bool on) {
+		Settings.useCholesky = on;
+		useDefaultSettings = false;
+		SetLevel(levelIndex);
+		useDefaultSettings = true;
+	}
+
+	public void ChangeBoundaryCondition(float coeff) {
+		changedBoundaryCond = coeff;
+	}
+
+	public void Clicking(BaseEventData data) {
+		PointerEventData pdata = (PointerEventData) data;
+		clicking = pdata.button == PointerEventData.InputButton.Left;
+	}
+
+	private void UpdateInfoText() {
+		if (visualState == 0) {
+			visualModeText.text = "";
+		} else if (visualState == 1) {
+			visualModeText.text = "Visualization Mode = Distance gradient";
+		} else if (visualState == 2) {
+			visualModeText.text = "Visualization Mode = Heat gradient";
+		}
+		if (materialMode == 1) {
+			if (visualState == 0) {
+				visualModeText.text = "Visualization Mode = Wireframe";
+			} else {
+				visualModeText.text += " + Wireframe";
+			}
 		}
 	}
 }

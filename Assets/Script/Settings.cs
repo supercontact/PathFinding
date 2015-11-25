@@ -1,10 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 /// A class to store global variables.
 /// </summary>
 public class Settings {
+
+	/// <summary>
+	/// Whether or not we use Cholesky decomposition to accelerate the calculation (which will however make initialization slower).
+	/// </summary>
+	public static bool useCholesky = true;
+
+	/// <summary>
+	/// The boundary condition interpolation.
+	/// 0 - Neumann condition, 1 - Dirichlet condition
+	/// </summary>
+	public static float boundaryCondition = 0.5f;
 
 	/// <summary>
 	/// Distance on the surface that correspond to one period of the texture.
@@ -29,7 +41,7 @@ public class Settings {
 	/// <summary>
 	/// Default index of the source vertex.
 	/// </summary>
-	public static int defaultSource = 42;
+	public static List<int> defaultSource = new List<int>();
 
 	/// <summary>
 	/// Default index of the triangle where the walking man is initially standing.
