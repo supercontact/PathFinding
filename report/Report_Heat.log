@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.8.16)  22 NOV 2015 17:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (MiKTeX 2.9) (preloaded format=pdflatex 2015.8.16)  26 NOV 2015 23:02
 entering extended mode
 **Report_Heat.tex
 (Report_Heat.tex
@@ -668,7 +668,7 @@ LaTeX Info: Redefining \nameref on input line 15.
 Package lastpage Info: Please have a look at the pageslts package at
 (lastpage)             https://www.ctan.org/pkg/pageslts
 (lastpage)             ! on input line 15.
-<polytechnique-armes.pdf, id=95, 195.21231pt x 257.65057pt>
+<polytechnique-armes.pdf, id=103, 195.21231pt x 257.65057pt>
 File: polytechnique-armes.pdf Graphic file (type pdf)
 
 <use polytechnique-armes.pdf>
@@ -681,7 +681,7 @@ File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Info: Redefining \\ on input line 17.
 
-<polytechnique-filetcourtbleu.pdf, id=96, 28.40442pt x 2.16678pt>
+<polytechnique-filetcourtbleu.pdf, id=104, 28.40442pt x 2.16678pt>
 File: polytechnique-filetcourtbleu.pdf Graphic file (type pdf)
 
 <use polytechnique-filetcourtbleu.pdf>
@@ -717,7 +717,7 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 17.
 
-<polytechnique-logovert.pdf, id=97, 196.53926pt x 267.24042pt>
+<polytechnique-logovert.pdf, id=105, 196.53926pt x 267.24042pt>
 File: polytechnique-logovert.pdf Graphic file (type pdf)
 
 <use polytechnique-logovert.pdf>
@@ -730,7 +730,7 @@ aming/MiKTeX/2.9/tex/latex/polytechnique/resources/polytechnique-armes.pdf> <C:
 /Users/ascan/AppData/Roaming/MiKTeX/2.9/tex/latex/polytechnique/resources/polyt
 echnique-filetcourtbleu.pdf> <C:/Users/ascan/AppData/Roaming/MiKTeX/2.9/tex/lat
 ex/polytechnique/resources/polytechnique-logovert.pdf>]
-<polytechnique-filetlongrouge.pdf, id=164, 124.21106pt x 2.16629pt>
+<polytechnique-filetlongrouge.pdf, id=172, 124.21106pt x 2.16629pt>
 File: polytechnique-filetlongrouge.pdf Graphic file (type pdf)
 
 <use polytechnique-filetlongrouge.pdf>
@@ -743,7 +743,7 @@ Package pdftex.def Info: polytechnique-filetlongrouge.pdf used on input line 25
 .
 (pdftex.def)             Requested size: 124.21074pt x 2.16628pt.
 
-<polytechnique-filetcourtbleuclair.pdf, id=165, 28.40492pt x 2.16678pt>
+<polytechnique-filetcourtbleuclair.pdf, id=173, 28.40492pt x 2.16678pt>
 File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
 
 <use polytechnique-filetcourtbleuclair.pdf>
@@ -762,7 +762,7 @@ File: omslmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 LaTeX Font Info:    Font shape `OMS/lmr/m/sc' in size <14.4> not available
 (Font)              Font shape `OMS/lmsy/m/n' tried instead on input line 34.
 
-<polytechnique-logohori.pdf, id=166, 195.52248pt x 85.3575pt>
+<polytechnique-logohori.pdf, id=174, 195.52248pt x 85.3575pt>
 File: polytechnique-logohori.pdf Graphic file (type pdf)
 
 <use polytechnique-logohori.pdf>
@@ -797,80 +797,146 @@ File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
 
 <use polytechnique-filetcourtbleuclair.pdf>
 Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
-ne 71.
+ne 65.
 (pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
 File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
 
 <use polytechnique-filetcourtbleuclair.pdf>
 Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
-ne 75.
-(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
-File: polytechnique-filetlongrouge.pdf Graphic file (type pdf)
-
-<use polytechnique-filetlongrouge.pdf>
-Package pdftex.def Info: polytechnique-filetlongrouge.pdf used on input line 81
-.
-(pdftex.def)             Requested size: 124.21074pt x 2.16628pt.
-File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
-
-<use polytechnique-filetcourtbleuclair.pdf>
-Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
-ne 83.
+ne 79.
 (pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
 File: polytechnique-logohori.pdf Graphic file (type pdf)
  <use polytechnique-logohori.pdf>
-Package pdftex.def Info: polytechnique-logohori.pdf used on input line 86.
+Package pdftex.def Info: polytechnique-logohori.pdf used on input line 82.
 (pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
 
 [3]
 File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
  <use polytechnique-filetcourtbleuclair.pdf>
 Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
-ne 88.
+ne 100.
 (pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
 File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
 
 <use polytechnique-filetcourtbleuclair.pdf>
 Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
-ne 90.
+ne 120.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetlongrouge.pdf Graphic file (type pdf)
+
+<use polytechnique-filetlongrouge.pdf>
+Package pdftex.def Info: polytechnique-filetlongrouge.pdf used on input line 12
+5.
+(pdftex.def)             Requested size: 124.21074pt x 2.16628pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 127.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-logohori.pdf Graphic file (type pdf)
+ <use polytechnique-logohori.pdf>
+Package pdftex.def Info: polytechnique-logohori.pdf used on input line 130.
+(pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
+
+[4]
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+ <use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 130.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 133.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 137.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetlongrouge.pdf Graphic file (type pdf)
+
+<use polytechnique-filetlongrouge.pdf>
+Package pdftex.def Info: polytechnique-filetlongrouge.pdf used on input line 13
+9.
+(pdftex.def)             Requested size: 124.21074pt x 2.16628pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 141.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 164.
 (pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 114--115
+Underfull \hbox (badness 10000) in paragraph at lines 171--172
 
  []
 
 File: polytechnique-logohori.pdf Graphic file (type pdf)
 <use polytechnique-logohori.pdf>
-Package pdftex.def Info: polytechnique-logohori.pdf used on input line 125.
+Package pdftex.def Info: polytechnique-logohori.pdf used on input line 172.
 (pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
- [4]
+ [5]
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 173.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 175.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
+File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
+
+<use polytechnique-filetcourtbleuclair.pdf>
+Package pdftex.def Info: polytechnique-filetcourtbleuclair.pdf used on input li
+ne 177.
+(pdftex.def)             Requested size: 28.40483pt x 2.16676pt.
 File: polytechnique-filetlongrouge.pdf Graphic file (type pdf)
- <use polytechnique-filetlongrouge.pdf>
-Package pdftex.def Info: polytechnique-filetlongrouge.pdf used on input line 12
-5.
+
+<use polytechnique-filetlongrouge.pdf>
+Package pdftex.def Info: polytechnique-filetlongrouge.pdf used on input line 18
+2.
 (pdftex.def)             Requested size: 124.21074pt x 2.16628pt.
-
-
+ 
 AED: lastpage setting LastPage
 File: polytechnique-logohori.pdf Graphic file (type pdf)
 <use polytechnique-logohori.pdf>
-Package pdftex.def Info: polytechnique-logohori.pdf used on input line 130.
+Package pdftex.def Info: polytechnique-logohori.pdf used on input line 189.
 (pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
- [5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 130.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 130.
+ [6]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
  (Report_Heat.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 130.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 130.
-Package rerunfilecheck Info: File `Report_Heat.out' has not changed.
-(rerunfilecheck)             Checksum: 6017E62E4AD0D0FB76CD3A375E7179F3;1480.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
+
+
+Package rerunfilecheck Warning: File `Report_Heat.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `Report_Heat.out':
+(rerunfilecheck)             Before: 2D37A8429CA6C90AE7B2AEE56F6F5FB2;1544
+(rerunfilecheck)             After:  A4D044D3539032CA369523DE46F42BD4;1547.
  ) 
 Here is how much of TeX's memory you used:
- 8471 strings out of 493673
- 123916 string characters out of 3141530
- 232060 words of memory out of 3000000
- 11664 multiletter control sequences out of 15000+200000
- 63567 words of font info for 47 fonts, out of 3000000 for 9000
+ 8489 strings out of 493673
+ 123993 string characters out of 3141530
+ 233057 words of memory out of 3000000
+ 11667 multiletter control sequences out of 15000+200000
+ 67829 words of font info for 48 fonts, out of 3000000 for 9000
  1025 hyphenation exceptions out of 8191
  32i,10n,47p,853b,508s stack positions out of 5000i,500n,10000p,200000b,50000s
 {C:/Program Files (x86)/MiKTeX 2.9/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Progr
@@ -883,12 +949,13 @@ c10.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmex10.pfb><C:
 les (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmmi8.pfb><C:/Program Files (x86)/Mi
 KTeX 2.9/fonts/type1/public/lm/lmr12.pfb><C:/Program Files (x86)/MiKTeX 2.9/fon
 ts/type1/public/lm/lmr17.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/pub
-lic/lm/lmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmss17
-.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/
-Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
-Output written on Report_Heat.pdf (5 pages, 1718643 bytes).
+lic/lm/lmr8.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmri12
+.pfb><C:/Program Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmss17.pfb><C:/Pr
+ogram Files (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmssbx10.pfb><C:/Program Fil
+es (x86)/MiKTeX 2.9/fonts/type1/public/lm/lmsy10.pfb>
+Output written on Report_Heat.pdf (6 pages, 1751439 bytes).
 PDF statistics:
- 302 PDF objects out of 1000 (max. 8388607)
- 29 named destinations out of 1000 (max. 500000)
- 215 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 335 PDF objects out of 1000 (max. 8388607)
+ 43 named destinations out of 1000 (max. 500000)
+ 231 words of extra memory for PDF output out of 10000 (max. 10000000)
 
