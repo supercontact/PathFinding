@@ -171,7 +171,13 @@ public class MeshFactory {
 		return m;
 	}
 
-	public static void MergeOverlappingPoints(Mesh mesh, float threshold = 0.0001f) {
+
+	/// <summary>
+	/// Merges all overlapping points (points with a distance smaller than the threshold between them).
+	/// Useful for removing UV seams.
+	/// </summary>
+	/// <param name="mesh">Mesh.</param>
+	public static void MergeOverlappingPoints(Mesh mesh, float threshold = 0.00001f) {
 		Vector3[] verts = mesh.vertices;
 		int[] triangles = mesh.triangles;
 
@@ -189,9 +195,6 @@ public class MeshFactory {
 			if (replacement[i] == -1) {
 				// Replace all vertices within the threshold radius by this vertex
 				int[] pts = kd.RangeSearch(verts[i], threshold);
-				if (pts.Length > 1) {
-					Debug.Log("merged " + pts.Length + " points!");
-				}
 				for (int j = 0; j < pts.Length; j++) {
 					if (pts[j] != i) {
 						replacement[pts[j]] = i;
@@ -226,7 +229,49 @@ public class MeshFactory {
 		mesh.vertices = usedVertices;
 		mesh.RecalculateNormals();
 	}
-	
+
+
+	/// <summary>
+	/// Reorders the vertex indices of the mesh in order to decrease fill-in of a Cholesky decomposition.
+	/// axis: 0 - x, 1 - y, 2 - z
+	/// </summary>
+	public static void ReorderVertexIndices(Mesh mesh, int axis = 0) {
+		Vector3[] verts = mesh.vertices;
+		int[] triangles = mesh.triangles;
+		int n = verts.Length;
+		int f = triangles.Length / 3;
+		int[] oldIndices = new int[n];
+		int[] newIndices = new int[n];
+		for (int i = 0; i < n; i++) {
+			oldIndices[i] = i;
+		}
+
+		Array.Sort<Vector3, int>(verts, oldIndices, new VecComparer(axis));
+		for (int i = 0; i < n; i++) {
+			newIndices[oldIndices[i]] = i;
+		}
+		for (int i = 0; i < f * 3; i++) {
+			triangles[i] = newIndices[triangles[i]];
+		}
+
+		// Update mesh object
+		mesh.triangles = triangles;
+		mesh.vertices = verts;
+		mesh.RecalculateNormals();
+	}
+
+	class VecComparer : IComparer<Vector3> {
+		int axis;
+		public VecComparer(int axis) {
+			this.axis = axis;
+		}
+		public int Compare(Vector3 v1, Vector3 v2)
+		{
+			return (v1[axis] - v2[axis] > 0) ? 1 : ((v1[axis] - v2[axis] < 0) ? -1 : 0);
+		}
+	}
+
+
 	/// <summary>
 	/// Applys a transform to a mesh.
 	/// </summary>
@@ -292,6 +337,7 @@ public class MeshFactory {
 		m.RecalculateNormals();
 		return m;
 	}
+
 
 	/// <summary>
 	/// Creates a striped texture.

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 
 /// <summary>
@@ -24,7 +25,9 @@ public class ObserveCamera : MonoBehaviour {
 	private Quaternion targetRotation;
 
 	private Vector3 prevMousePos;
-	private int mouseMode = 0;
+	private int mouseMode = -1;
+
+	private bool clicking;
 
 	// Start is called at the beginning
 	void Start () {
@@ -37,7 +40,8 @@ public class ObserveCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Time.deltaTime != 0f) {
-			if (Input.GetMouseButtonDown(0)) {
+			if (clicking) {
+				clicking = false;
 				prevMousePos = Input.mousePosition;
 				mouseMode = 0;
 				center.Hide();
@@ -64,7 +68,10 @@ public class ObserveCamera : MonoBehaviour {
 				                           Input.mouseScrollDelta.y * targetDistance * mouseScrollMovingFactor);
 				targetOffset += targetRotation * move;
 				prevMousePos = Input.mousePosition;
+			} else {
+				mouseMode = -1;
 			}
+
 			if (Input.GetMouseButtonUp(1)) {
 				center.Hide();
 			}
@@ -85,6 +92,11 @@ public class ObserveCamera : MonoBehaviour {
 			transform.position = target.transform.position + distance * (transform.rotation * Vector3.back) + offset;
 			center.transform.localPosition = new Vector3(0, 0, distance);
 		}
+	}
+
+	public void Clicking(BaseEventData data) {
+		PointerEventData pdata = (PointerEventData) data;
+		clicking = pdata.button == PointerEventData.InputButton.Left;
 	}
 
 

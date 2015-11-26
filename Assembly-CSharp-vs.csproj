@@ -47,14 +47,15 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\CameraCenterScript.cs" />
+     <Compile Include="Assets\Script\DijkstraEdgePathFinding.cs" />
      <Compile Include="Assets\Script\Geometry.cs" />
      <Compile Include="Assets\Script\HeatGeodesics.cs" />
      <Compile Include="Assets\Script\KDTree.cs" />
      <Compile Include="Assets\Script\MeshFactory.cs" />
      <Compile Include="Assets\Script\ObserveCamera.cs" />
      <Compile Include="Assets\Script\Settings.cs" />
+     <Compile Include="Assets\Script\SurfaceObject.cs" />
      <Compile Include="Assets\Script\TestPathFinding.cs" />
-     <Compile Include="Assets\Script\WalkMesh.cs" />
      <Compile Include="Assets\Script\WalkingMan.cs" />
      <None Include="Assets\Resources\OFF\bague.txt" />
      <None Include="Assets\Resources\OFF\sphere.txt" />
@@ -64,6 +65,7 @@
      <None Include="Assets\Resources\OFF\star.txt" />
      <None Include="Assets\Resources\OFF\tetrahedron.txt" />
      <None Include="Assets\Resources\OFF\cube.txt" />
+     <None Include="Assets\Materials\Wireframe.shader" />
      <None Include="Assets\Resources\OFF\high_genus.txt" />
      <None Include="Assets\Resources\OFF\torus_33.txt" />
      <None Include="Assets\Resources\OFF\tore.txt" />
@@ -81,6 +83,9 @@
  </Reference>
  <Reference Include="alglibnet2">
  <HintPath>D:/Unity projects/PathFinding/Assets/alglibnet2.dll</HintPath>
+ </Reference>
+ <Reference Include="C5">
+ <HintPath>D:/Unity Projects/Path Finding/Assets/C5.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.iOS.Extensions.Xcode">
  <HintPath>C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
