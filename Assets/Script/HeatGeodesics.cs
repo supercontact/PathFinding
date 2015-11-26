@@ -57,6 +57,9 @@ public class HeatGeodesics {
 	/// Call this to build matrices.
 	/// </summary>
 	public void Initialize(bool clearSources = true) {
+		float time = Time.realtimeSinceStartup;
+		Debug.Log("Initializing matrices...");
+
 		if (clearSources) {
 			s = new List<Vertex>();
 		}
@@ -78,6 +81,10 @@ public class HeatGeodesics {
 			alglib.sparseconverttocrs(A1);
 		}
 
+		Debug.Log("Heat equation matrix built, time = " + (Time.realtimeSinceStartup - time) * 1000 + "ms");
+		time = Time.realtimeSinceStartup;
+
+
 		if (g.hasBorder && Settings.boundaryCondition > 0) {
 			// Dirichlet condition heat matrix
 			A1b = g.CalculateLcMatrixSparse(- Settings.tFactor * g.h * g.h, true, multiSource ? s : null);
@@ -93,13 +100,22 @@ public class HeatGeodesics {
 			} else {
 				alglib.sparseconverttocrs(A1b);
 			}
+
+			Debug.Log("Additional heat equation matrix built (dirichlet), time = " + (Time.realtimeSinceStartup - time) * 1000 + "ms");
+			time = Time.realtimeSinceStartup;
 		}
 
+
 		// Laplacien matrix
-		A2 = g.CalculateLcMatrixSparse(-1);
+		A2 = g.CalculateLcMatrixSparse(-1, false, multiSource ? s : null);
+		if (multiSource) {
+			foreach (Vertex src in s) {
+				alglib.sparseadd(A2, src.index, src.index, 1);
+			}
+		}
 		if (useCholesky) {
 			for (int i = 0; i < n; i++) {
-				alglib.sparseadd(A2, i, i, 0.0000000001); // To make it positive definite
+				alglib.sparseadd(A2, i, i, 0.000000001); // To make it positive definite
 			}
 			alglib.sparseconverttosks(A2);
 			alglib.sparsecholeskyskyline(A2, n, true);
@@ -107,8 +123,14 @@ public class HeatGeodesics {
 			alglib.sparseconverttocrs(A2);
 		}
 
+		Debug.Log("Laplacien matrix built, time = " + (Time.realtimeSinceStartup - time) * 1000 + "ms");
+		time = Time.realtimeSinceStartup;
+
+
 		// Tables of Cotangent value * edge vectors
 		div = g.CalculateDivData();
+
+		Debug.Log("Cotangent table built, time = " + (Time.realtimeSinceStartup - time) * 1000 + "ms");
 	}
 
 	/// <summary>
@@ -146,7 +168,7 @@ public class HeatGeodesics {
 		int f = g.faces.Count;
 
 		float time = Time.realtimeSinceStartup;
-		Debug.Log("t = 0ms");
+		Debug.Log("Begin geodesic calculation...");
 
 		// Solve heat equation
 		double[] b = new double[n];
@@ -199,9 +221,8 @@ public class HeatGeodesics {
 			}
 		}
 
-		//Debug.Log("Solved first linear system, termination = " + rep1.terminationtype);
-		Debug.Log("Solved first linear system.");
-		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		Debug.Log("Solved first linear system, heat field calculated, time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		time = Time.realtimeSinceStartup;
 
 
 		// Calculate X, normalized gradient of heat field
@@ -226,8 +247,8 @@ public class HeatGeodesics {
 			face.ClearEdgeArray();
 		}
 
-		Debug.Log("Gradient of heat flow calculated");
-		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		Debug.Log("Gradient of heat flow calculated, time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		time = Time.realtimeSinceStartup;
 
 
 		// Calculate div(X);
@@ -255,21 +276,27 @@ public class HeatGeodesics {
 			divX[i] -= divXmean;
 		}
 
-		Debug.Log("Div of X calculated");
-		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		Debug.Log("Div of X calculated, time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		time = Time.realtimeSinceStartup;
 
 
 		// Solve Poisson equation
+		phi = new double[n];
+		Array.Copy(divX, phi, n);
+		if (s.Count > 1) {
+			foreach (Vertex src in s) {
+				phi[src.index] = 0;
+			}
+		}
 		if (useCholesky) {
-			phi = new double[n];
-			Array.Copy(divX, phi, n);
+
 			alglib.sparsetrsv(A2, true, false, 1, ref phi);
 			alglib.sparsetrsv(A2, true, false, 0, ref phi);
 		} else {
 			alglib.lincgstate s2;
 			alglib.lincgreport rep2;
 			alglib.lincgcreate(n, out s2);
-			alglib.lincgsolvesparse(s2, A2, true, divX);
+			alglib.lincgsolvesparse(s2, A2, true, phi);
 			alglib.lincgresults(s2, out phi, out rep2);
 		}
 
@@ -278,28 +305,9 @@ public class HeatGeodesics {
 			phi[i] -= phi0;
 		}
 
-		//Debug.Log("Distance field calculated (Second linear system), termination = " + rep2.terminationtype);
-		Debug.Log("Distance field calculated (Second linear system)");
-		Debug.Log("t = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		Debug.Log("Distance field calculated (Second linear system), time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		time = Time.realtimeSinceStartup;
 
-		// Adjust uv coordinates of vertices in order to show the distance mapping
-		// Tangent field provides necessary information for normal mapping
-		Vector2[] uv = new Vector2[n];
-		Vector4[] tangents = new Vector4[n];
-		for (int i = 0; i < n; i++) {
-			uv[i] = new Vector2((float) (phi[i] / Settings.mappingDistance), 0);
-			Vector3 tgt = new Vector3();
-			foreach (Halfedge e in g.vertices[i].edges) {
-				if (e.face.index != -1) {
-					tgt += X[e.face.index];
-				}
-			}
-			tgt.Normalize();
-			tangents[i] = new Vector4(tgt.x, tgt.y, tgt.z, 1);
-			g.vertices[i].ClearEdgeArray();
-		}
-		g.linkedMesh.uv = uv;
-		g.linkedMesh.tangents = tangents;
 
 		// Calculate gradient of the distance field
 		GradPhi = new Vector3[f];
@@ -318,6 +326,36 @@ public class HeatGeodesics {
 			GradPhi[i] = new Vector3((float) (gx / l), (float) (gy / l), (float) (gz / l));
 			face.ClearEdgeArray();
 		}
+
+		Debug.Log("Distance gradient calculated, time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
+		time = Time.realtimeSinceStartup;
+
+
+		// Adjust uv coordinates of vertices in order to show the distance mapping
+		// Tangent field provides necessary information for normal mapping
+		Vector2[] uv = new Vector2[n];
+		Vector4[] tangents = new Vector4[n];
+		for (int i = 0; i < n; i++) {
+			uv[i] = new Vector2((float) (phi[i] / Settings.mappingDistance), 0);
+			Vector3 tgt = new Vector3();
+			foreach (Halfedge e in g.vertices[i].edges) {
+				if (e.face.index != -1) {
+					tgt -= GradPhi[e.face.index];
+				}
+			}
+			tgt.Normalize();
+			if (tgt.sqrMagnitude == 0) {
+				tgt = g.vertices[i].CalculateNormalTri();
+			}
+			tangents[i] = new Vector4(tgt.x, tgt.y, tgt.z, 1);
+
+			g.vertices[i].ClearEdgeArray();
+		}
+		g.linkedMesh.uv = uv;
+		g.linkedMesh.tangents = tangents;
+
+
+		Debug.Log("UV and tangent set, time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
 
 	}
 

@@ -62,10 +62,8 @@ public class SurfaceObject {
 			return;
 		}
 		// If reached the source, stop
-		foreach (Vertex source in navigation.s) {
-			if ((source.p - BarycenterToWorldCoord(coeffs)).magnitude < stopThreshold) {
-				return;
-			}
+		if (Interpolate(navigation.phi, coeffs) < stopThreshold) {
+			return;
 		}
 
 		// Calculate the moving direction in barycentric form (with a sum of 0)
@@ -155,5 +153,8 @@ public class SurfaceObject {
 		m.SetRow(3, new Vector4(0, 0, 0, 1));
 		return m.inverse.MultiplyVector(vect);
 	}
-	
+
+	public double Interpolate(double[] field, Vector3 weights) {
+		return field[triVertices[0].index] * weights[0] + field[triVertices[1].index] * weights[1] + field[triVertices[2].index] * weights[2];
+	}
 }

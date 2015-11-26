@@ -96,4 +96,5 @@ Shader "Custom/Wireframe"
 
     	}
 	}
+	FallBack "VertexLit"
 }

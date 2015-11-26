@@ -292,11 +292,17 @@ public class Geometry {
 				Halfedge et = vertices[i].edges[j];
 				if (et.opposite == null) {
 					Vertex vt = et.prev.vertex;
+					bool foundOpposite = false;
 					for (int k = 0; k < vt.edges.Count; k++) {
 						if (vt.edges[k].prev.vertex == vertices[i]) {
+							if (foundOpposite) {
+								//GameObject.Instantiate(GameObject.Find("Pin")).transform.position = vertices[i].p;
+								throw new Exception("Edge shared by 3 faces, not manifold!");
+							}
 							et.opposite = vt.edges[k];
-							vt.edges[k].opposite = et;
-							break;
+							//vt.edges[k].opposite = et;
+							//break;
+							foundOpposite = true;
 						}
 					}
 
@@ -311,7 +317,8 @@ public class Geometry {
 				}
 			}
 		}
-
+		//throw new UnityException("WOW");
+		
 		// Reconnect all newly created halfedges on a boundary
 		for (int i = 0; i < halfedges.Count; i++) {
 			if (halfedges[i].next == null) {
@@ -336,6 +343,7 @@ public class Geometry {
 				} while (temp != first);
 			}
 		}
+		//throw new UnityException("WOW");
 
 		for (int i = 0; i < vertices.Count; i++) {
 			vertices[i].ClearEdgeArray();
@@ -350,6 +358,8 @@ public class Geometry {
 			//h += e.Length();
 		}
 		//h /= halfedges.Count;
+
+		Debug.Log("Geometry created, Eular number = " + (vertices.Count - halfedges.Count / 2 + faces.Count));
 	}
 	
 	public void ToMesh(Mesh mesh) {
@@ -429,6 +439,7 @@ public class Geometry {
 		modification = modif;
 		return result;
 	}
+	// Temporary vector
 	public double[] modification;
 
 	/// <summary>

@@ -177,7 +177,7 @@ public class MeshFactory {
 	/// Useful for removing UV seams.
 	/// </summary>
 	/// <param name="mesh">Mesh.</param>
-	public static void MergeOverlappingPoints(Mesh mesh, float threshold = 0.0001f) {
+	public static void MergeOverlappingPoints(Mesh mesh, float threshold = 0.00001f) {
 		Vector3[] verts = mesh.vertices;
 		int[] triangles = mesh.triangles;
 

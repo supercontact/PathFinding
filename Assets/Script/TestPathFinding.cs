@@ -15,9 +15,12 @@ public class TestPathFinding : MonoBehaviour {
 	public WalkingMan man;
 	public Mesh road;
 	public Mesh sphere;
+	Mesh sphere2; // Copy of sphere + processing
+	Mesh sphere3; // Created via script
 	public Mesh hemisphere;
-	Mesh sphere2, sphere3;
+	public Mesh skull;
 	public Mesh dragon;
+	Mesh highG, bague, cow, triceratops, horse; // Loaded OFF files
 	public Text triangleCounter;
 	public Text visualModeText;
 	public Text heatInfo;
@@ -27,6 +30,7 @@ public class TestPathFinding : MonoBehaviour {
 	public GameObject pin;
 	public GameObject roadBase;
 	public GameObject hemiCap;
+	public GameObject skullBase;
 	public GameObject visual;
 	public GameObject gradArrow;
 	public GameObject cursor;
@@ -49,9 +53,29 @@ public class TestPathFinding : MonoBehaviour {
 	Material mainMat;
 	int materialMode = 0;
 	float changedBoundaryCond = -1f;
+	Vertex lastClickedVertex;
+
+	ColorMixer anim1;
 
 	// Start is called at the beginng
 	void Start () {
+		mainMat = earth.GetComponent<MeshRenderer>().material;
+		pins = new List<GameObject>();
+
+		// Initializing meshes
+		highG = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
+		MeshFactory.ReorderVertexIndices(highG, 0);
+
+		bague = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
+		MeshFactory.ReorderVertexIndices(bague, 0);
+
+		cow = MeshFactory.ReadMeshFromFile("OFF/cow", 1.5f, new Vector3(0.15f, 0.15f, 0));
+
+		triceratops = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops", 0.2f, new Vector3(0.15f, 0, 0));
+
+		horse = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.3f), Quaternion.Euler(-90, 0, 0));
+		MeshFactory.ReorderVertexIndices(horse, 2);
+
 		sphere = Instantiate<Mesh>(sphere);
 		sphere2 = Instantiate<Mesh>(sphere);
 		sphere3 = MeshFactory.CreateSphere(1, 48);
@@ -61,31 +85,55 @@ public class TestPathFinding : MonoBehaviour {
 		MeshFactory.MergeOverlappingPoints(hemisphere);
 		MeshFactory.TransformMesh(hemisphere, Vector3.zero, Quaternion.Euler(-90, 0, 0));
 
+		skull = Instantiate<Mesh>(skull);
+		MeshFactory.MergeOverlappingPoints(skull);
+		MeshFactory.TransformMesh(skull, new Vector3(0, -0.5f, 0), Quaternion.Euler(-90, 0, 0));
+		MeshFactory.ReorderVertexIndices(skull, 1);
+
 		road = Instantiate<Mesh>(road);
 		MeshFactory.TransformMesh(road, Vector3.zero, Quaternion.Euler(-180, 0, 0));
 
 		dragon = Instantiate<Mesh>(dragon);
 		MeshFactory.MergeOverlappingPoints(dragon);
 		MeshFactory.TransformMesh(dragon, Vector3.zero, Quaternion.Euler(0, 90, 0), new Vector3(0.75f, 0.75f, 0.75f));
+		MeshFactory.ReorderVertexIndices(dragon, 0);
 
-		mainMat = earth.GetComponent<MeshRenderer>().material;
-		pins = new List<GameObject>();
+		// Emission animation
+		float tTotal = 6f, tBlink = 0.10f;
+		float cMax = 0.9f, cM1 = 0.3f, cM2 = 0.5f;
+		anim1 = new ColorMixer();
+		anim1.InsertColorNode(new Color(cMax, cMax, cMax), 0f);
+		anim1.InsertColorNode(new Color(cMax, cMax, cMax), 0.5f - 3f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cM1, cM1, cM1), 0.5f - 2.5f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cMax, cMax, cMax), 0.5f - 2f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cM1, cM1, cM1), 0.5f - 1.5f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cMax, cMax, cMax), 0.5f - 1f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(0f, 0f, 0f), 0.5f);
+		anim1.InsertColorNode(new Color(0f, 0f, 0f), 1f - 3f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cM2, cM2, cM2), 1f - 2.5f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(0f, 0f, 0f), 1f - 2f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cM2, cM2, cM2), 1f - 1.5f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(0f, 0f, 0f), 1f - 1f * tBlink / tTotal);
+		anim1.InsertColorNode(new Color(cMax, cMax, cMax), 1f);
 
+		// Start with the first mesh
 		SetLevel(0);
 		UpdateInfoText();
 	}
+
 
 	// Update is called once per frame
 	void Update () {
 		line.enabled = false;
 
-		// When clicking on the surface of the mesh, reset source
+		// Find the triangle and the closest vertex the mouse is pointing to
 		Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 		RaycastHit info;
+		bool pressingAlt = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+
 		cursor.transform.position = new Vector3(1000, 0, 0);
 		heatInfo.rectTransform.position = new Vector3(10000, 0, 0);
-		//bool clicking = Input.GetMouseButtonDown(0);
-		bool pressingAlt = Input.GetKey(KeyCode.LeftAlt) || Input.GetKey(KeyCode.RightAlt);
+
 		if ((clicking || pressingAlt) && Physics.Raycast(ray, out info)) {
 			if (info.triangleIndex != -1) {
 				Face f = g.faces[info.triangleIndex];
@@ -123,13 +171,23 @@ public class TestPathFinding : MonoBehaviour {
 					}
 				}
 
+				// When clicking on the surface of the mesh, reset source
 				if (clicking) {
 					Debug.Log("triangle hit = " + info.triangleIndex);
 					Debug.Log("vertex hit = " + v.index);
 
 					// Set the source
-					bool additional = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl);
-					hg.CalculateGeodesics(v, additional);
+					bool wholeLine = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+					bool additional = Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) || wholeLine;
+					List<Vertex> lineSources = null;
+
+					if (!wholeLine) {
+						hg.CalculateGeodesics(v, additional);
+					} else {
+						DijkstraEdgePathFinding deef = new DijkstraEdgePathFinding(g, lastClickedVertex);
+						lineSources = deef.GetPathFrom(v);
+						hg.CalculateGeodesics(lineSources, true);
+					}
 					warning.gameObject.SetActive(additional && Settings.useCholesky);
 
 					// Put the mark at the source vertex
@@ -139,10 +197,21 @@ public class TestPathFinding : MonoBehaviour {
 						}
 						pins.Clear();
 					}
-					GameObject newPin = Instantiate(pin);
-					pins.Add(newPin);
-					newPin.transform.position = v.p;
-					newPin.transform.rotation = Quaternion.LookRotation(v.CalculateNormalTri());
+					if (!wholeLine) {
+						GameObject newPin = Instantiate(pin);
+						pins.Add(newPin);
+						newPin.transform.position = v.p;
+						newPin.transform.rotation = Quaternion.LookRotation(v.CalculateNormalTri());
+					} else {
+						foreach (Vertex vert in lineSources) {
+							GameObject newPin = Instantiate(pin);
+							pins.Add(newPin);
+							newPin.transform.position = vert.p;
+							newPin.transform.rotation = Quaternion.LookRotation(vert.CalculateNormalTri());
+						}
+					}
+
+					lastClickedVertex = v;
 
 					// Hide tutorial text
 					if (firstClick) {
@@ -172,62 +241,35 @@ public class TestPathFinding : MonoBehaviour {
 		// Emission texture animation
 		Material mat = mainMat;
 		if (textureIndex == 2) {
-			float tPhase = 3f;
-			float tBlink = 0.10f;
-			float c;
-			t = (t + Time.deltaTime) % (tPhase * 2);
-			if (t < tPhase - 3 * tBlink) {
-				Settings.ScrollSpeed = 0.08f;
-				mat.SetColor("_EmissionColor", new Color(0.9f, 0.9f, 0.9f));
-			} else if (t < tPhase - 2 * tBlink) {
-				c = 0.9f * (0.3f + 1.4f * Mathf.Abs(t - tPhase + 2.5f * tBlink) / tBlink);
-				mat.SetColor("_EmissionColor", new Color(c, c, c));
-			} else if (t < tPhase - tBlink) {
-				c = 0.9f * (0.3f + 1.4f * Mathf.Abs(t - tPhase + 1.5f * tBlink) / tBlink);
-				mat.SetColor("_EmissionColor", new Color(c, c, c));
-			} else if (t < tPhase) {
-				c = 0.9f * (tPhase - t) / tBlink;
-				mat.SetColor("_EmissionColor", new Color(c, c, c));
-			} else if (t < 2 * tPhase - 3 * tBlink) {
-				Settings.ScrollSpeed = 0.04f;
-				mat.SetColor("_EmissionColor", new Color(0, 0, 0));
-			} else if (t < 2 * tPhase - 2 * tBlink) {
-				c = 0.9f * (0.5f - Mathf.Abs(t - 2 *tPhase + 2.5f * tBlink) / tBlink);
-				mat.SetColor("_EmissionColor", new Color(c, c, c));
-			} else if (t < 2 * tPhase - tBlink) {
-				c = 0.9f * (0.5f - Mathf.Abs(t - 2 *tPhase + 1.5f * tBlink) / tBlink);
-				mat.SetColor("_EmissionColor", new Color(c, c, c));
-			} else {
-				Settings.ScrollSpeed = 0.08f;
-				c = 0.9f * (t - 2 * tPhase + tBlink) / tBlink;
-				mat.SetColor("_EmissionColor", new Color(c, c, c));
-			}
+			float T = 6f;
+			t = (t + Time.deltaTime) % T;
+			mat.SetColor("_EmissionColor", anim1.GetColor(t / T));
+			Settings.ScrollSpeed = (t < T / 2 || t > T - 0.1f) ? 0.08f : 0.04f;
+
 		} else if (textureIndex == 3) {
-			float tPeriod = 7f;
-			float tLight = 3f;
-			float c;
+			float tPeriod = 7f, tLight = 3f;
 			t = (t + Time.deltaTime) % tPeriod;
 			if (t < tLight) {
 				float cos = Mathf.Cos(Mathf.PI * (t - tLight / 2) / tLight);
-				c = 0.7f * cos;
+				float c = 0.7f * cos;
 				Settings.ScrollSpeed = 0.05f * (1 - 0.9f * cos);
 				mat.SetColor("_EmissionColor", new Color(c, c, c));
 			} else  {
 				mat.SetColor("_EmissionColor", new Color(0f, 0f, 0f));
 			}
+
 		} else if (textureIndex == 6) {
-			float tPeriod = 4f;
-			float tLight = 1f;
-			float c;
+			float tPeriod = 4f, tLight = 1f;
 			t = (t + Time.deltaTime) % tPeriod;
 			float tt = t % tLight;
 			if (t / tLight < 3) {
 				float cos = Mathf.Cos(Mathf.PI * (tt - tLight / 2) / tLight);
-				c = 0.9f * cos;
+				float c = 0.9f * cos;
 				mat.SetColor("_EmissionColor", new Color(c, c, c));
 			} else {
 				mat.SetColor("_EmissionColor", new Color(0f, 0f, 0f));
 			}
+
 		}
 
 		// Quit the application
@@ -235,6 +277,7 @@ public class TestPathFinding : MonoBehaviour {
 			Application.Quit();
 		}
 	}
+
 
 	/// <summary>
 	/// Load a certain mesh.
@@ -245,43 +288,38 @@ public class TestPathFinding : MonoBehaviour {
 		double tFactor = 1;
 		int source = 42;
 		int manPos = 42;
-		int reorder = -1;
 		Settings.cotLimit = 10000;
 
 		switch (level) {
 		case 0:
 		default:
-			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/high_genus", 0.2f, new Vector3(0, 0, -0.6f));
-			reorder = 0;
+			earth.GetComponent<MeshFilter>().mesh = highG;
 			SetTexture(2);
 			source = 1537;
 			manPos = 1947;
 			break;
 		case 1:
-			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/bague", 0.5f);
-			reorder = 0;
+			earth.GetComponent<MeshFilter>().mesh = bague;
 			SetTexture(0);
 			source = 280;
 			manPos = 230;
 			break;
 		case 2:
-			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/cow", 1.5f, new Vector3(0.15f, 0.15f, 0));
+			earth.GetComponent<MeshFilter>().mesh = cow;
 			SetTexture(3);
 			source = 429;
 			manPos = 2129;
 			break;
 		case 3:
 		case 6:
-			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/tri_triceratops", 0.2f, new Vector3(0.15f, 0, 0));
+			earth.GetComponent<MeshFilter>().mesh = triceratops;
 			SetTexture(4);
 			Settings.cotLimit = 5;
 			source = 42;
 			manPos = 918;
 			break;
 		case 4:
-			//earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/bun_zipper.off", 12f, new Vector3(0.2f, -1f, 0));
-			earth.GetComponent<MeshFilter>().mesh = MeshFactory.ReadMeshFromFile("OFF/horse1", 12f, new Vector3(0f, 0f, -0.3f), Quaternion.Euler(-90, 0, 0));
-			reorder = 2;
+			earth.GetComponent<MeshFilter>().mesh = horse;
 			SetTexture(5);
 			tFactor = 10;
 			source = 435;
@@ -317,9 +355,14 @@ public class TestPathFinding : MonoBehaviour {
 			source = 1331;
 			manPos = 475;
 			break;
+		case 12:
+			earth.GetComponent<MeshFilter>().mesh = skull;
+			SetTexture(8);
+			source = 42;
+			manPos = 42;
+			break;
 		case 10:
 			earth.GetComponent<MeshFilter>().mesh = dragon;
-			reorder = 0;
 			SetTexture(6);
 			source = 7561;
 			manPos = 7284;
@@ -327,12 +370,9 @@ public class TestPathFinding : MonoBehaviour {
 		}
 		roadBase.SetActive(level == 5);
 		hemiCap.SetActive(level == 11);
+		skullBase.SetActive(level == 12);
 
-		// Reorder the vertex indices of the mesh in order to decrease fill-in of a Cholesky decomposition.
-		if (reorder >= 0) {
-			MeshFactory.ReorderVertexIndices(earth.GetComponent<MeshFilter>().mesh, reorder);
-		}
-
+		// Adjust settings
 		if (useDefaultSettings) {
 			Settings.tFactor = tFactor;
 			Settings.defaultSource = new List<int>();
@@ -364,11 +404,15 @@ public class TestPathFinding : MonoBehaviour {
 		// Start heat method
 		hg = new HeatGeodesics(g, Settings.useCholesky);
 		hg.Initialize();
+
 		List<Vertex> sources = new List<Vertex>();
 		foreach (int ind in Settings.defaultSource) {
 			sources.Add(g.vertices[ind]);
+			lastClickedVertex = g.vertices[ind];
 		}
 		hg.CalculateGeodesics(sources);
+
+		// Spawn the little man
 		if (man.isActiveAndEnabled) {
 			man.GetReady(g, hg, g.faces[Settings.initialManPos]);
 		}
@@ -398,6 +442,7 @@ public class TestPathFinding : MonoBehaviour {
 			}
 		}
 	}
+
 
 	/// <summary>
 	/// Generate and add texture to the mesh.
@@ -735,6 +780,42 @@ public class TestPathFinding : MonoBehaviour {
 			
 			mat.DisableKeyword("_EMISSION");
 			break;
+
+		case 8:
+			// White bone, metal band
+			period = 82;
+			width = 22;
+			Settings.mappingDistance = 3;
+			Settings.ScrollSpeed = 0.066f;
+			
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(0.6f, 0.6f, 0.6f), 0f);
+			stripe.InsertColorNode(new Color(0f, 0f, 0f), 0);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
+			mat.mainTexture = tex;
+			
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(0f, 0f, 0f, 0.4f), 0);
+			stripe.InsertColorNode(new Color(0.7f, 0.7f, 0.7f, 0.8f), 0);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe);
+			mat.SetTexture("_SpecGlossMap", tex);
+			mat.EnableKeyword("_SPECGLOSSMAP");
+			
+			background = new ColorMixer();
+			stripe = new ColorMixer();
+			background.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 0f), 0);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0.1f);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.5f, 0.5f), 0.9f);
+			stripe.InsertColorNode(new Color(1f, 0.5f, 0.2f, 1f), 1);
+			tex = MeshFactory.CreateStripedTexture(2048, period, width, 20, background, stripe, true);
+			mat.SetTexture("_BumpMap", tex);
+			mat.EnableKeyword("_NORMALMAP");
+			
+			mat.DisableKeyword("_EMISSION");
+			break;
 		}
 
 	}
@@ -853,6 +934,9 @@ public class TestPathFinding : MonoBehaviour {
 		useDefaultSettings = true;
 	}
 
+	/// <summary>
+	/// Change the boundary condition ratio
+	/// </summary>
 	public void ChangeBoundaryCondition(float coeff) {
 		changedBoundaryCond = coeff;
 	}
