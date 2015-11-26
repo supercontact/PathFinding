@@ -358,8 +358,8 @@ public class TestPathFinding : MonoBehaviour {
 		case 12:
 			earth.GetComponent<MeshFilter>().mesh = skull;
 			SetTexture(8);
-			source = 42;
-			manPos = 42;
+			source = 5794;
+			manPos = 781;
 			break;
 		case 10:
 			earth.GetComponent<MeshFilter>().mesh = dragon;
