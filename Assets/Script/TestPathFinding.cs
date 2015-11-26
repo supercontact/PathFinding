@@ -36,6 +36,7 @@ public class TestPathFinding : MonoBehaviour {
 	public GameObject cursor;
 	public Material wireframe;
 	public LineRenderer line;
+	public ParticleSystem fire;
 
 	Geometry g; // The main geometry (mesh)
 	HeatGeodesics hg; // The heat geodesics calculation module
@@ -269,7 +270,7 @@ public class TestPathFinding : MonoBehaviour {
 			} else {
 				mat.SetColor("_EmissionColor", new Color(0f, 0f, 0f));
 			}
-
+			fire.enableEmission = t / tLight > 3 && t / tLight < 3.8f;
 		}
 
 		// Quit the application
@@ -371,6 +372,7 @@ public class TestPathFinding : MonoBehaviour {
 		roadBase.SetActive(level == 5);
 		hemiCap.SetActive(level == 11);
 		skullBase.SetActive(level == 12);
+		fire.gameObject.SetActive(level == 10);
 
 		// Adjust settings
 		if (useDefaultSettings) {
