@@ -19,39 +19,45 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 
-In this project we present practical methods for computing approximate shortest paths (geodesics) on a triangle mesh. We implemented a naive method based on Dijkstra's algorithm and a method of Heat Flow based on \textit{Geodesics in Heat: A New Approach to Computing Distance Based on Heat Flow}, written by Crane [2013]. We created a walking man on surface to represent the shortest path taken. The implementation is done in C\# on the Unity platform.
+In this project we present a practical method for computing approximate shortest paths (geodesics) on a triangle mesh. We implemented a naive method based on Dijkstra's algorithm and a method of Heat Flow based on \textit{Geodesics in Heat: A New Approach to Computing Distance Based on Heat Flow}, written by Crane [2013]. We created a walking man on surface to represent the shortest path taken. The implementation is done in C\# on the Unity platform.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Algorithms}
+\section{Heat flow algorithm}
 
-In this section we explain the main algorithms used in this project. The first part is a quick description of the method introduced in the paper. The second part is an algorithm created on our own.
+In this section we explain the Heat Flow algorithm used in this project.It determines the geodesic distance to a specified subset of a given domain. We describe it on a triangle mesh.
 
-\subsection{Heat flow}
-This algorithm determines the geodesic distance to a specified subset of a given domain. 
+Notations: heat field $u$, vector field $X$, distance function $\phi$.
 
-Notations: heat flow $u$, vector field $X$, distance function $\phi$.
+\subsection{First Step}
+Integrate the heat field $\dot{u} = \Delta u$.
 
-\subsubsection{First Step}
-Integrate the heat flow $\dot{u} = \Delta u$.
+The heat $u$ of a point on a considered surface is a value between 0 and 1. Source has 1 as its value.
 
-$u$ of a point on a considered surface is a value between 0 and 1. Source have 1 as its value.
+In other words, we solve $(id - t\Delta)u_t = u_0$ where $u_t$ is the heat field after a time step $t$ and $u_0$ is the initial heat field.
 
-\subsubsection{Second Step}
+On a triangle mesh and in matrix form, we have $(A - tLc)u = u_0$ where $A$ is a diagonal matrix containing the vertex areas, $A^{-1}Lc$ is the discrete Laplacian matrix of a triangle mesh, and $u_0$ is a vector which has value 1 on sources and 0 otherwise. Remark that here $u_0$ should be multiplied at left by $A$. However, in the case of one point source, this does not affect the second step.
+
+
+\subsection{Second Step}
 Evaluate the vector field $X = -\nabla u / \left | \nabla u \right |$.
 
-We are only interested in the direction of $\nabla u$ and not in its value. $X$ points to the opposite direction of the source. 
+We are only interested in the direction of $\nabla u$ and not in its value. $X$ points to the opposite direction of the source.
 
-\subsubsection{Third Step}
+On a triangle mesh, by using the formula given in the article, we calculate the vector field on every triangle.
+
+\subsection{Third Step}
 
 Solve the Poisson equation $\Delta \phi = \nabla \cdot X$.
 
 If a distance function $\phi$ exists, $\nabla \phi$ should give us a unit vector on every point, pointing to the opposite directin of the source. We approximate such a distance function $\phi$ by minimizing $\int \left | \nabla \phi - X \right |^{2}$, which is equivalent to solving the Poisson equation $\Delta \phi = \nabla \cdot X$.
 
-\subsection{Navigation}
+On a triangle mesh and in matrix form, we solve $Lc\phi = b$ where $b$ is the vector of divergences of the vector field $X$.
 
-We also implemented a navigation system, represented by a walking man. He is positioned on the surface of the mesh and moves toward a given source point. 
+%\subsection{Navigation}
 
-A walking man's position is defined by barycentric coordinates of a triangle of the mesh. A walk function takes a distance as its argument and first applys on the triangle on which he is standing and then recursively calls itself at the next triangle he comes across, until walking the given distance or reaching the source.
+%We also implemented a navigation system, represented by a walking man. He is positioned on the surface of the mesh and moves toward a given source point. 
+
+%A walking man's position is defined by barycentric coordinates of a triangle of the mesh. A walk function takes a distance as its argument and first applys on the triangle on which he is standing and then recursively calls itself at the next triangle he comes across, until walking the given distance or reaching the source.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Implementation}
@@ -78,7 +84,7 @@ Many 3D models obtained from the internet have UV mappings, and thus have UV sea
 
 \subsection{Matrix precalculation}
 
-For each mesh loaded, we calculate in the first place its discrete unweighted laplacien matrix $-Lc$, and the matrices $A-tLc$ adapted to 2 different boundary conditions (if there are boundaries).
+For each mesh loaded, we calculate in the first place its discrete unweighted laplacian matrix $-Lc$, and the matrices $A-tLc$ adapted to 2 different boundary conditions (if there are boundaries).
 
 \begin{itemize}
 \item
@@ -89,7 +95,7 @@ We set all elements in the rows/columns of the boundary vertices to 0, except th
 \item
 Neumann condition:
 
-The original laplacien matrix described in the paper satisfies Neumann condition.
+The original laplacian matrix described in the paper satisfies Neumann condition.
 \end{itemize}
 
 
@@ -103,19 +109,22 @@ For single source problem, we follow these steps:
 
 \begin{enumerate}
 \item
-Calculate the heat flow u by solving the heat equation $(A-tLc)u = \Delta($source$)$.
+Calculate the heat field $u$ by solving the heat equation $(A-tLc)u = u_0$.
 \item
-Calculate $X$, the normalized gradient of the heat flow, on every triangle.
+Calculate $X$, the normalized gradient of the heat field, on every triangle.
 \item
-Calculate $DivX$ on every vertex using the value of X on its surrounding triangles.
+Calculate $DivX$ on every vertex using the value of $X$ on its surrounding triangles.
 \item
 Calculate the distance field $\phi$ by solving the Poisson equation $Lc \phi = DivX$
 \item
 We then calculate the gradient of the distance field $\nabla \phi$ on every triangle which can be used to calculate the shortest paths.
 \end{enumerate}
 
-%symetric negative, add epsilon
+At first, without Cholesky decomposition, we used LinCG (Linear Conjugate Gradient) solver to solve linear equations. This solver solves symmetric positive definite problems, but it works fine even with our second semi-definite problem (Poisson equation). We just need to shift the result such that the distance value at the source equals to zero.
 
+However, from the result we obtained, we observed that LinCG solver is sensible to numerical errors. The solution of the heat equation contains values ranging from 1 to $10^{-20}$ or smaller. The longer the distance to the source, the smaller the heat value is. LinCG returns values of 0 when smaller than $\sim 10^{-12}$, so the heat gradient of the farther area cannot be computed. We can only improve the solution by increasing the time step $t$, which increases the heat value but creates a smoothed distance field.
+
+Therefore, we chose to implement the Cholesky decomposition of matrices. It consists of decomposing a symmetric positive matrix $M$ into $LL^T$, where $L$ is a lower triangular matrix. This means the linear equation $LL^Tx = y$ becomes two basic triangular systems, that can be solved by simple substitution. This improves greatly the calculation time when switching sources (The decomposition is only calculated once for every mesh). And since we calculate the exact solution this way, we managed to have much smaller numerical errors, so as to eliminate the problems above. We added a small regularization term to the diagonal entries of the laplacian matrix to get strict positive-definiteness (needed for ALGLIB).
 
 \subsection{Navigation}
 
@@ -132,9 +141,9 @@ lots of graphs here!
 
 \subsection{Time step t}
 
-numerical error when t = 1 (choice of $t$), tweak parameter
+numerical error when $t = 1$ (choice of $t$), tweak parameter
 
-\subsection{Calculation Time Cost}
+\subsection{Calculation time cost}
 
 \section{Additional work}
 
@@ -144,22 +153,18 @@ Below are the four options we used:
 \begin{enumerate}
 
 \item
-OFF format (high genus, bague, triceratops, horse) -> mesh -> halfedge mesh
+OFF format meshes from TD (high genus, bague, triceratops, horse) -> Unity mesh -> halfedge mesh
 
 \item
-FBX format (dragon) -> processing (weld uv seams) -> halfedge mesh
+Internet resources (dragon, skull) -> Unity mesh -> processing (weld uv seams) -> halfedge mesh
 
 \item
-3Dmax handmade mesh (maze) -> halfedge mesh
+3Dmax handmade mesh (maze, sphere 2 and 3, hemisphere) -> Unity mesh -> halfedge mesh
 
 \item
-Code generated mesh (sphere) -> halfedge mesh
+Code generated mesh (sphere 1) -> halfedge mesh
 
 \end{enumerate}
-
-weld uv seams by Kd tree
-
-Fix vertices (triceratops)
 
 \subsection{Optimization}
 Our solver ALGLIB solves parse symetric positve-definite matrix system a lot faster than only symetric matrix system and Cholesky decomposition works only with symetric positve-definite matrix.
@@ -180,10 +185,11 @@ Albedo, Normal, Specular Smoothness, Emission
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion \& extensions}
-The heat method is a simple and efficient way that allows us to calculate the shortest paths to a point source or a specific domain of sources. In this project we succeeded to implement this method on surfaces represented by triangle meshes. A system of navigation is added to visualize the path taken. Some extra work is done to improve the visualization, such as texture mappings 
+Path finding is an important topic and has applications in several domains, such as video games and robotics. The heat method is a simple way that allows us to compute approximate geodesics to a point source or a specific domain of source (multisource) efficiently. In this project we succeeded to implement this method on surfaces represented by triangle meshes. A system of navigation is added to visualize the shortest path taken. Some extra work is done to improve the visualization, such as texture mappings.
 
-add weight
+Regarding improvement we could make, in the case of multisource repeated calculation of Cholesky decomposition is required due to the constraints of multisources. It might be possible to operate on the Cholesky decomposition of $Lc$ to cleverly avoid recalculating the decomposition each time we change the source.
 
-applications : video games, robotics
+One extension we can think of is adding different weight on different areas to represent the difficulty of passing through. Another is changing the form of the considered domain from surfaces represented by triangle meshes to bounded spaces represented by tetrehedron meshes.
+
 
 \end{document}
