@@ -132,7 +132,7 @@ lots of graphs here!
 
 \subsection{Time step t}
 
-numerical error when t = 1 (choice of $t$), tweak parameter
+numerical error when $t = 1$ (choice of $t$), tweak parameter
 
 \subsection{Calculation Time Cost}
 
@@ -144,22 +144,18 @@ Below are the four options we used:
 \begin{enumerate}
 
 \item
-OFF format (high genus, bague, triceratops, horse) -> mesh -> halfedge mesh
+OFF format meshes from TD (high genus, bague, triceratops, horse) -> Unity mesh -> halfedge mesh
 
 \item
-FBX format (dragon) -> processing (weld uv seams) -> halfedge mesh
+Internet resources (dragon, skull) -> Unity mesh -> processing (weld uv seams) -> halfedge mesh
 
 \item
-3Dmax handmade mesh (maze) -> halfedge mesh
+3Dmax handmade mesh (maze, sphere 2 and 3, hemisphere) -> Unity mesh -> halfedge mesh
 
 \item
-Code generated mesh (sphere) -> halfedge mesh
+Code generated mesh (sphere 1) -> halfedge mesh
 
 \end{enumerate}
-
-weld uv seams by Kd tree
-
-Fix vertices (triceratops)
 
 \subsection{Optimization}
 Our solver ALGLIB solves parse symetric positve-definite matrix system a lot faster than only symetric matrix system and Cholesky decomposition works only with symetric positve-definite matrix.
@@ -180,10 +176,11 @@ Albedo, Normal, Specular Smoothness, Emission
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion \& extensions}
-The heat method is a simple and efficient way that allows us to calculate the shortest paths to a point source or a specific domain of sources. In this project we succeeded to implement this method on surfaces represented by triangle meshes. A system of navigation is added to visualize the path taken. Some extra work is done to improve the visualization, such as texture mappings 
+Path finding is an important topic and has applications in several domains, such as video games and robotics. The heat method is a simple way that allows us to compute approximate geodesics to a point source or a specific domain of source (multisource) efficiently. In this project we succeeded to implement this method on surfaces represented by triangle meshes. A system of navigation is added to visualize the shortest path taken. Some extra work is done to improve the visualization, such as texture mappings.
 
-add weight
+Regarding improvement we could make, in the case of multisource repeated calculation of Cholesky decomposition is required due to the constraints of multisources. It might be possible to operate on the Cholesky decomposition of $Lc$ to cleverly avoid recalculating the decomposition each time we change the source.
 
-applications : video games, robotics
+One extension we can think of is adding different weight on different areas to represent the difficulty of passing through. Another is changing the form of the considered domain from surfaces represented by triangle meshes to bounded spaces represented by tetrehedron meshes.
+
 
 \end{document}
