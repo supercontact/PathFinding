@@ -6,6 +6,7 @@
 \usepackage{url,csquotes}
 \usepackage[hidelinks,hyperfootnotes=false]{hyperref}
 \usepackage[titlepage,fancysections,pagenumber]{polytechnique}
+\usepackage{multirow}
 
 
 \title{Shortest Paths on Surfaces\\ Geodesics in Heat}
@@ -149,21 +150,29 @@ numerical error when $t = 1$ (choice of $t$), tweak parameter
 
 \subsection{Calculation time cost}
 
-\begin{tabular}{|c|c|c|c|c|}
+\begin{tabular}{|c|c|c|c|c|c|c|}
   \hline
-  Model & Triangles & Precalculation & Main calculation \\
-  \hline
-  High Genus & 3328 & 1.1 & 1.2 \\
-  Bague & 5304 & 0.25s & 2.2 \\
-  Cow & 5804 & 2.1 & 2.2 \\
-  Triceratops & 5660 & 2.1 & 2.2 \\
-  Sphere 1 & 9024 & 2.1 & 2.2 \\
-  Sphere 2 \& 3 & 6912 & 2.1 & 2.2 \\
-  Hemisphere & 3456 & 2.1 & 2.2 \\
-  Skull & 12200 & 2.1 & 2.2 \\
-  Maze & 5120 & 2.1 & 2.2 \\
-  Horse & 39996 & 2.1 & 2.2 \\
-  Dragon & 20388 & 2.1 & 2.2 \\
+  
+  %\multirow{2}{*}{Model} & \multirow{2}{*}{Triangles} & \multicolumn{2}{c|}{LinCG} & \multicolumn{2}{c|}{Cholesky} \\
+  %& & Pre & Solve & Pre & Solve \\
+  %\hline
+  
+  Model & Triangles & \multicolumn{2}{c|}{LinCG} & \multicolumn{2}{c|}{Cholesky} \\
+  \cline{3-6}
+  & & Pre & Solve & Pre & Solve \\
+  \hline\hline
+  
+  High Genus & 3328 & 34ms & 27ms & 64ms & 8.9ms \\
+  Bague & 5304 & 55ms & 60ms & 109ms & 17ms  \\
+  Cow & 5804 & 62ms & 109ms & 335ms & 16ms \\
+  Triceratops & 5660 & 59ms & 105ms & 306ms & 15ms \\
+  Sphere 1 & 9024 & 94ms & 99ms & 236ms & 21ms \\
+  Sphere 3 & 6912 & 65ms & 59ms & 327ms & 18ms \\
+  Hemisphere & 3456 & 51ms & 34ms & 131ms & 10ms \\
+  Skull & 12200 & 183ms & 338ms & 989ms & 38ms \\
+  Maze & 5120 & 63ms & 94ms & 134ms & 12ms \\
+  Horse & 39996 & 447ms & 1355ms & 2047ms & 113ms \\
+  Dragon & 20388 & 188ms & 1291ms & 1787ms & 58ms \\
   \hline
 \end{tabular}
 
