@@ -124,7 +124,15 @@ At first, without Cholesky decomposition, we used LinCG (Linear Conjugate Gradie
 
 However, from the result we obtained, we observed that LinCG solver is sensible to numerical errors. The solution of the heat equation contains values ranging from 1 to $10^{-20}$ or smaller. The longer the distance to the source, the smaller the heat value is. LinCG returns values of 0 when smaller than $\sim 10^{-12}$, so the heat gradient of the farther area cannot be computed. We can only improve the solution by increasing the time step $t$, which increases the heat value but creates a smoothed distance field.
 
-Therefore, we chose to implement the Cholesky decomposition of matrices. It consists of decomposing a symmetric positive matrix $M$ into $LL^T$, where $L$ is a lower triangular matrix. This means the linear equation $LL^Tx = y$ becomes two basic triangular systems, that can be solved by simple substitution. This improves greatly the calculation time when switching sources (The decomposition is only calculated once for every mesh). And since we calculate the exact solution this way, we managed to have much smaller numerical errors, so as to eliminate the problems above. We added a small regularization term to the diagonal entries of the laplacian matrix to get strict positive-definiteness (needed for ALGLIB).
+Therefore, we chose to implement the Cholesky decomposition of matrices. It consists of decomposing a symmetric positive matrix $M$ into $LL^T$, where $L$ is a lower triangular matrix. This means the linear equation $LL^Tx = y$ becomes two basic triangular systems, that can be solved by simple substitution. This improves greatly the calculation time when switching sources (The decomposition is only calculated once for every mesh). And since we calculate the exact solution this way, we managed to have much smaller numerical errors, so as to eliminate the problems above. 
+We overcame 2 difficulties regarding the Cholesky decomposition: 
+
+\begin{itemize}
+\item
+While $M$ is a sparse matrix, $L$ isn’t necessarily sparse, especially when the entries of $M$ are mostly far away from the diagonal. This comes to one of our model which has randomly ordered vertices – it costs more than 4G RAM space to store the matrix $L$. After we reorder the vertices of the mesh along a certain axis, $L$ becomes much sparser and takes much less time to compute.
+\item
+We need to add a small regularization term to the diagonal entries of the laplacian matrix to get strict positive-definiteness (needed for the Cholesky decomposition of ALGLIB).
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
@@ -146,7 +154,7 @@ numerical error when $t = 1$ (choice of $t$), tweak parameter
   Model & Triangles & Precalculation & Main calculation \\
   \hline
   High Genus & 3328 & 1.1 & 1.2 \\
-  Bague & 5304 & 2.1 & 2.2 \\
+  Bague & 5304 & 0.25s & 2.2 \\
   Cow & 5804 & 2.1 & 2.2 \\
   Triceratops & 5660 & 2.1 & 2.2 \\
   Sphere 1 & 9024 & 2.1 & 2.2 \\
@@ -167,16 +175,18 @@ Below are the four options we used:
 \begin{enumerate}
 
 \item
-OFF format meshes from TD (high genus, bague, triceratops, horse) -> Unity mesh -> halfedge mesh
+OFF format mesh from TD (High Genus, Bague, Cow, Triceratops, Horse) -> Unity mesh -> halfedge mesh
+
+We wrote a OFF parser to transform OFF format meshes into Unity meshes.
 
 \item
-Internet resources (dragon, skull) -> Unity mesh -> processing (weld uv seams) -> halfedge mesh
+Internet resources (Skull, Dragon) -> Unity mesh -> processing (weld uv seams) -> halfedge mesh
 
 \item
-3Dmax handmade mesh (maze, sphere 2 and 3, hemisphere) -> Unity mesh -> halfedge mesh
+3Dmax handmade mesh (Maze, Sphere 2 \& 3, Hemisphere) -> Unity mesh -> halfedge mesh
 
 \item
-Code generated mesh (sphere 1) -> halfedge mesh
+Code generated mesh (Sphere 1) -> halfedge mesh
 
 \end{enumerate}
 
@@ -223,7 +233,7 @@ To make it even better, in addition to the main texture, we also apply generated
 %Albedo, Normal, Specular Smoothness, Emission
 
 \subsection{Dijkstra}
-
+We implemented a simple Dijkstra shortest path algorithm on the graph made by the vertices and edges of the mesh. This allows us to easily create a line of source vertices connecting 2 selected vertices. (In the demo, press shift and click on the surface of the mesh.)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
