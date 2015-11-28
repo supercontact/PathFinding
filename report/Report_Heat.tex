@@ -141,6 +141,24 @@ numerical error when $t = 1$ (choice of $t$), tweak parameter
 
 \subsection{Calculation time cost}
 
+\begin{tabular}{|c|c|c|c|c|}
+  \hline
+  Model & Triangles & Precalculation & Main calculation \\
+  \hline
+  High Genus & 3328 & 1.1 & 1.2 \\
+  Bague & 5304 & 2.1 & 2.2 \\
+  Cow & 5804 & 2.1 & 2.2 \\
+  Triceratops & 5660 & 2.1 & 2.2 \\
+  Sphere 1 & 9024 & 2.1 & 2.2 \\
+  Sphere 2 \& 3 & 6912 & 2.1 & 2.2 \\
+  Hemisphere & 3456 & 2.1 & 2.2 \\
+  Skull & 12200 & 2.1 & 2.2 \\
+  Maze & 5120 & 2.1 & 2.2 \\
+  Horse & 39996 & 2.1 & 2.2 \\
+  Dragon & 20388 & 2.1 & 2.2 \\
+  \hline
+\end{tabular}
+
 \section{Additional work}
 
 \subsection{How we obtain meshes?}
@@ -185,13 +203,27 @@ One downside, however, is that the matrices need to be modified to contain these
 
 \subsection{Navigation}
 
-Now that we have the distance field, we would like to calculate the path from a given point to the source point. We achieved this by first calculating the gradient of the distance field (step 5 of the main calculation) which is considered uniform on every triangle, then trace a trajectory by recursively following the gradient in every triangle and entering the next one. 
+Now that we have the distance field, we would like to calculate the path from a given point to the source point. We achieved this by first calculating the gradient of the distance field (step 5 of the main calculation) which is considered uniform on every triangle, then tracing a trajectory by recursively following the gradient in every triangle and entering the next one. 
 
-We visualized this process by moving a walking man on the surface of the mesh. His position is defined by barycentric coordinates of the triangle he is standing on. A walk function takes a distance as its argument and first applies on the triangle on which he is standing and then recursively calls itself at the next triangle he comes across, until walking the given distance or reaching the source.
+We visualized this process by moving a walking man on the surface of the mesh. His position is defined by barycentric coordinates of the triangle he is standing on. The distance gradient on it is also converted to barycentric coordinates, but with a sum of 0. (In this way, we can add it to the position coordinates and still get a barycentric coordinate with a sum of 1.) A walk function takes a distance as its argument and first moves on the triangle on which he is standing. By finding the first coordinate that reaches zero we find the edge the man will come across. It then recursively calls itself at the next triangle he enters, until walking the given distance or reaching the source.
 
+There are however 2 extra cases to consider:
+\begin{itemize}
+\item
+The gradient is pointing to a boundary. In this case, when reaching a boundary, we walk alongside it towards the smaller-distance vertex.
+\item
+2 neighboring triangles have opposing gradient. In this case, when reaching the middle edge, we choose to follow the edge instead.
+\end{itemize}
 
 \subsection{Mapping}
-Albedo, Normal, Specular Smoothness, Emission
+
+In order to better visualize the distance field, we chose to map a striped texture onto the surface of the mesh. It is actually quite simple: We create some striped textures with color gradient that are only one pixel tall, assign it to the mesh, and for each vertex we set the U value of its UV coordinates to its distance to the source. And that’s it! When rendering the texture, each point on a triangle has its U coordinate interpolated from the 3 vertices of the triangle, and it is exactly the interpolated distance of this point – so it will be colored by the pixel of the striped texture representing this distance.
+To make it even better, in addition to the main texture, we also apply generated normal map, specular map and emission map to each model, making it especially realistic. We just need to set the tangent vector of each vertex to the average distance gradient on it to make the normal map work.
+
+%Albedo, Normal, Specular Smoothness, Emission
+
+\subsection{Dijkstra}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
