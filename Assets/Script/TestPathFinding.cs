@@ -292,8 +292,8 @@ public class TestPathFinding : MonoBehaviour {
 			Time.timeScale = Mathf.Min(1f, Time.timeScale + 1f * Time.unscaledDeltaTime);
 		}
 
-		// Press Backspace to toggle background skybox
-		if (Input.GetKeyDown(KeyCode.Backspace)) {
+		// Press I to toggle background skybox
+		if (Input.GetKeyDown(KeyCode.I)) {
 			useBlankSky = !useBlankSky;
 			RenderSettings.skybox = useBlankSky ? blankSky : sky;
 		}
