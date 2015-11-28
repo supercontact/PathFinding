@@ -26,9 +26,9 @@ public class CameraCenterScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (visible) {
-			progress = 1 + (progress - 1) * Mathf.Exp( - Time.deltaTime / smoothT);
+			progress = 1 + (progress - 1) * Mathf.Exp( - Time.unscaledDeltaTime / smoothT);
 		} else {
-			progress *= Mathf.Exp( - Time.deltaTime / smoothT);
+			progress *= Mathf.Exp( - Time.unscaledDeltaTime / smoothT);
 		}
 		if (progress > 0.01f || visible) {
 			X.localScale = new Vector3(1, progress, progress);
@@ -41,7 +41,7 @@ public class CameraCenterScript : MonoBehaviour {
 			Z.gameObject.SetActive(false);
 			O.gameObject.SetActive(false);
 		}
-		transform.localRotation = Quaternion.Euler(0, Time.deltaTime * 120, 0) * transform.localRotation;
+		transform.localRotation = Quaternion.Euler(0, Time.unscaledDeltaTime * 120, 0) * transform.localRotation;
 	}
 
 	public void Show() {
