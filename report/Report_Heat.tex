@@ -326,6 +326,12 @@ Two neighboring triangles have opposing gradient. In this case, when reaching th
 In order to better visualize the distance field, we chose to map a striped texture onto the surface of the mesh. It is actually quite simple: We create some striped textures with color gradient that are only one pixel tall, assign it to the mesh, and for each vertex we set the U value of its UV coordinates to its distance to the source. And that’s it! When rendering the texture, each point on a triangle has its U coordinate interpolated from the three vertices of the triangle, and it is exactly the interpolated distance of this point – so it will be colored by the pixel of the striped texture representing this distance.
 To make it even better, in addition to the main texture, we also apply generated normal map, specular map and emission map to each model, making it especially realistic. We just need to set the tangent vector of each vertex to the average distance gradient on it to make the normal map work.
 
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{P9.png}
+	\caption{An example of generated textures}
+\end{figure}
+
 %Albedo, Normal, Specular Smoothness, Emission
 
 \subsection{Dijkstra}
