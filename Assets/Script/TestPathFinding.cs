@@ -13,6 +13,7 @@ public class TestPathFinding : MonoBehaviour {
 	public GameObject earth;
 	public Camera cam;
 	public WalkingMan man;
+	// Meshes
 	public Mesh road;
 	public Mesh sphere;
 	Mesh sphere2; // Copy of sphere + processing
@@ -21,6 +22,7 @@ public class TestPathFinding : MonoBehaviour {
 	public Mesh skull;
 	public Mesh dragon;
 	Mesh highG, bague, cow, triceratops, horse; // Loaded OFF files
+	// UI elements
 	public Text tutorial;
 	public Text triangleCounter;
 	public Text visualModeText;
@@ -28,16 +30,21 @@ public class TestPathFinding : MonoBehaviour {
 	public Text warning;
 	public InputField inputT;
 	public Image background;
+	public CanvasScaler canvasScaler;
+	// Visual objects
 	public GameObject pin;
-	public GameObject roadBase;
-	public GameObject hemiCap;
-	public GameObject skullBase;
 	public GameObject visual;
 	public GameObject gradArrow;
 	public GameObject cursor;
-	public Material wireframe;
-	public LineRenderer line;
+	public GameObject roadBase;
+	public GameObject hemiCap;
+	public GameObject skullBase;
 	public ParticleSystem fire;
+	// Materials
+	public Material wireframe;
+	public Material sky;
+	public Material blankSky;
+	public LineRenderer line;
 
 	Geometry g; // The main geometry (mesh)
 	HeatGeodesics hg; // The heat geodesics calculation module
@@ -56,6 +63,7 @@ public class TestPathFinding : MonoBehaviour {
 	int materialMode = 0;
 	float changedBoundaryCond = -1f;
 	Vertex lastClickedVertex;
+	bool useBlankSky = false;
 
 	ColorMixer anim1;
 
@@ -153,10 +161,13 @@ public class TestPathFinding : MonoBehaviour {
 					// Show vertex info
 					cursor.transform.position = v.p;
 					Vector3 vertScreenPoint = cam.WorldToScreenPoint(v.p);
-					heatInfo.rectTransform.position = new Vector3(Mathf.Round(vertScreenPoint.x) + 170, Mathf.Round(vertScreenPoint.y) - 32, 0);
+					heatInfo.rectTransform.position = new Vector3(Mathf.Round(vertScreenPoint.x) + 170, Mathf.Round(vertScreenPoint.y) - 42, 0);
 					heatInfo.text = "Vertex distance = " + hg.phi[v.index];
 					heatInfo.text += "\nVertex heat = " + hg.u[v.index];
 					heatInfo.text += "\nVertex index = " + v.index;
+					if (hg.s.Contains(v)) {
+						heatInfo.text += "\n<color=#22FF00>Source vertex</color>";
+					}
 					if (v.onBorder) {
 						heatInfo.text += "\n<color=#ff2200>Boundary vertex</color>";
 					}
@@ -272,6 +283,34 @@ public class TestPathFinding : MonoBehaviour {
 				mat.SetColor("_EmissionColor", new Color(0f, 0f, 0f));
 			}
 			fire.enableEmission = t / tLight > 3 && t / tLight < 3.8f;
+		}
+	
+		// Press P to stop animation
+		if (Input.GetKey(KeyCode.P)) {
+			Time.timeScale = Mathf.Max(0f, Time.timeScale - 1f * Time.unscaledDeltaTime);
+		} else {
+			Time.timeScale = Mathf.Min(1f, Time.timeScale + 1f * Time.unscaledDeltaTime);
+		}
+
+		// Press Backspace to toggle background skybox
+		if (Input.GetKeyDown(KeyCode.Backspace)) {
+			useBlankSky = !useBlankSky;
+			RenderSettings.skybox = useBlankSky ? blankSky : sky;
+		}
+
+		// Press O to show/hide walking man
+		if (Input.GetKeyDown(KeyCode.O)) {
+			foreach (MeshRenderer renderer in man.gameObject.GetComponentsInChildren<MeshRenderer>()) {
+				renderer.enabled = !renderer.enabled;
+			}
+		}
+
+		// Press +/- to change UI size
+		if (Input.GetKeyDown(KeyCode.Equals)) {
+			canvasScaler.scaleFactor *= 1.1f;
+		}
+		if (Input.GetKeyDown(KeyCode.Minus)) {
+			canvasScaler.scaleFactor /= 1.1f;
 		}
 
 		// Quit the application

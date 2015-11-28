@@ -39,7 +39,7 @@ public class ObserveCamera : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Time.deltaTime != 0f) {
+		if (Time.unscaledDeltaTime != 0f) {
 			if (clicking) {
 				clicking = false;
 				prevMousePos = Input.mousePosition;
@@ -86,9 +86,9 @@ public class ObserveCamera : MonoBehaviour {
 			}
 
 			// Smooth transition
-			transform.rotation = Quaternion.Slerp(targetRotation, transform.rotation, Mathf.Exp(- Time.deltaTime / smoothT));
-			distance = Mathf.Lerp(targetDistance, distance, Mathf.Exp(- Time.deltaTime / smoothT));
-			offset = Vector3.Lerp(targetOffset, offset, Mathf.Exp(- Time.deltaTime / smoothT));
+			transform.rotation = Quaternion.Slerp(targetRotation, transform.rotation, Mathf.Exp(- Time.unscaledDeltaTime / smoothT));
+			distance = Mathf.Lerp(targetDistance, distance, Mathf.Exp(- Time.unscaledDeltaTime / smoothT));
+			offset = Vector3.Lerp(targetOffset, offset, Mathf.Exp(- Time.unscaledDeltaTime / smoothT));
 			transform.position = target.transform.position + distance * (transform.rotation * Vector3.back) + offset;
 			center.transform.localPosition = new Vector3(0, 0, distance);
 		}
