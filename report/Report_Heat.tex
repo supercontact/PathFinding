@@ -126,10 +126,6 @@ However, from the result we obtained, we observed that LinCG solver is sensible 
 
 Therefore, we chose to implement the Cholesky decomposition of matrices. It consists of decomposing a symmetric positive matrix $M$ into $LL^T$, where $L$ is a lower triangular matrix. This means the linear equation $LL^Tx = y$ becomes two basic triangular systems, that can be solved by simple substitution. This improves greatly the calculation time when switching sources (The decomposition is only calculated once for every mesh). And since we calculate the exact solution this way, we managed to have much smaller numerical errors, so as to eliminate the problems above. We added a small regularization term to the diagonal entries of the laplacian matrix to get strict positive-definiteness (needed for ALGLIB).
 
-\subsection{Navigation}
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Results}
 
@@ -177,7 +173,22 @@ We note $U_{ij}=E_{ii}+E_{jj}-E_{ij}-E_{ji}$ where $E_{ij}$ is an elementary mat
 
 \subsection{Multisource}
 
+We also tried calculating the geodesics on surfaces when multiple vertices are marked as sources. However, by simply changing the initial heat vector to  $u_0$ (sources) we generate incorrect heat field and distance field – the solved heat field $u_t$ cannot guarantee equal values at each source vertex, and thus not every source vertex has a distance of zero. Typically, the vertex surrounded by more source vertices has a higher temperature and a negative distance.
+
+[tuuuuuuuuuuuuuuuuuuuuuuuu]
+
+We solved this by imposing the constraints $u_t = 1$ at every source vertex in the heat equation, and also the constraint $\phi = 0$ at every source vertex in the Poisson equation. (The first constraint cannot imply the second since the distance field we get is only the closest potential of the heat gradient field.)
+
+[tuuuuuuuuuuuuuuuuuuuuuuu]
+
+One downside, however, is that the matrices need to be modified to contain these extra constraints related to the source. For exemple, to have $u_t = 1$ at the source we put $1$ at the diagonal entries of the sources, and $0$ everywhere else in the same lines and columns. We then compensate the terms we deleted by adding an additional vector at the right side of the equation. Because of this, the Cholesky decomposition need to be carried out each time we change the source. This slows down the calculation a lot.
+
 \subsection{Navigation}
+
+Now that we have the distance field, we would like to calculate the path from a given point to the source point. We achieved this by first calculating the gradient of the distance field (step 5 of the main calculation) which is considered uniform on every triangle, then trace a trajectory by recursively following the gradient in every triangle and entering the next one. 
+
+We visualized this process by moving a walking man on the surface of the mesh. His position is defined by barycentric coordinates of the triangle he is standing on. A walk function takes a distance as its argument and first applies on the triangle on which he is standing and then recursively calls itself at the next triangle he comes across, until walking the given distance or reaching the source.
+
 
 \subsection{Mapping}
 Albedo, Normal, Specular Smoothness, Emission

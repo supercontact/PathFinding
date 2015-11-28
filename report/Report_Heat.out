@@ -8,16 +8,15 @@
 \BOOKMARK [2][-]{subsection.3.2}{Mesh representation}{section.3}% 8
 \BOOKMARK [2][-]{subsection.3.3}{Matrix precalculation}{section.3}% 9
 \BOOKMARK [2][-]{subsection.3.4}{Main calculation}{section.3}% 10
-\BOOKMARK [2][-]{subsection.3.5}{Navigation}{section.3}% 11
-\BOOKMARK [1][-]{section.4}{Results}{}% 12
-\BOOKMARK [2][-]{subsection.4.1}{Main results}{section.4}% 13
-\BOOKMARK [2][-]{subsection.4.2}{Boundary conditions}{section.4}% 14
-\BOOKMARK [2][-]{subsection.4.3}{Time step t}{section.4}% 15
-\BOOKMARK [2][-]{subsection.4.4}{Calculation time cost}{section.4}% 16
-\BOOKMARK [1][-]{section.5}{Additional work}{}% 17
-\BOOKMARK [2][-]{subsection.5.1}{How we obtain meshes?}{section.5}% 18
-\BOOKMARK [2][-]{subsection.5.2}{Optimization}{section.5}% 19
-\BOOKMARK [2][-]{subsection.5.3}{Multisource}{section.5}% 20
-\BOOKMARK [2][-]{subsection.5.4}{Navigation}{section.5}% 21
-\BOOKMARK [2][-]{subsection.5.5}{Mapping}{section.5}% 22
-\BOOKMARK [1][-]{section.6}{Conclusion \046 extensions}{}% 23
+\BOOKMARK [1][-]{section.4}{Results}{}% 11
+\BOOKMARK [2][-]{subsection.4.1}{Main results}{section.4}% 12
+\BOOKMARK [2][-]{subsection.4.2}{Boundary conditions}{section.4}% 13
+\BOOKMARK [2][-]{subsection.4.3}{Time step t}{section.4}% 14
+\BOOKMARK [2][-]{subsection.4.4}{Calculation time cost}{section.4}% 15
+\BOOKMARK [1][-]{section.5}{Additional work}{}% 16
+\BOOKMARK [2][-]{subsection.5.1}{How we obtain meshes?}{section.5}% 17
+\BOOKMARK [2][-]{subsection.5.2}{Optimization}{section.5}% 18
+\BOOKMARK [2][-]{subsection.5.3}{Multisource}{section.5}% 19
+\BOOKMARK [2][-]{subsection.5.4}{Navigation}{section.5}% 20
+\BOOKMARK [2][-]{subsection.5.5}{Mapping}{section.5}% 21
+\BOOKMARK [1][-]{section.6}{Conclusion \046 extensions}{}% 22
