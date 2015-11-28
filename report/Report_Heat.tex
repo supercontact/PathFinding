@@ -7,6 +7,7 @@
 \usepackage[hidelinks,hyperfootnotes=false]{hyperref}
 \usepackage[titlepage,fancysections,pagenumber]{polytechnique}
 \usepackage{multirow}
+\usepackage{wrapfig}
 
 
 \title{Shortest Paths on Surfaces\\ Geodesics in Heat}
@@ -71,17 +72,24 @@ We chose Unity to implement the heat method in order to better visualize the res
 
 \subsection{Mesh representation}
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{F1.png}
+	\caption{UV seams}
+\end{wrapfigure}
+
 We obtain ordinary triangle meshes via various ways. Those meshes are represented by a vertex array (array of Vector3) and a triangle array (sets of 3 indexes stored in an int array). We first wrote a method to convert them to half-edge representation, defined in Geometry.cs. The conversion can be done in time of $O(nd^2)$ where n is the number of vertices and d is the maximum degree of vertices. There are however two important things to consider:
 
-\begin{enumerate}
+\begin{wrapfigure}{l}{0.32\textwidth}
+	\centering
+	\includegraphics[width=0.32\textwidth]{F2.png}
+	\caption{Boundary face}
+\end{wrapfigure}
 
-\item
-The half-edge representation is not well defined when using meshes with boundaries. In order to incorporate with other methods built on this representation, we decided to add a new face to cap each boundary. Those faces are marked as "boundary faces", and all vertices around them are marked as "boundary vertices". This way we can easily implement the boundary conditions in the heat method.
+1. The half-edge representation is not well defined when using meshes with boundaries. In order to incorporate with other methods built on this representation, we decided to add a new face to cap each boundary. Those faces are marked as "boundary faces", and all vertices around them are marked as "boundary vertices". This way we can easily implement the boundary conditions in the heat method.
 
-\item
-Many 3D models obtained from the internet have UV mappings, and thus have UV seams. This means that at the same position there can be two separate points having different UV coordinates. So the geometry we built may have seam-like boundaries blocking the way. To cope with this, we implemented a method to weld all overlapping vertices with a complexity of $O(nlogn)$, based on kdTree range searching.
+2. Many 3D models obtained from the internet have UV mappings, and thus have UV seams. This means that at the same position there can be two separate points having different UV coordinates. So the geometry we built may have seam-like boundaries blocking the way. To cope with this, we implemented a method to weld all overlapping vertices with a complexity of $O(nlogn)$, based on kdTree range searching.
 
-\end{enumerate}
 
 \subsection{Matrix precalculation}
 
@@ -123,6 +131,18 @@ We then calculate the gradient of the distance field $\nabla \phi$ on every tria
 
 At first, without Cholesky decomposition, we used LinCG (Linear Conjugate Gradient) solver to solve linear equations. This solver solves symmetric positive-definite problems, but it works fine even with our second semi-definite problem (Poisson equation). We just need to shift the result such that the distance value at the source equals to zero.
 
+\begin{wrapfigure}{r}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{P1.png}
+	\caption{Left: LinCG / Right: Cholesky}
+\end{wrapfigure}
+
+%\begin{figure}[htb]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{P1.png}
+%	\caption{P1}
+%\end{figure}
+
 However, from the result we obtained, we observed that LinCG solver is sensible to numerical errors. The solution of the heat equation contains values ranging from 1 to $10^{-20}$ or smaller. The longer the distance to the source, the smaller the heat value is. LinCG returns values of 0 when smaller than $\sim 10^{-12}$, so the heat gradient of the farther area cannot be computed. We can only improve the solution by increasing the time step $t$, which increases the heat value but creates a smoothed distance field.
 
 Therefore, we chose to implement the Cholesky decomposition of matrices. It consists of decomposing a symmetric positive matrix $M$ into $LL^T$, where $L$ is a lower triangular matrix. This means the linear equation $LL^Tx = y$ becomes two basic triangular systems, that can be solved by simple substitution. This improves greatly the calculation time when switching sources (The decomposition is only calculated once for every mesh). And since we calculate the exact solution this way, we managed to have much smaller numerical errors, so as to eliminate the problems above. 
@@ -142,25 +162,63 @@ We need to add a small regularization term to the diagonal entries of the laplac
 
 We successfully obtained some very nice results on a variety of meshes. Below are some pictures of the calculated geodesics and gradient fields.
 
-%\begin{wrapfigure}{r}{0.25\textwidth}
-%	\centering
-%	\includegraphics[width=0.25\textwidth]{sphere.jpg}
-%	\caption{Organigramme d'où je me situe}
-%\end{wrapfigure}
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=\textwidth]{P4.png}
+	\caption{Family photo}
+\end{figure}
 
 We observed the difference between the heat gradient and the distance gradient. The distance gradient smoothed out some non-uniform areas.
 
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.5\textwidth]{P2.png}
+	\caption{Left: Gradient of distance field/ Right: Gradient of heat field}
+\end{figure}
+
+%\begin{wrapfigure}{r}{0.3\textwidth}
+%	\centering
+%	\includegraphics[width=0.3\textwidth]{P2.png}
+%	\caption{P2}
+%\end{wrapfigure}
+
 \subsection{Time step t}
 
-numerical error when $t = 1$ (choice of $t$), tweak parameter
+We usually set the time step t to the square of the maximum edge length. Using a much larger time step can create a smoothed distance. The smoothed distance is in general longer than the exact distance, because the trajectory is more curved. Below is an example of comparison.
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{P8.png}
+	\caption{Left: $t=h^2$ / Right: $t=100h^2$ ($h$ is the maximum edge length)}
+\end{figure}
+
+%numerical error when $t = 1$ (choice of $t$), tweak parameter
 
 \subsection{Boundary conditions}
 
 We also compared the results when using different boundary conditions. We observed that with high value of $t$ (smoothed distance), the paths obtained tend to avoid borders with Dirichlet condition, and to adhere to borders with Neumann condition. And by using the average heat field calculated from two different conditions we get more natural paths.
 
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.8\textwidth]{P5.png}
+	\caption{Left: Neumann / Middle: Dirichlet / Right: Average condition}
+\end{figure}
+
 \subsection{Broken mesh}
 
-The triceratops mesh that we tested has some bizarrely sharp obtuse triangles – they will break the positiveness of the heat matrix if we do not put a limit to the cotangent values of an angle. Even if we do, the result seems broken. We find a workaround by resetting the position of a vertex of the triangle to the average position of its neighbors.
+%\begin{wrapfigure}{r}{0.25\textwidth}
+%	\centering
+%	\includegraphics[width=0.25\textwidth]{P3.png}
+%	\caption{P3}
+%\end{wrapfigure}
+
+The triceratops mesh that we tested has some bizarrely sharp obtuse triangles – they will break the positiveness of the heat matrix if we do not put a limit to the cotangent values of an angle. Even if we do, the result seems broken. We find a workaround by resetting the position of a vertex of the triangle to the average position of its neighbors.\\\\\\
+
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.34\textwidth]{P3.png}
+	\caption{Mesh fixing}
+\end{figure}
 
 \subsection{Calculation time cost}
 
@@ -193,6 +251,8 @@ The triceratops mesh that we tested has some bizarrely sharp obtuse triangles �
 \end{tabular}
 \caption{Comparison of LinCG and Cholesky decomposition}
 \end{table}
+
+%\phantom \\
 
 \section{Additional work}
 
@@ -230,19 +290,28 @@ We note $U_{ij}=E_{ii}+E_{jj}-E_{ij}-E_{ji}$ where $E_{ij}$ is an elementary mat
 
 We also tried calculating the geodesics on surfaces when multiple vertices are marked as sources. However, by simply changing the initial heat vector to  $u_0$ (the vector which has value 1 on sources and 0 otherwise) we generate incorrect heat field and distance field – the solved heat field $u_t$ cannot guarantee equal values at each source vertex, and thus not every source vertex has a distance of zero. Typically, the vertex surrounded by more source vertices has a higher temperature and a negative distance.
 
-[tuuuuuuuuuuuuuuuuuuuuuuuu]
+\begin{figure}[htb]
+	\centering
+	\includegraphics[width=0.6\textwidth]{P6.png}
+	\caption{Left: Simply adding source on $u_0$ / Right: Accurate multisource}
+\end{figure}
 
 We solved this by imposing the constraints $u_t = 1$ at every source vertex in the heat equation, and also the constraint $\phi = 0$ at every source vertex in the Poisson equation. (The first constraint cannot imply the second since the distance field we get is only the closest potential of the heat gradient field.)
-
-[tuuuuuuuuuuuuuuuuuuuuuuu]
 
 One downside, however, is that the matrices need to be modified to contain these extra constraints related to the source. For exemple, to have $u_t = 1$ at the source we put $1$ at the diagonal entries of the sources, and $0$ everywhere else in the same lines and columns. We then compensate the terms we deleted by adding an additional vector at the right side of the equation. Because of this, the Cholesky decomposition need to be carried out each time we change the source. This slows down the calculation a lot.
 
 \subsection{Navigation}
 
-Now that we have the distance field, we would like to calculate the path from a given point to the source point. We achieved this by first calculating the gradient of the distance field (step 5 of the main calculation) which is considered uniform on every triangle, then tracing a trajectory by recursively following the gradient in every triangle and entering the next one. 
+\begin{wrapfigure}{r}{0.36\textwidth}
+	\centering
+	\includegraphics[width=0.36\textwidth]{P7.png}
+	\caption{Navigation}
+\end{wrapfigure}
+
+Now that we have the distance field, we would like to calculate the path from a given point to the source point. We achieved this by first calculating the gradient of the distance field (step 5 of the main calculation) which is considered uniform on every triangle, then tracing a trajectory by recursively following the gradient in every triangle and entering the next one.
 
 We visualized this process by moving a walking man on the surface of the mesh. His position is defined by barycentric coordinates of the triangle he is standing on. The distance gradient on it is also converted to barycentric coordinates, but with a sum of 0. (In this way, we can add it to the position coordinates and still get a barycentric coordinate with a sum of 1.) A walk function takes a distance as its argument and first moves on the triangle on which he is standing. By finding the first coordinate that reaches zero we find the edge the man will come across. It then recursively calls itself at the next triangle he enters, until walking the given distance or reaching the source.
+
 
 There are however two extra cases to consider:
 \begin{itemize}
