@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,6 +65,7 @@ public class HeatGeodesics {
 	/// </summary>
 	public void Initialize(bool clearSources = true) {
 		float time = Time.realtimeSinceStartup;
+		float time0 = time;
 		Debug.Log("Initializing matrices...");
 
 		if (clearSources) {
@@ -137,6 +139,7 @@ public class HeatGeodesics {
 		div = g.CalculateDivData();
 
 		Debug.Log("Cotangent table built, time = " + (Time.realtimeSinceStartup - time) * 1000 + "ms");
+		GameObject.Find("Timer2").GetComponent<Text>().text = "Precalculation time = " + (Time.realtimeSinceStartup - time0) * 1000 + "ms";
 	}
 
 	/// <summary>
@@ -174,6 +177,7 @@ public class HeatGeodesics {
 		int f = g.faces.Count;
 
 		float time = Time.realtimeSinceStartup;
+		float time0 = time;
 		Debug.Log("Begin geodesic calculation...");
 
 		// Solve heat equation
@@ -334,6 +338,7 @@ public class HeatGeodesics {
 
 		Debug.Log("Distance gradient calculated, time = " + (Time.realtimeSinceStartup - time)*1000 + "ms");
 		time = Time.realtimeSinceStartup;
+		GameObject.Find("Timer").GetComponent<Text>().text = "Solve time = " + (Time.realtimeSinceStartup - time0) * 1000 + "ms";
 
 
 		// Adjust uv coordinates of vertices in order to show the distance mapping
