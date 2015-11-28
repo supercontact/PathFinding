@@ -26,7 +26,7 @@ In this project we present the algorithm of a practical method for computing app
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Heat flow algorithm}
 
-In this section we explain the Heat Flow algorithm used in this project. It determines the geodesic distance to a specified subset of a given domain. We describe it on a triangle mesh.
+In this section we explain the Heat Flow algorithm used in this project. It determines the geodesic distance to a specified subset of a given domain. We interpret it on a triangle mesh.
 
 Notations: heat field $u$, vector field $X$, distance function $\phi$.
 
@@ -72,23 +72,24 @@ We chose Unity to implement the heat method in order to better visualize the res
 
 \subsection{Mesh representation}
 
-\begin{wrapfigure}{r}{0.5\textwidth}
-	\centering
-	\includegraphics[width=0.5\textwidth]{F1.png}
-	\caption{UV seams}
-\end{wrapfigure}
-
-We obtain ordinary triangle meshes via various ways. Those meshes are represented by a vertex array (array of Vector3) and a triangle array (sets of 3 indexes stored in an int array). We first wrote a method to convert them to half-edge representation, defined in Geometry.cs. The conversion can be done in time of $O(nd^2)$ where n is the number of vertices and d is the maximum degree of vertices. There are however two important things to consider:
-
-\begin{wrapfigure}{l}{0.32\textwidth}
+\begin{wrapfigure}{r}{0.32\textwidth}
 	\centering
 	\includegraphics[width=0.32\textwidth]{F2.png}
 	\caption{Boundary face}
 \end{wrapfigure}
 
-1. The half-edge representation is not well defined when using meshes with boundaries. In order to incorporate with other methods built on this representation, we decided to add a new face to cap each boundary. Those faces are marked as "boundary faces", and all vertices around them are marked as "boundary vertices". This way we can easily implement the boundary conditions in the heat method.
+We obtain ordinary triangle meshes via various ways. Those meshes are represented by a vertex array (array of Vector3) and a triangle array (sets of 3 indexes stored in an int array). We first wrote a method to convert them to half-edge representation, defined in Geometry.cs. The conversion can be done in time of $O(nd^2)$ where n is the number of vertices and d is the maximum degree of vertices. There are however two important things to consider:
 
-2. Many 3D models obtained from the internet have UV mappings, and thus have UV seams. This means that at the same position there can be two separate points having different UV coordinates. So the geometry we built may have seam-like boundaries blocking the way. To cope with this, we implemented a method to weld all overlapping vertices with a complexity of $O(nlogn)$, based on kdTree range searching.
+\begin{wrapfigure}{l}{0.5\textwidth}
+	\centering
+	\includegraphics[width=0.5\textwidth]{F1.png}
+	\caption{UV seams}
+\end{wrapfigure}
+
+
+1. The half-edge representation is not well defined when using meshes with boundaries. In order to incorporate with other methods built on this representation, we decided to add a new face to cap each boundary. Those faces are marked as ``boundary faces'', and all vertices around them are marked as ``boundary vertice''. This way we can easily implement the boundary conditions in the heat method.
+
+2. Many 3D models obtained from the internet have UV mappings, and thus have UV seams. This means that at the same position there can be two separate points having different UV coordinates. So the geometry we built may have seam-like boundaries blocking the way. To cope with this, we implemented a method to weld all overlapping vertices with a complexity of $O(nlogn)$, based on kdTree range searching.\\
 
 
 \subsection{Matrix precalculation}
@@ -108,7 +109,7 @@ The original laplacian matrix described in the paper satisfies Neumann condition
 \end{itemize}
 
 
-We also build a Vector3 array of size (3 * triangle count) keeping all the values of cot(angle) * opposite edge vector, in order to accelerate the calculation of divergence.
+We also build a Vector3 array of size ($3 \times$ triangle count) keeping all the values of cot(angle) times opposite edge vector, in order to accelerate the calculation of divergence.
 
 For the first time, we skipped the Cholesky decomposition step since the overall performance without it is still reasonable. However, because of the numerical problems that we will explain afterwards, we finally implemented the Cholesky decomposition. It is applied on all precalculated matrices.
 
@@ -173,7 +174,7 @@ We observed the difference between the heat gradient and the distance gradient. 
 \begin{figure}[htb]
 	\centering
 	\includegraphics[width=0.5\textwidth]{P2.png}
-	\caption{Left: Gradient of distance field/ Right: Gradient of heat field}
+	\caption{Left: Gradient of distance field / Right: Gradient of heat field}
 \end{figure}
 
 %\begin{wrapfigure}{r}{0.3\textwidth}
