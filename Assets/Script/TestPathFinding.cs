@@ -620,14 +620,14 @@ public class TestPathFinding : MonoBehaviour {
 
 			background = new ColorMixer();
 			stripe = new ColorMixer();
-			background.InsertColorNode(new Color(1f, 0.7f, 0.30f), 0f);
+			background.InsertColorNode(new Color(1f, 0.7f, 0.3f), 0f);
 			stripe.InsertColorNode(new Color(0.125f, 0.125f, 0.1f), 0);
 			tex = MeshFactory.CreateStripedTexture(2048, period, width-2, 21, background, stripe);
 			mat.mainTexture = tex;
 
 			background = new ColorMixer();
 			stripe = new ColorMixer();
-			background.InsertColorNode(new Color(1f, 0.70f, 0.30f, 0.75f), 0);
+			background.InsertColorNode(new Color(1f, 0.7f, 0.3f, 0.75f), 0);
 			stripe.InsertColorNode(new Color(0.3f, 0.3f, 0.3f, 0.4f), 0);
 			tex = MeshFactory.CreateStripedTexture(2048, period, width-2, 21, background, stripe);
 			mat.SetTexture("_SpecGlossMap", tex);
