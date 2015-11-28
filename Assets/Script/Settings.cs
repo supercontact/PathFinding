@@ -11,6 +11,10 @@ public class Settings {
 	/// Whether or not we use Cholesky decomposition to accelerate the calculation (which will however make initialization slower).
 	/// </summary>
 	public static bool useCholesky = true;
+	/// <summary>
+	/// Whether or not we use extra constraints to calculate correct multisource geodesics. This will force reinitialization of matrices when changing the source.
+	/// </summary>
+	public static bool useAccurateMultisource = true;
 
 	/// <summary>
 	/// The boundary condition interpolation.

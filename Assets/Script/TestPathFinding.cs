@@ -21,6 +21,7 @@ public class TestPathFinding : MonoBehaviour {
 	public Mesh skull;
 	public Mesh dragon;
 	Mesh highG, bague, cow, triceratops, horse; // Loaded OFF files
+	public Text tutorial;
 	public Text triangleCounter;
 	public Text visualModeText;
 	public Text heatInfo;
@@ -189,7 +190,7 @@ public class TestPathFinding : MonoBehaviour {
 						lineSources = deef.GetPathFrom(v);
 						hg.CalculateGeodesics(lineSources, true);
 					}
-					warning.gameObject.SetActive(additional && Settings.useCholesky);
+					warning.gameObject.SetActive(additional && Settings.useCholesky && Settings.useAccurateMultisource);
 
 					// Put the mark at the source vertex
 					if (!additional) {
@@ -216,7 +217,7 @@ public class TestPathFinding : MonoBehaviour {
 
 					// Hide tutorial text
 					if (firstClick) {
-						GameObject.Find("Tutorial").SetActive(false);
+						tutorial.gameObject.SetActive(false);
 						firstClick = false;
 					}
 
@@ -404,7 +405,7 @@ public class TestPathFinding : MonoBehaviour {
 		}
 
 		// Start heat method
-		hg = new HeatGeodesics(g, Settings.useCholesky);
+		hg = new HeatGeodesics(g, Settings.useCholesky, Settings.useAccurateMultisource);
 		hg.Initialize();
 
 		List<Vertex> sources = new List<Vertex>();
@@ -934,6 +935,17 @@ public class TestPathFinding : MonoBehaviour {
 		useDefaultSettings = false;
 		SetLevel(levelIndex);
 		useDefaultSettings = true;
+		warning.gameObject.SetActive(hg.s.Count > 1 && Settings.useCholesky && Settings.useAccurateMultisource);
+	}
+	/// <summary>
+	/// Toggles usage of advanced multisource.
+	/// </summary>
+	public void ToggleAdvancedMultisource(bool on) {
+		Settings.useAccurateMultisource = on;
+		useDefaultSettings = false;
+		SetLevel(levelIndex);
+		useDefaultSettings = true;
+		warning.gameObject.SetActive(hg.s.Count > 1 && Settings.useCholesky && Settings.useAccurateMultisource);
 	}
 
 	/// <summary>
@@ -941,6 +953,12 @@ public class TestPathFinding : MonoBehaviour {
 	/// </summary>
 	public void ChangeBoundaryCondition(float coeff) {
 		changedBoundaryCond = coeff;
+	}
+
+
+	public void ToggleTutorial() {
+		tutorial.gameObject.SetActive(!tutorial.gameObject.activeSelf);
+		firstClick = false;
 	}
 
 	public void Clicking(BaseEventData data) {
