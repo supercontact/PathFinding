@@ -16,10 +16,15 @@ public class HeatGeodesics {
 	/// The source vertices.
 	/// </summary>
 	public List<Vertex> s;
+
 	/// <summary>
 	/// Whether or not we use Cholesky decomposition to accelerate the calculation (which will however make initialization slower).
 	/// </summary>
 	private bool useCholesky;
+	/// <summary>
+	/// Whether or not we use extra constraints to calculate correct multisource geodesics. This will force reinitialization of matrices when changing the source.
+	/// </summary>
+	private bool useAccurateMultisource;
 
 	// Precalculated matrices and data
 	private alglib.sparsematrix A1, A1b, A2;
@@ -48,9 +53,10 @@ public class HeatGeodesics {
 	/// </summary>
 	public Vector3[] GradPhi;
 
-	public HeatGeodesics(Geometry g, bool useCholesky = true) {
+	public HeatGeodesics(Geometry g, bool useCholesky = true, bool useAccurateMultisource = true) {
 		this.g = g;
 		this.useCholesky = useCholesky;
+		this.useAccurateMultisource = useAccurateMultisource;
 	}
 
 	/// <summary>
@@ -63,7 +69,7 @@ public class HeatGeodesics {
 		if (clearSources) {
 			s = new List<Vertex>();
 		}
-		bool multiSource = s.Count > 1;
+		bool multiSource = useAccurateMultisource && s.Count > 1;
 		int n = g.vertices.Count;
 
 		// Heat matrix (Neumann condition)
@@ -158,7 +164,7 @@ public class HeatGeodesics {
 	/// </summary>
 	public void CalculateGeodesics() {
 		// If we have multiple sources, we cannot use precalculated matrices. So rebuild matrices with forced heat conditions on sources.
-		if (s.Count > 1 || lastBuiltMatrixIsMultiSource) {
+		if (useAccurateMultisource && (s.Count > 1 || lastBuiltMatrixIsMultiSource)) {
 			Initialize(false);
 			lastBuiltMatrixIsMultiSource = s.Count > 1;
 		}
@@ -179,7 +185,7 @@ public class HeatGeodesics {
 
 		u = new double[n];
 		Array.Copy(b, u, n);
-		if (s.Count > 1) {
+		if (useAccurateMultisource && s.Count > 1) {
 			for (int i = 0; i < n; i++) {
 				u[i] = u[i] + modif1[i];
 			}
@@ -200,7 +206,7 @@ public class HeatGeodesics {
 			// The mesh has boundaries : Use average of Neumann condition solution and Dirichlet condition solution
 			double[] u2 = new double[n];
 			Array.Copy(b, u2, n);
-			if (s.Count > 1) {
+			if (useAccurateMultisource && s.Count > 1) {
 				for (int i = 0; i < n; i++) {
 					u2[i] = u2[i] + modif1b[i];
 				}
@@ -283,13 +289,12 @@ public class HeatGeodesics {
 		// Solve Poisson equation
 		phi = new double[n];
 		Array.Copy(divX, phi, n);
-		if (s.Count > 1) {
+		if (useAccurateMultisource && s.Count > 1) {
 			foreach (Vertex src in s) {
 				phi[src.index] = 0;
 			}
 		}
 		if (useCholesky) {
-
 			alglib.sparsetrsv(A2, true, false, 1, ref phi);
 			alglib.sparsetrsv(A2, true, false, 0, ref phi);
 		} else {
